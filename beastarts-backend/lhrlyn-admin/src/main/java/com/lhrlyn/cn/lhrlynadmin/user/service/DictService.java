@@ -1,0 +1,23 @@
+package com.lhrlyn.cn.lhrlynadmin.user.service;
+
+import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
+import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
+import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
+
+import java.util.List;
+import java.util.Map;
+
+public interface DictService {
+
+    List<DictDto> selectDictByType(String type);
+
+    Map<String, List<DictDto>> selectAllDicts();
+
+    List<DictDto> page(PageQuery query);
+
+    boolean add(DictDto dictDto);
+
+    DictDto edit(String id);
+
+    boolean editDictDate(DictDto dictDto);
+}

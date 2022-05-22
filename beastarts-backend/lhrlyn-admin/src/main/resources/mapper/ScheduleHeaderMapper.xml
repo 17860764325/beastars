@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.ScheduleHeaderMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleHeader" id="ScheduleHeaderResultMap">
+        <id property="id" column="id" />
+        <result property="date" column="date"/>
+        <result property="isOk" column="is_ok"/>
+        <result property="isOther" column="is_other"/>
+        <result property="otherIsOk" column="other_is_ok"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="page" resultMap="ScheduleHeaderResultMap" parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
+        select
+          sh.*
+        from schedule_header sh
+        <where>
+            <if test="date != null and date != ''">
+                and sh.date > #{date}
+            </if>
+        </where>
+        order by sh.create_time desc
+    </select>
+
+
+</mapper>
