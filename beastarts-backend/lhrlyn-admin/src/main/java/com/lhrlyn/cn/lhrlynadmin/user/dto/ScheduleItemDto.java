@@ -13,16 +13,7 @@ public class ScheduleItemDto {
 
     private Long id;
     private Long headerId;
-    private Date date;
-    private String name;
-    private String about;
-    private String time;
-    private String  isOk;
-    private String otherName;
-    private String otherAbout;
-    private String otherTime;
-    private String otherIdOk;
-    private String remarks;
+    private String dataAbout;
     private Date createTime;
     private Date updateTime;
 

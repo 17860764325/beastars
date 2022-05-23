@@ -13,13 +13,11 @@ public class ScheduleHeaderDto {
 
     private Long id;
 
+    private String name;
+
     private Date date;
 
     private String isOk;
-
-    private String isOther;
-
-    private String otherIsOk;
 
     private Date createTime;
 

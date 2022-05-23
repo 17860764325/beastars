@@ -1,149 +1,113 @@
 <template>
-  <div class="app-container documentation-container">
-
-    <el-form>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="日期">
-          <el-input v-model="formInline.user" type="date" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
-        </el-form-item>
-      </el-form>
-    </el-form>
-    <el-table
-      :data="tableData"
-      border
-      style="width: 100%"
-    >
-      <el-table-column
-        fixed
-        prop="date"
-        label="日期"
-        width="auto"
-      />
-      <el-table-column
-        prop="name"
-        label="事件描述"
-        width="120"
-      >
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top">
-            <p>姓名: {{ scope.row.name }}</p>
-            <p>住址: {{ scope.row.address }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            </div>
-          </el-popover>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="province"
-        label="时间区间"
-        width="120"
-      />
-      <el-table-column
-        prop="city"
-        label="是否完成"
-        width="120"
-      />
-      <el-table-column
-        prop="address"
-        label="是否临时有事"
-        width="300"
-      />
-      <el-table-column
-        prop="zip"
-        label="临时事情描述"
-        width="120"
-      />
-      <el-table-column
-        prop="zip"
-        label="临时事情是否完成"
-        width="120"
-      />
-      <el-table-column
-        prop="zip"
-        label="临时事情时间区间"
-        width="120"
-      />
-      <el-table-column
-        prop="zip"
-        label="备注"
-        width="120"
-      />
-      <el-table-column
-        fixed="right"
-        label="操作"
-        width="100"
-      >
-        <template slot-scope="scope">
-          <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
-        </template>
-      </el-table-column>
-
-    </el-table>
+  <div class="app-container ">
+    <quill-editor
+      ref="myQuillEditor"
+      v-model="this.data.dataAbout"
+      :options="editorOption"
+      @blur="onEditorBlur($event)"
+      @focus="onEditorFocus($event)"
+      @change="onEditorChange($event)"
+    />
+    <div style="text-align: center">
+      <el-button @click="save()">保存</el-button>
+    </div>
   </div>
 </template>
 
 <script>
+// 富文本编辑
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
+// 保存
+import { getInfo, saveInfo } from '@/api/ScheduleItem/api'
 
 export default {
   name: 'Documentation',
+  components: {
+    quillEditor
+  },
   props: {
-    dateId: String
+    id: String
   },
   data() {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1517 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1519 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1516 弄',
-        zip: 200333
-      }],
-      formInline: {
-        user: '',
-        region: ''
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗，斜体，下划线，删除线
+            ['blockquote', 'code-block'], // 引用，代码块
+            [{ 'header': 1 }, { 'header': 2 }], // 标题，键值对的形式；1、2表示字体大小
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }], // 列表
+            [{ 'script': 'sub' }, { 'script': 'super' }], // 上下标
+            [{ 'indent': '-1' }, { 'indent': '+1' }], // 缩进
+            [{ 'direction': 'rtl' }], // 文本方向
+            [{ 'size': ['small', false, 'large', 'huge'] }], // 字体大小
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // 几级标题
+            [{ 'color': [] }, { 'background': [] }], // 字体颜色，字体背景颜色
+            [{ 'font': [] }], // 字体
+            [{ 'align': [] }], // 对齐方式
+            ['clean'], // 清除字体样式
+            ['image', 'video'] // 上传图片、上传视频
+          ]
+        },
+        placeholder: '请讲述这个故事', // 提示
+        readyOnly: false, // 是否只读
+        theme: 'snow', // 主题 snow/bubble
+        syntax: true // 语法检测
+      }, // 编辑器配置项
+      data: {
+        headerId: undefined,
+        dataAbout: undefined
       }
+
     }
   },
-  created() {
-    console.log(this.dateId)
+  computed: {
+    editor() {
+      return this.$refs.myQuillEditor.quill
+    }
+  },
+  async created() {
+    const res = await getInfo(this.id)
+    this.data.dataAbout = res.data.dataAbout
   },
   methods: {
-    handleClick(row) {
-      console.log(row)
+    // 失去焦点
+    onEditorBlur(date) {
+      console.log(date, 'onEditorBlur')
     },
-    onSubmit() {
-      console.log('submit!')
+    // 获得焦点
+    onEditorFocus(date) {
+      console.log(date, 'onEditorFocus')
+    },
+    // 值发生变化
+    onEditorChange(date) {
+      console.log(date.html, 'onEditorChange')
+      this.data.dataAbout = date.html
+    },
+    save() {
+      this.data.headerId = this.id
+      saveInfo(this.data).then(res => {
+        if (res.success) {
+          this.$notify({
+            title: '成功',
+            message: '🥳故事保存成功！',
+            type: 'success'
+          })
+        } else {
+          this.$notify({
+            title: '失败',
+            message: '😵保存失败，未知原因！',
+            type: 'error'
+          })
+        }
+      })
     }
+
   }
+
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

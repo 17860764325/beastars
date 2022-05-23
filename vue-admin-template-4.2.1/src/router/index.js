@@ -27,7 +27,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard☘️', icon: 'dashboard' }
     }]
   },
 
@@ -39,13 +39,13 @@ export const constantRoutes = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '日程', icon: 'table' }
+        meta: { title: '想做的事🦾', icon: 'table' }
       },
       {
         path: 'dateDetail/:dateId',
         name: 'dateDetail',
         component: () => import('@/views/form/detail/index'),
-        meta: { title: '日程详细', icon: 'form' },
+        meta: { title: '事情详情计划🛎', icon: 'form' },
         props: true,
         hidden: true
 
@@ -55,7 +55,7 @@ export const constantRoutes = [
   {
     path: '/system',
     component: Layout,
-    meta: { title: '系统管理', icon: 'eye-open' },
+    meta: { title: '系统管理⚙️', icon: 'eye-open' },
     children: [
       {
         path: 'dict',

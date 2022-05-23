@@ -19,6 +19,11 @@ import _ from 'lodash'
 import { getDicts } from '@/api/dict/api'
 import inputRules from '@/utils/inputRules' // 引入输入验证
 import validate from '@/utils/validate' // 输入验证方法引入
+import QuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.bubble.css'
+import 'quill/dist/quill.snow.css'
+Vue.use(QuillEditor)
 
 /**
  * If you don't want to use mock-server

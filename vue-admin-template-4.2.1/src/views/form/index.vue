@@ -42,30 +42,22 @@ export default {
 
           // 交易形式
           {
+            prop: 'name',
+            showOverflowTooltip: true,
+            label: '👀想做事情名称',
+            minWidth: 100
+          },
+          {
             prop: 'date',
             showOverflowTooltip: true,
-            label: '日期',
+            label: '🕐准备什么时候做？',
             type: 'date',
             minWidth: 100
           },
           {
             prop: 'isOk',
             showOverflowTooltip: true,
-            label: '是否完成',
-            dictType: 'is_ok',
-            minWidth: 100
-          },
-          {
-            prop: 'isOther',
-            showOverflowTooltip: true,
-            label: '是否有其他事情',
-            dictType: 'is_ok',
-            minWidth: 100
-          },
-          {
-            prop: 'otherIsOk',
-            showOverflowTooltip: true,
-            label: '其他事情是否完成',
+            label: '☑️是否完成了？',
             dictType: 'is_ok',
             minWidth: 100
           }
@@ -76,7 +68,7 @@ export default {
           btList: [
             {
               type: 'text',
-              label: '详细编辑',
+              label: '📝书写策划',
               event: 'edit',
               show: true
             }
@@ -125,7 +117,7 @@ export default {
     },
     detail(data) {
       console.log(data)
-      this.$router.push({ name: 'dateDetail', params: { dateId: data.date }})
+      this.$router.push({ name: 'dateDetail', params: { id: data.id }})
     },
     // 添加数据
     async add() {

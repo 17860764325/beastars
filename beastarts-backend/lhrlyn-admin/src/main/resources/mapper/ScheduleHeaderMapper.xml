@@ -6,10 +6,9 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleHeader" id="ScheduleHeaderResultMap">
         <id property="id" column="id" />
+        <result property="name" column="name"/>
         <result property="date" column="date"/>
         <result property="isOk" column="is_ok"/>
-        <result property="isOther" column="is_other"/>
-        <result property="otherIsOk" column="other_is_ok"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
