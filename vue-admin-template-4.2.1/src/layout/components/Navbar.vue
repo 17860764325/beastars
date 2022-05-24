@@ -1,5 +1,17 @@
 <template>
   <div class="navbar">
+    <img class="backageImage" src="../../assets/navbar_image/猫咪.png">
+    <img class="backageImage" src="../../assets/navbar_image/2.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/3.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/1.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/4.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/5.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/6.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/7.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/8.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/9.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/10.png" @click="imageClick('1')">
+    <img class="backageImage" src="../../assets/navbar_image/11.png" @click="imageClick('1')">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
@@ -16,12 +28,9 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+          <!-- <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
@@ -54,6 +63,9 @@ export default {
     async logout() {
       await this.$store.dispatch('user/resetToken')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    imageClick(item) {
+      console.log(item)
     }
   }
 }
@@ -66,6 +78,13 @@ export default {
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+  .backageImage{
+
+    border-radius: 20%;
+    border: black solid 1px;
+    height: 100%;
+  }
 
   .hamburger-container {
     line-height: 46px;
