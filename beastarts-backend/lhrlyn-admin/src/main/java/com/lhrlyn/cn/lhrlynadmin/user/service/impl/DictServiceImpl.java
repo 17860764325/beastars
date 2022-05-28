@@ -8,6 +8,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.listBeanUtil.ListBeanUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.redis.RedisUtils;
+import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,5 +95,16 @@ public class DictServiceImpl implements DictService {
         }else {
             return false;
         }
+    }
+
+    @Override
+    public ObjectRestResponse delete(String ids) {
+            int i = dictMapper.deleteByIds(ids);
+        if(i >= 1){
+            return ObjectRestResponse.success();
+        }else {
+            return ObjectRestResponse.failed();
+        }
+
     }
 }

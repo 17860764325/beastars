@@ -20,7 +20,7 @@ public class ScheduleHeader {
     private Date date;
     @Column(name = "is_ok")
     private String isOk;
-    @Column(name = "crete_time")
+    @Column(name = "create_time")
     private Date createTime;
     @Column(name = "update_time")
     private Date updateTime;

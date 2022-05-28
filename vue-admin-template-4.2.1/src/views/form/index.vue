@@ -8,8 +8,9 @@
         type="date"
       />
       <el-button type="primary" icon="el-icon-search" class="filter-item" @click="getList()">Query</el-button>
-      <el-button type="primary" icon="el-icon-refresh" class="filter-item" @click="reset">Reset</el-button>
-      <el-button type="primary" icon="el-icon-plus" class="filter-item" @click="add">Add</el-button>
+      <el-button type="primary" icon="el-icon-refresh" class="filter-item" @click="reset()">Reset</el-button>
+      <el-button type="primary" icon="el-icon-plus" class="filter-item" @click="add()">Add</el-button>
+      <el-button type="danger" icon="el-icon-delete" class="filter-item" @click="deletes()">Delete</el-button>
     </div>
     <hr-table
       ref="table"
@@ -22,19 +23,54 @@
       :btn-hide-set="btnHideSet"
       :table-index="true"
       :export-file-name="exportFileName"
+      :selection="true"
+      @selection-change="selectionChange"
       @handle-click="handleClick"
     />
+    <el-dialog
+      v-if="addVisible"
+      class="addDialog"
+      width="80%"
+      :title="'新增故事！'"
+      :visible.sync="addVisible"
+    >
+      <story-add
+        @close="addDilogClose"
+      />
+    </el-dialog>
+    <el-dialog
+      v-if="editVisible"
+      class="addDialog"
+      width="80%"
+      :title="'修改故事！'"
+      :visible.sync="editVisible"
+    >
+      <story-edit
+        :id="id"
+        @close="editDilogClose"
+      />
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { page } from '@/api/ScheduleHeader/api.js'
-import { getAllDicts } from '@/api/dict/api.js'
+import { page, deletes } from '@/api/ScheduleHeader/api.js'
 export default {
   name: 'Documentation',
+  components: {
+    // 新增
+    'story-add': () => import('./components/add'),
+    // 编辑
+    'story-edit': () => import('./components/edit')
+  },
   data() {
     return {
       page,
+      addVisible: false,
+      editVisible: false,
+      ids: '',
+      id: undefined,
+      selectedRows: [],
       tableInfo: {
         refresh: 1,
         data: [],
@@ -69,6 +105,12 @@ export default {
             {
               type: 'text',
               label: '📝书写策划',
+              event: 'detail',
+              show: true
+            },
+            {
+              type: 'text',
+              label: '修改',
               event: 'edit',
               show: true
             }
@@ -105,11 +147,11 @@ export default {
     },
     handleClick(event, data) {
       switch (event) {
-        case 'edit':
+        case 'detail':
           this.detail(data)
           break
-        case 'add':
-          this.handleAdd(data)
+        case 'edit':
+          this.edit(data)
           break
         default:
           break
@@ -120,11 +162,61 @@ export default {
       this.$router.push({ name: 'dateDetail', params: { id: data.id }})
     },
     // 添加数据
-    async add() {
-      // this.$router.push({ name: 'dateAdd' })
-      this.getDicts('is_ok')
-      console.log(this.test['a'])
-      console.log(await getAllDicts())
+    add() {
+      console.log('add')
+      this.addVisible = true
+    },
+    addDilogClose() {
+      this.addVisible = false
+      this.getList()
+    },
+    // 修改数据
+    edit(data) {
+      this.id = data.id
+      this.editVisible = true
+    },
+    editDilogClose() {
+      this.editVisible = false
+      this.getList()
+    },
+    // 选中数据
+    selectionChange(rows) {
+      this.selectedRows = rows
+    },
+    // 删除数据
+    deletes() {
+      if (this.selectedRows.length > 0) {
+        this.selectedRows.forEach(element => {
+          if (this.selectedRows[this.selectedRows.length - 1] === element) {
+            this.ids = this.ids + element.id
+          } else {
+            this.ids = this.ids + element.id + ','
+          }
+        })
+        deletes(this.ids).then(res => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+          this.getList()
+          this.ids = ''
+        })
+      } else {
+        this.$notify({
+          title: '警告',
+          message: '至少选一条数据sb',
+          type: 'warning'
+        })
+      }
     }
   }
 }
@@ -134,4 +226,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+</style>
+<style scoped>
+
 </style>

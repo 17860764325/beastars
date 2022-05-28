@@ -18,6 +18,7 @@
       <el-button type="primary" icon="el-icon-search" class="filter-item" @click="getList()">Query</el-button>
       <el-button type="primary" icon="el-icon-refresh" class="filter-item" @click="reset()">Reset</el-button>
       <el-button type="primary" icon="el-icon-plus" class="filter-item" @click="addDilogOpen()">Add</el-button>
+      <el-button type="danger" icon="el-icon-delete" class="filter-item" @click="deletes()">Delete</el-button>
     </div>
     <hr-table
       ref="table"
@@ -25,10 +26,12 @@
       :data.sync="tableInfo.data"
       :field-list="tableInfo.fieldList"
       :api="page"
+      :selection="true"
       :query="listQuery"
       :handle="tableInfo.handle"
       :table-index="true"
       :export-file-name="exportFileName"
+      @selection-change="selectionChange"
       @handle-click="handleClick"
     />
     <el-dialog
@@ -58,7 +61,7 @@
 </template>
 
 <script>
-import { page } from '@/api/dict/api.js'
+import { page, deletes } from '@/api/dict/api.js'
 export default {
   name: 'Documentation',
   components: {
@@ -73,6 +76,8 @@ export default {
       id: undefined,
       addVisible: false,
       editVisible: false,
+      selectedRow: [],
+      ids: '',
       tableInfo: {
         refresh: 1,
         data: [],
@@ -169,6 +174,10 @@ export default {
           break
       }
     },
+    selectionChange(rows) {
+      this.selectedRow = rows
+      console.log(rows)
+    },
     editOpen(data) {
       this.id = data.dictCode
       this.editVisible = true
@@ -184,6 +193,41 @@ export default {
     addDilogClose() {
       this.addVisible = false
       this.getList()
+    },
+    // delete
+    deletes() {
+      if (this.selectedRow.length > 0) {
+        this.selectedRow.forEach(element => {
+          if (this.selectedRow[this.selectedRow.length - 1] === element) {
+            this.ids = this.ids + element.dictCode
+          } else {
+            this.ids = this.ids + element.dictCode + ','
+          }
+        })
+        deletes(this.ids).then(res => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+          this.getList()
+          this.ids = ''
+        })
+      } else {
+        this.$notify({
+          title: '警告',
+          message: '至少选一条数据sb',
+          type: 'warning'
+        })
+      }
     }
   }
 }

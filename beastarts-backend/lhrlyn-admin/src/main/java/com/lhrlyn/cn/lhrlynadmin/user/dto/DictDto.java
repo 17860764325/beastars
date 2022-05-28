@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class DictDto implements Serializable {
 
-    @Id
+
     private Long dictCode;
 
     private String dictLabel;

@@ -7,3 +7,34 @@ export function page(query) {
     params: query
   })
 }
+
+export function addObj(data) {
+  return request({
+    url: '/schedule/add',
+    method: 'post',
+    data: data
+  })
+}
+
+export function getDictInfoById(id) {
+  return request({
+    url: '/schedule/edit/' + id,
+    method: 'get'
+  })
+}
+
+export function editObj(obj) {
+  return request({
+    url: '/schedule/edit',
+    method: 'post',
+    data: obj
+  })
+}
+
+// 删除
+export function deletes(ids) {
+  return request({
+    url: '/schedule/delete/' + ids,
+    method: 'get'
+  })
+}

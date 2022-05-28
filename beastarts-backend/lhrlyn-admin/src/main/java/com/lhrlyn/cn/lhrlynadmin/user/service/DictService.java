@@ -3,6 +3,7 @@ package com.lhrlyn.cn.lhrlynadmin.user.service;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
+import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,6 @@ public interface DictService {
     DictDto edit(String id);
 
     boolean editDictDate(DictDto dictDto);
+
+    ObjectRestResponse delete(String ids);
 }

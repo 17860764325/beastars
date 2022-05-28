@@ -1,7 +1,9 @@
 <template>
   <div class="app-container ">
     <hr-form ref="hrTable" :form-disabled="false" :form.sync="form" :field-list="fieldList" />
-    <div style="text-align: center">
+    <div
+      style="text-align: center"
+    >
       <el-button @click="submit()">确定</el-button>
       <el-button @click="centrl()">取消</el-button>
     </div>
@@ -104,3 +106,4 @@ export default {
   margin-bottom: 20px;
 }
 </style>
+

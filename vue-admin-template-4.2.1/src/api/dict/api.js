@@ -50,3 +50,11 @@ export function editObj(obj) {
     data: obj
   })
 }
+
+// 删除字典
+export function deletes(ids) {
+  return request({
+    url: '/dict/delete/' + ids,
+    method: 'get'
+  })
+}
