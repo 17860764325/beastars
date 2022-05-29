@@ -15,7 +15,7 @@ redis:
 
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/leigexi?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=UTC&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://127.0.0.1:3306/leigexi?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: liuyinuo1314
     driver-class-name: com.mysql.cj.jdbc.Driver

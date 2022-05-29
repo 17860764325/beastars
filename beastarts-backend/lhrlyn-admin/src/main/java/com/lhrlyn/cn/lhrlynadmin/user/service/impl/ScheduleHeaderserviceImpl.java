@@ -53,6 +53,46 @@ public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
     }
 
     @Override
+    public ObjectRestResponse statusOk(String ids) {
+        String[] split = ids.split(",");
+        boolean b = true;
+        for (String s : split) {
+            ScheduleHeader scheduleHeader = new ScheduleHeader();
+            scheduleHeader.setId(Long.valueOf(s));
+            scheduleHeader.setIsOk("1");
+            int i = scheduleHeaderMapper.updateByPrimaryKeySelective(scheduleHeader);
+            if (i <= 0 ){
+                b= false;
+            }
+        }
+        if (b){
+            return ObjectRestResponse.success();
+        }else {
+            return ObjectRestResponse.failed();
+        }
+    }
+
+    @Override
+    public ObjectRestResponse statusNo(String ids) {
+        String[] split = ids.split(",");
+        boolean b = true;
+        for (String s : split) {
+            ScheduleHeader scheduleHeader = new ScheduleHeader();
+            scheduleHeader.setId(Long.valueOf(s));
+            scheduleHeader.setIsOk("2");
+            int i = scheduleHeaderMapper.updateByPrimaryKeySelective(scheduleHeader);
+            if (i <= 0 ){
+                b= false;
+            }
+        }
+        if (b){
+            return ObjectRestResponse.success();
+        }else {
+            return ObjectRestResponse.failed();
+        }
+    }
+
+    @Override
     public ScheduleHeaderDto edit(String id) {
         ScheduleHeader scheduleHeader = new ScheduleHeader();
         scheduleHeader.setId(Long.valueOf(id));

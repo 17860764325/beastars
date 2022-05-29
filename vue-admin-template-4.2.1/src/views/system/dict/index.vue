@@ -57,6 +57,19 @@
         @close="editClose"
       />
     </el-dialog>
+    <el-dialog
+      v-if="deleteVisible"
+      class="isDelete"
+      width="20%"
+      :title="'删除'"
+      :visible.sync="deleteVisible"
+    >
+      <h3>是否要删除这条数据？</h3>
+      <div style="text-align: center">
+        <el-button @click="yesDelete()">YES!</el-button>
+        <el-button @click="noDelete()">NO!</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -76,6 +89,7 @@ export default {
       id: undefined,
       addVisible: false,
       editVisible: false,
+      deleteVisible: false,
       selectedRow: [],
       ids: '',
       tableInfo: {
@@ -195,7 +209,11 @@ export default {
       this.getList()
     },
     // delete
+    // 删除数据
     deletes() {
+      this.deleteVisible = true
+    },
+    yesDelete() {
       if (this.selectedRow.length > 0) {
         this.selectedRow.forEach(element => {
           if (this.selectedRow[this.selectedRow.length - 1] === element) {
@@ -220,6 +238,7 @@ export default {
           }
           this.getList()
           this.ids = ''
+          this.deleteVisible = false
         })
       } else {
         this.$notify({
@@ -228,6 +247,10 @@ export default {
           type: 'warning'
         })
       }
+    },
+    noDelete() {
+      this.deleteVisible = false
+      this.getList()
     }
   }
 }

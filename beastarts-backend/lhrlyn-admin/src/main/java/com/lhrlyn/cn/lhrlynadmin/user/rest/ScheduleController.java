@@ -57,6 +57,18 @@ public class ScheduleController extends Controller {
         return scheduleHeaderService.delete(ids);
     }
 
+    @GetMapping("/statusOk/{ids}")
+    public ObjectRestResponse statusOk(@PathVariable("ids") String ids) {
+        return scheduleHeaderService.statusOk(ids);
+    }
+
+    @GetMapping("/statusNo/{ids}")
+    public ObjectRestResponse statusNo(@PathVariable("ids") String ids) {
+        return scheduleHeaderService.statusNo(ids);
+    }
+
+
+
     @GetMapping("/edit/{id}")
     public ObjectRestResponse<ScheduleHeaderDto> edit(@PathVariable("id") String id) {
         ScheduleHeaderDto scheduleHeaderDto = scheduleHeaderService.edit(id);

@@ -18,4 +18,8 @@ public interface ScheduleHeaderService {
     ScheduleHeaderDto edit(String id);
 
     boolean editDictDate(ScheduleHeaderDto scheduleHeaderDto);
+
+    ObjectRestResponse statusOk(String ids);
+
+    ObjectRestResponse statusNo(String ids);
 }

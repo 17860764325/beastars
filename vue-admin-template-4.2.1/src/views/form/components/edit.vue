@@ -30,6 +30,7 @@ import { editObj, getDictInfoById } from '@/api/ScheduleHeader/api'
 export default {
   name: 'Documentation',
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     id: String
   },
   data() {

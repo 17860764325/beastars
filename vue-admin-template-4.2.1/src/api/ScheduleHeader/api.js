@@ -38,3 +38,19 @@ export function deletes(ids) {
     method: 'get'
   })
 }
+
+// 删除
+export function statusOk(ids) {
+  return request({
+    url: '/schedule/statusOk/' + ids,
+    method: 'get'
+  })
+}
+
+// 删除
+export function statusNo(ids) {
+  return request({
+    url: '/schedule/statusNo/' + ids,
+    method: 'get'
+  })
+}

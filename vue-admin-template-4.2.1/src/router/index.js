@@ -68,7 +68,50 @@ export const constantRoutes = [
         name: 'user',
         component: () => import('@/views/system/user/index'),
         meta: { title: 'master', icon: 'user' }
-
+      }
+    ]
+  },
+  {
+    path: '/workBench',
+    component: Layout,
+    meta: { title: '工具台🛠', icon: 'nested' },
+    children: [
+      {
+        path: 'code',
+        name: 'code',
+        component: () => import('@/views/workBench/code/index'),
+        meta: { title: '代码生成👨🏻‍🔧', icon: 'dashboard' }
+      },
+      {
+        path: 'drawing',
+        name: 'drawing',
+        component: () => import('@/views/workBench/drawing/index'),
+        meta: { title: '你的图纸世界👨🏻‍🔬', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/otherWorld',
+    component: Layout,
+    meta: { title: '异世界👨🏻‍🚀', icon: 'link' },
+    children: [
+      {
+        path: 'gongqijun',
+        name: 'gongqijun',
+        component: () => import('@/views/otherWorld/gongqijun/index'),
+        meta: { title: '宫崎骏的动漫世界🎑', icon: 'link' }
+      },
+      {
+        path: 'beastars',
+        name: 'beastars',
+        component: () => import('@/views/otherWorld/beastars/index'),
+        meta: { title: 'beastars🐺🐰🐼🐑  ', icon: 'link' }
+      },
+      {
+        path: 'otherWorld',
+        name: 'otherWorld',
+        component: () => import('@/views/otherWorld/otherWorld/index'),
+        meta: { title: '其他的世界🌃', icon: 'link' }
       }
     ]
   },

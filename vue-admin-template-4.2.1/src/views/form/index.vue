@@ -11,6 +11,8 @@
       <el-button type="primary" icon="el-icon-refresh" class="filter-item" @click="reset()">Reset</el-button>
       <el-button type="primary" icon="el-icon-plus" class="filter-item" @click="add()">Add</el-button>
       <el-button type="danger" icon="el-icon-delete" class="filter-item" @click="deletes()">Delete</el-button>
+      <el-button type="success" icon="el-icon-check" class="filter-item" @click="ok()">OK</el-button>
+      <el-button type="danger" icon="el-icon-close" class="filter-item" @click="no()">NO</el-button>
     </div>
     <hr-table
       ref="table"
@@ -50,11 +52,24 @@
         @close="editDilogClose"
       />
     </el-dialog>
+    <el-dialog
+      v-if="deleteVisible"
+      class="isDelete"
+      width="20%"
+      :title="'删除'"
+      :visible.sync="deleteVisible"
+    >
+      <h3>是否要删除这条数据？</h3>
+      <div style="text-align: center">
+        <el-button @click="yesDelete()">YES!</el-button>
+        <el-button @click="noDelete()">NO!</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { page, deletes } from '@/api/ScheduleHeader/api.js'
+import { page, deletes, statusOk, statusNo } from '@/api/ScheduleHeader/api.js'
 export default {
   name: 'Documentation',
   components: {
@@ -68,6 +83,7 @@ export default {
       page,
       addVisible: false,
       editVisible: false,
+      deleteVisible: false,
       ids: '',
       id: undefined,
       selectedRows: [],
@@ -185,6 +201,77 @@ export default {
     },
     // 删除数据
     deletes() {
+      this.deleteVisible = true
+    },
+    async ok() {
+      if (this.selectedRows.length > 0) {
+        this.selectedRows.forEach(element => {
+          if (this.selectedRows[this.selectedRows.length - 1] === element) {
+            this.ids = this.ids + element.id
+          } else {
+            this.ids = this.ids + element.id + ','
+          }
+        })
+        await statusOk(this.ids).then(res => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+          this.getList()
+          this.ids = ''
+        })
+      } else {
+        this.$notify({
+          title: '警告',
+          message: '至少选一条数据sb',
+          type: 'warning'
+        })
+      }
+    },
+    async no() {
+      if (this.selectedRows.length > 0) {
+        this.selectedRows.forEach(element => {
+          if (this.selectedRows[this.selectedRows.length - 1] === element) {
+            this.ids = this.ids + element.id
+          } else {
+            this.ids = this.ids + element.id + ','
+          }
+        })
+        await statusNo(this.ids).then(res => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+          this.getList()
+          this.ids = ''
+        })
+      } else {
+        this.$notify({
+          title: '警告',
+          message: '至少选一条数据sb',
+          type: 'warning'
+        })
+      }
+    },
+    yesDelete() {
       if (this.selectedRows.length > 0) {
         this.selectedRows.forEach(element => {
           if (this.selectedRows[this.selectedRows.length - 1] === element) {
@@ -209,6 +296,7 @@ export default {
           }
           this.getList()
           this.ids = ''
+          this.deleteVisible = false
         })
       } else {
         this.$notify({
@@ -217,6 +305,10 @@ export default {
           type: 'warning'
         })
       }
+    },
+    noDelete() {
+      this.deleteVisible = false
+      this.getList()
     }
   }
 }
@@ -228,5 +320,7 @@ export default {
 }
 </style>
 <style scoped>
-
+.app-container {
+  background-image: url(../../assets/images/909641.png);
+}
 </style>
