@@ -120,7 +120,7 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
+export const createRouter = () => new Router({
   // mode: 'history', // require service support
   mode: 'hash',
   base: '/vue/app/',

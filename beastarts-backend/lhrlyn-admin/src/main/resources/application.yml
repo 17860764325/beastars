@@ -7,8 +7,8 @@ server:
 
 redis:
   database: 0
-  host: 8.130.54.79
-  password: redis
+  host: localhost
+  password: 668827
   pool:
     max-active: 8
     max-idle: 8

@@ -44,8 +44,8 @@ Vue.prototype.GLOBAL = validate
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
   router,
   store,
+  el: '#app',
   render: h => h(App)
-})
+}).$mount('#app')
