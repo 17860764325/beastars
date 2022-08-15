@@ -17,7 +17,7 @@ public class UserRole  {
     private Long UserId;
 
     @Column(name = "role_id")
-    private Long role_id;
+    private Long roleId;
 
     @Column(name = "is_void")
     private String isVoid;

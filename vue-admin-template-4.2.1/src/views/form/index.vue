@@ -7,12 +7,42 @@
         class="filter-item"
         type="date"
       />
-      <el-button type="primary" icon="el-icon-search" class="filter-item" @click="getList()">Query</el-button>
-      <el-button type="primary" icon="el-icon-refresh" class="filter-item" @click="reset()">Reset</el-button>
-      <el-button type="primary" icon="el-icon-plus" class="filter-item" @click="add()">Add</el-button>
-      <el-button type="danger" icon="el-icon-delete" class="filter-item" @click="deletes()">Delete</el-button>
-      <el-button type="success" icon="el-icon-check" class="filter-item" @click="ok()">OK</el-button>
-      <el-button type="danger" icon="el-icon-close" class="filter-item" @click="no()">NO</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+        class="filter-item"
+        @click="getList()"
+      >Query</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-refresh"
+        class="filter-item"
+        @click="reset()"
+      >Reset</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        class="filter-item"
+        @click="add()"
+      >Add</el-button>
+      <el-button
+        type="danger"
+        icon="el-icon-delete"
+        class="filter-item"
+        @click="deletes()"
+      >Delete</el-button>
+      <el-button
+        type="success"
+        icon="el-icon-check"
+        class="filter-item"
+        @click="ok()"
+      >OK</el-button>
+      <el-button
+        type="danger"
+        icon="el-icon-close"
+        class="filter-item"
+        @click="no()"
+      >NO</el-button>
     </div>
     <hr-table
       ref="table"
@@ -36,9 +66,7 @@
       :title="'新增故事！'"
       :visible.sync="addVisible"
     >
-      <story-add
-        @close="addDilogClose"
-      />
+      <story-add @close="addDilogClose" />
     </el-dialog>
     <el-dialog
       v-if="editVisible"
@@ -47,10 +75,7 @@
       :title="'修改故事！'"
       :visible.sync="editVisible"
     >
-      <story-edit
-        :id="id"
-        @close="editDilogClose"
-      />
+      <story-edit :id="id" @close="editDilogClose" />
     </el-dialog>
     <el-dialog
       v-if="deleteVisible"
@@ -91,7 +116,6 @@ export default {
         refresh: 1,
         data: [],
         fieldList: [
-
           // 交易形式
           {
             prop: 'name',
@@ -153,7 +177,7 @@ export default {
       const res = await page(this.listQuery)
       this.tableInfo.data = res.data.rows
     },
-    async  reset() {
+    async reset() {
       this.listQuery.date = undefined
       const res = await page({
         page: 1,
@@ -314,13 +338,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.query{
+.query {
   margin-top: 10px;
   margin-bottom: 20px;
-}
-</style>
-<style scoped>
-.app-container {
-  background-image: url(../../assets/images/909641.png);
 }
 </style>

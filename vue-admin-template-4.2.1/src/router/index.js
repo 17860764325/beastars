@@ -87,6 +87,12 @@ export const constantRoutes = [
         name: 'drawing',
         component: () => import('@/views/workBench/drawing/index'),
         meta: { title: '你的图纸世界👨🏻‍🔬', icon: 'dashboard' }
+      },
+      {
+        path: 'study',
+        name: 'study',
+        component: () => import('@/views/workBench/study/index'),
+        meta: { title: '成人高考资料📝', icon: 'dashboard' }
       }
     ]
   },

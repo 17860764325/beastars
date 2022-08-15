@@ -89,7 +89,7 @@ public class LoginServiceImpl implements LoginService {
             List<String> list = new ArrayList<>();
             for (UserRole role : select) {
                 Role role1 = new Role();
-                role1.setId(role.getRole_id());
+                role1.setId(role.getRoleId());
                 Role role2 = roleMapper.selectOne(role1);
                 list.add(role2.getRoleName());
             }

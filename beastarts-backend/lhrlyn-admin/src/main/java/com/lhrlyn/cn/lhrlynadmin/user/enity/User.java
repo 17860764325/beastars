@@ -22,6 +22,12 @@ public class User implements Serializable {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "about")
+    private String about;
+    @Column(name = "user_head_img")
+    private String userHeadImg;
+    @Column(name = "backageground_img")
+    private String backagegroundImg;
     @Column(name = "is_void")
     private String isVoid;
 
