@@ -36,6 +36,18 @@ public class loginController extends Controller {
     }
 
     /**
+     * @param: user regist
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.ResultData
+     * @author lhr
+     * @date: 2022/8/16 09:56
+     */
+    @PostMapping("/user/regist")
+    public ResultData regist(@RequestBody UserDto user) {
+        return loginServiceImpl.regist(user);
+    }
+
+
+    /**
      *  获取用户信息，包括权限和一些基本信息
      * @author lhr
      * @date  2022/1/17 9:07 下午

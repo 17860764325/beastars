@@ -40,7 +40,6 @@ module.exports = {
       '/api': {
         target: `http://localhost:8081/`,
         ws: true,
-        changeOrigin: true, // 允许跨域
         pathRewrite: {
           '^/api': '' // 请求的时候是用这个api就可以
         }

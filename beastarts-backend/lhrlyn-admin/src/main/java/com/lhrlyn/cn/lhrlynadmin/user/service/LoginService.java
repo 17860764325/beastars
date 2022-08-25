@@ -8,4 +8,6 @@ public interface LoginService {
 
     ResultData checkUser(UserDto user);
     ResultData getUserInfo(String token);
+
+    ResultData regist(UserDto user);
 }

@@ -23,6 +23,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.lhrlyn.cn.lhrlynadmin.user.util.ReturnCode.USER_IS_HASED;
+
 @Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -102,5 +104,32 @@ public class LoginServiceImpl implements LoginService {
         } else {
             return ResultData.fail(ReturnCode.RC401.getCode(), ReturnCode.RC401.getMessage());
         }
+    }
+
+    /**
+     * @description: regist
+     * @param: user
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.ResultData
+     * @author lhr
+     * @date: 2022/8/16 10:13
+     */
+    @Override
+    public ResultData regist(UserDto user) {
+        User userSelect = new User();
+        userSelect.setUsername(user.getUsername());
+        List<User> userList = userMapper.select(userSelect);
+        if (userList.size() > 0){
+            return ResultData.fail(ReturnCode.USER_IS_HASED.getCode(),ReturnCode.USER_IS_HASED.getMessage());
+        }
+        User user1 = BeanCopyUtils.beanCopy(user, User.class);
+        user1.setIsVoid("1");
+        user1.setUserHeadImg("1.png");
+        user1.setBackagegroundImg("12.jpg");
+        int insert = userMapper.insert(user1);
+        if (insert > 0 ){
+            return ResultData.success("");
+        }
+        return ResultData.fail(ReturnCode.RC999.getCode(),ReturnCode.RC999.getMessage());
+
     }
 }

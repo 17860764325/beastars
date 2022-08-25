@@ -430,7 +430,8 @@ export default {
       if (item.type === 'upload' || item.type === 'textarea' || item.type === 'passProgress') {
         return this.labelPosition === 'top' ? { padding: '0 10px', marginBottom: '10px' } : {}
       } else {
-        const topStyle = { height: '56px', padding: '0 10px', marginBottom: '50px' }
+        // 每个form表单上面的label
+        const topStyle = { height: '41px', padding: '0 10px', marginBottom: '50px' }
         const rightStyle = { height: '28px' }
         return this.labelPosition === 'top' ? topStyle : rightStyle
       }

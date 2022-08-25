@@ -7,6 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 export const constantRoutes = [
+
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -61,11 +62,17 @@ export const constantRoutes = [
         path: 'dict',
         name: 'dict',
         component: () => import('@/views/system/dict/index'),
-        meta: { title: '字典', icon: 'table' }
+        meta: { title: '字典📚', icon: 'table' }
       },
       {
         path: 'user',
         name: 'user',
+        component: () => import('@/views/system/user/master'),
+        meta: { title: '个人中心🫠', icon: 'user' }
+      },
+      {
+        path: 'userManagement',
+        name: 'userManagement',
         component: () => import('@/views/system/user/index'),
         meta: { title: 'master', icon: 'user' }
       }
@@ -94,6 +101,13 @@ export const constantRoutes = [
         component: () => import('@/views/workBench/study/index'),
         meta: { title: '成人高考资料📝', icon: 'dashboard' }
       }
+      // 考研，自媒体、模块
+      // {
+      //   path: 'study',
+      //   name: 'study',
+      //   component: () => import('@/views/workBench/study/index'),
+      //   meta: { title: '成人高考资料📝', icon: 'dashboard' }
+      // }
     ]
   },
   {
