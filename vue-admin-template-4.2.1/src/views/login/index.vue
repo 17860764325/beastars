@@ -135,7 +135,6 @@ export default {
           this.loading = true
           console.log(this.redirect)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('12312312312')
             this.$store.dispatch('permission/generateRoutes').then(() => {
               // 添加到路由表中
               console.log(this.$router)
