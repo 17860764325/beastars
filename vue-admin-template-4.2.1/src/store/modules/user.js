@@ -1,7 +1,8 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
 import { getAllDicts } from '@/api/dict/api'
+import store from '@/store'
 
 const state = {
   token: getToken(),
@@ -62,7 +63,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       // 存放token
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ username: username.trim(), password: password }).then(async response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
