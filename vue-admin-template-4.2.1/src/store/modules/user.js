@@ -23,7 +23,7 @@ const mutations = {
   // 数据字典
   SET_DICTS: (state, dicts) => {
     state.dicts = dicts
-  },
+  }
   // 添加
   //   addMenu(state, router) {
   //     // 查看是否

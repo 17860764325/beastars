@@ -365,6 +365,7 @@
 </template>
 
 <script>
+import { getAllDicts } from '@/api/dict/api'
 export default {
   name: 'SvForm',
   props: {
@@ -391,6 +392,7 @@ export default {
   },
   data() {
     return {
+      dicts: undefined,
       // 表单布局，默认上下布局，如果想修改为左右只需要把labelPosition改为right，开发根据labelWidth调整每个表单的宽度
       labelPosition: 'top',
       options: {}
@@ -417,7 +419,9 @@ export default {
       immediate: true
     }
   },
-  created() {
+  async created() {
+    const res = await getAllDicts()
+    this.dicts = res.data
     this.setOptions()
   },
   methods: {
@@ -478,7 +482,7 @@ export default {
     // 下拉框选项，数据字典获取，或者直接通过feildList传入
     getOptions(item) {
       if (item.dict) {
-        return this.$store.getters.dicts[item.dict]
+        return this.dicts[item.dict]
       } else {
         return item.options
       }

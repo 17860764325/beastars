@@ -16,11 +16,11 @@
       @row-click="handleRowClick"
     >
       <!-- 复选框（可以选择多个） -->
-      <el-table-column v-if="selection" key="selection" align="center" type="selection" width="55" fixed="left" />
+      <el-table-column v-if="selection" key="selection" align="center" type="selection" width="55" fixed="left"/>
       <!-- 单选框（只能选择单个） -->
       <el-table-column v-if="singleSelect" key="singleSelect" align="center" width="55" fixed="left">
         <template #default="scope">
-          <el-radio v-model="singleSelectValue" :label="scope.row[pk]" @change="singleSelectionChange(scope.row)" />
+          <el-radio v-model="singleSelectValue" :label="scope.row[pk]" @change="singleSelectionChange(scope.row)"/>
         </template>
       </el-table-column>
       <!-- 序号 -->
@@ -52,11 +52,11 @@
         <template #default="scope">
           <!-- slot自定义列 -->
           <template v-if="item.type === 'slot'">
-            <slot :name="`col-${item.prop}`" :row="scope.row" />
+            <slot :name="`col-${item.prop}`" :row="scope.row"/>
           </template>
           <!-- 日期 -->
           <template v-else-if="item.type === 'date'">
-            <span v-if="scope.row[item.prop]">{{ formatter(scope.row[item.prop],'yyyy-MM-dd hh:mm:ss') }}</span>
+            <span v-if="scope.row[item.prop]">{{ formatter(scope.row[item.prop], 'yyyy-MM-dd hh:mm:ss') }}</span>
           </template>
           <!-- 链接 -->
           <template v-else-if="item.type === 'link'">
@@ -77,13 +77,12 @@
             v-else-if="item.type === 'file' && scope.row[item.prop]"
             v-model="scope.row[item.prop]"
             :storage-type="item.storageType ? item.storageType : 'minio'"
-            :biz-dir="item.bizDir"
             button-style="icon"
             :disabled="true"
             :multiple="true"
           />
           <!-- 其他 -->
-          <span v-else>{{ dictFilter(scope.row[item.prop],dicts[item.dictType]) }}</span>
+          <span v-else>{{ dictFilter(scope.row[item.prop], dicts[item.dictType]) }}</span>
         </template>
         <!-- 嵌套表格 -->
         <template v-if="item.children">
@@ -100,7 +99,7 @@
             :fixed="childItem.fixed"
           >
             <template #default="scope">
-              <span>{{ dictFilter(scope.row[childItem.prop],dicts[childItem.dictType]) }}</span>
+              <span>{{ dictFilter(scope.row[childItem.prop], dicts[childItem.dictType]) }}</span>
             </template>
           </el-table-column>
         </template>
@@ -167,7 +166,8 @@
 <script>
 import _ from 'lodash'
 import listHeightMixin from '@/mixins/listHeightMixin'
-import { getColumnSetting, saveColumnSetting } from '@/components/SvColumnSelect/api'
+import { getAllDicts } from '@/api/dict/api'
+
 export default {
   name: 'SvTable',
   mixins: [listHeightMixin],
@@ -288,6 +288,7 @@ export default {
   },
   data() {
     return {
+      dicts: undefined,
       // 单选行对应的value
       singleSelectValue: undefined,
       // 列表信息
@@ -309,9 +310,7 @@ export default {
   },
   computed: {
     // 数据字典
-    dicts() {
-      return this.$store.getters.dicts
-    },
+
     // 列表样式
     getTableStyle() {
       return { width: this.tabelWidth }
@@ -346,7 +345,9 @@ export default {
     this.$refs.table.doLayout()
   },
   // 初始化列设置
-  created() {
+  async created() {
+    const res = await getAllDicts()
+    this.dicts = res.data
     this.initColumns()
   },
   methods: {
@@ -361,9 +362,9 @@ export default {
       if (!this.module) {
         this.newFieldList = this.geneNewFieldList()
       } else {
-        const response = await getColumnSetting(this.module)
+        // const response = await getColumnSetting(this.module)
         this.newFieldList =
-          response && response.length ? this.geneNewFieldListForModule(JSON.parse(response)) : this.geneNewFieldList()
+          this.geneNewFieldList()
       }
     },
     // 根据前台定义生成列设置，过滤掉hidden隐藏的列，并且把显示的列设置show为true
@@ -441,7 +442,7 @@ export default {
           }
         }
       })
-      saveColumnSetting({ module: this.module, columns: JSON.stringify(this.newFieldList) })
+      // saveColumnSetting({ module: this.module, columns: JSON.stringify(this.newFieldList) })
       this.$refs.table.doLayout()
     },
     // 重置列设置
@@ -453,7 +454,7 @@ export default {
           return item
         })
       this.newFieldList = _.cloneDeep(newFieldList)
-      await saveColumnSetting({ module: this.module, columns: JSON.stringify(newFieldList) })
+      // await saveColumnSetting({ module: this.module, columns: JSON.stringify(newFieldList) })
     },
     // 打开列设置弹出框
     columnsSettings() {
@@ -736,10 +737,12 @@ export default {
     padding: 15px 0;
   }
 }
+
 ::v-deep.el-table--mini td,
 .el-table--mini th {
   padding: 2px 0 !important;
 }
+
 ::v-deep.el-radio .el-radio__label {
   display: none;
 }

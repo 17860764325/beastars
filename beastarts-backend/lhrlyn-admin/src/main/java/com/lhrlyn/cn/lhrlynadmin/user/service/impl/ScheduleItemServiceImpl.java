@@ -4,6 +4,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleItemDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleItem;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.ScheduleItemMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.ScheduleItemService;
+import com.lhrlyn.cn.lhrlynadmin.user.util.IdWorker;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,14 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
 
         int insert ;
         if(selectResult== null){
-             insert = scheduleItemMapper.insert(scheduleItem);
+            ScheduleItem scheduleItem1 = new ScheduleItem();
+            IdWorker idWorker = new IdWorker(1,1);
+            long id = idWorker.nextId();
+            scheduleItem1.setId(id);
+            scheduleItem1.setHeaderId(scheduleItem.getHeaderId());
+            scheduleItem1.setDataAbout(scheduleItem.getDataAbout());
+            scheduleItem1.setCreateTime(new Date());
+             insert = scheduleItemMapper.insert(scheduleItem1);
         }else {
             selectResult.setHeaderId(scheduleItem.getHeaderId());
             selectResult.setDataAbout(scheduleItem.getDataAbout());

@@ -1,10 +1,11 @@
-import router,{error404} from './router'
+import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { getInfo } from '@/api/user'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -24,6 +25,7 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
+    // 如果有token那么就要判断一下token是否过期？过期的话删除cookie的token，并且重定向到登陆页面。
     // 如果你登录了，就会判断你的目标路径是否是login是的话，那就路由到缺省的路由上去，也就是主页
     if (to.path === '/login') {
       // if is logged in, redirect to the home page

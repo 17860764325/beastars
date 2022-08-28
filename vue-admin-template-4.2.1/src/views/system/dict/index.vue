@@ -30,7 +30,6 @@
       :query="listQuery"
       :handle="tableInfo.handle"
       :table-index="true"
-      :export-file-name="exportFileName"
       @selection-change="selectionChange"
       @handle-click="handleClick"
     />

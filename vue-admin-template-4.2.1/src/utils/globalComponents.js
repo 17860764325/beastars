@@ -54,7 +54,7 @@ const plugins = {
     // 原SvButton, 点击按钮会触发确认提示框, <sv-button></sv-button>
     Vue.component('SvButton', SvButton)
     // 原SvButton, 点击按钮会触发确认提示框, <sv-column-select></sv-column-select>
-    Vue.component('SvColumnSelect', SvColumnSelect)
+    // Vue.component('SvColumnSelect', SvColumnSelect)
     Vue.component('SvPdfPreview', SvPdfPreview)
     Vue.component('SvWorkflow', SvWorkflow)
     Vue.component('SvPrint', SvPrint)

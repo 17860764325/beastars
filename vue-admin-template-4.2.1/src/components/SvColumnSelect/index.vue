@@ -19,7 +19,7 @@
           <i class="el-icon-refresh" title="重置列设置"></i>
         </el-button>
       </div>
-      <div slot="right-footer" style="visibility：hidden;"></div>
+      <div slot="right-footer" style="visibility：hidden"></div>
     </el-transfer>
   </el-dialog>
 </template>
