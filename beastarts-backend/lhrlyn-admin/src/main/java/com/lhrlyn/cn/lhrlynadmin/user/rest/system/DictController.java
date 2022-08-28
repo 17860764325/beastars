@@ -1,10 +1,11 @@
-package com.lhrlyn.cn.lhrlynadmin.user.rest;
+package com.lhrlyn.cn.lhrlynadmin.user.rest.system;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.Dict;
+import com.lhrlyn.cn.lhrlynadmin.user.rest.Controller;
 import com.lhrlyn.cn.lhrlynadmin.user.service.DictService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;

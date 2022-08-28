@@ -12,15 +12,15 @@
     <img class="backageImage" src="../../assets/navbar_image/9.png" @click="imageClick('1')">
     <img class="backageImage" src="../../assets/navbar_image/10.png" @click="imageClick('1')">
     <img class="backageImage" src="../../assets/navbar_image/11.png" @click="imageClick('1')">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
 
-    <breadcrumb class="breadcrumb-container" />
+    <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <img  :src="require('../../assets/navbar_image/'+avatar)" class="user-avatar">
+          <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
@@ -44,6 +44,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { getInfo } from '@/api/user'
 
 export default {
   components: {
@@ -52,9 +53,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'sidebar',
-      'avatar'
+      'sidebar'
     ])
+  },
+  data() {
+    return {
+      avatar: undefined
+    }
+  },
+  async created() {
+    const res = await getInfo()
+    this.avatar = res.data.avatar
   },
   methods: {
     toggleSideBar() {
@@ -77,9 +86,9 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
-  .backageImage{
+  .backageImage {
 
     border-radius: 20%;
     border: black solid 1px;
@@ -92,7 +101,7 @@ export default {
     float: left;
     cursor: pointer;
     transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
       background: rgba(0, 0, 0, .025)

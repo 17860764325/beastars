@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.PageMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.Page" id="pageMap">
+        <result property="id" column="id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <!-- 页面编码 -->
+        <result property="pageCode" column="page_code"/>
+        <!-- 页面名称 -->
+        <result property="pageName" column="page_name"/>
+        <!-- 页面图标 -->
+        <result property="icon" column="icon"/>
+        <!-- 路径（简） -->
+        <result property="path" column="path"/>
+        <!-- 名称（简） -->
+        <result property="name" column="name"/>
+        <!-- 父节点 -->
+        <result property="pageParentCode" column="page_parent_code"/>
+        <!-- 路由地址 -->
+        <result property="pagePath" column="page_path"/>
+        <!-- 路由参数 -->
+        <result property="pageQuery" column="page_query"/>
+        <!-- 权限标识 -->
+        <result property="pagePerms" column="page_perms"/>
+        <!-- 页面类型（M目录，C菜单） -->
+        <result property="pageType" column="page_type"/>
+        <!-- 页面状态（0失效，1有效） -->
+        <result property="pageStatus" column="page_status"/>
+    </resultMap>
+
+    <sql id="pageSql">
+        id,create_by,create_time,update_by,update_time,page_code,page_name,icon,path,name,page_parent_code,page_path,page_query,page_perms,page_type,page_status
+    </sql>
+
+    <select id="getMaxPageCode" resultType="java.lang.Integer">
+        SELECT  max(page_code + 0) from page
+    </select>
+
+
+</mapper>

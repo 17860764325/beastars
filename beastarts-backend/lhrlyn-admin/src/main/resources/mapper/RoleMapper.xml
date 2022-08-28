@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.Role" id="roleMap">
+        <!-- id -->
+        <result property="id" column="id"/>
+        <!-- 权限名称 -->
+        <result property="roleName" column="role_name"/>
+        <!-- 权限内容 -->
+        <result property="roleAbout" column="role_about"/>
+        <!-- 是否起作用 -->
+        <result property="isVoid" column="is_void"/>
+    </resultMap>
+
+</mapper>

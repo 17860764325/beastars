@@ -71,6 +71,8 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import register from '@/views/register/index'
+import router, { error404 } from '@/router'
+import { getToken } from '@/utils/auth'
 
 export default {
   name: 'Login',
@@ -103,18 +105,19 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined,
+      redirect: '/',
       registerVisable: false
     }
   },
-  watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
-  },
+  // watch: {
+  //   $route: {
+  //     handler: function(route) {
+  //       // 放入上次关闭窗口时候的页面
+  //       this.redirect = route.query && route.query.redirect
+  //     },
+  //     immediate: true
+  //   }
+  // },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
@@ -132,9 +135,14 @@ export default {
           this.loading = true
           console.log(this.redirect)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('asdf')
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
+            console.log('12312312312')
+            this.$store.dispatch('permission/generateRoutes').then(() => {
+              // 添加到路由表中
+              console.log(this.$router)
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
+            })
+
           }).catch(() => {
             this.loading = false
           })
@@ -161,7 +169,7 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-.page{
+.page {
   width: 100%;
   height: 100%;
 }

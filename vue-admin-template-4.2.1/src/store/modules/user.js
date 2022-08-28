@@ -23,7 +23,37 @@ const mutations = {
   // 数据字典
   SET_DICTS: (state, dicts) => {
     state.dicts = dicts
-  }
+  },
+  // 添加
+  //   addMenu(state, router) {
+  //     // 查看是否
+  //     if (!Cookie.get('menu')) {
+  //       return
+  //     }
+  //     let menu = JSON.parse(Cookie.get('menu'))
+  //     state.routerList = menu
+  //     let currentMenu = [
+  //       {
+  //         path: '/',
+  //         component: () => import(`@/views/Mine`),
+  //         children: []
+  //       }
+  //     ]
+  //     menu.forEach(item => {
+  //       if (item.children) {
+  //         item.children = item.children.map(item => {
+  //           item.component = () => import(`@/views/${item.url}`)
+  //           return item
+  //         })
+  //         currentMenu[0].children.push(...item.children)
+  //       } else {
+  //         item.component = () => import(`@/views/${item.url}`)
+  //         currentMenu[0].children.push(item)
+  //       }
+  //     })
+  //     router.addRoutes(currentMenu)
+  //   },
+  // }
 }
 
 const actions = {
@@ -31,6 +61,7 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
+      // 存放token
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)

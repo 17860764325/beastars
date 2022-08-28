@@ -1,14 +1,14 @@
 import Layout from '@/layout'
 export const asyncRoutes = [
   {
-    path: 'external-link',
+    path: '/',
     component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        // 重点：role
-        meta: { title: 'External Link', icon: 'link', role: ['admin'] }
-      }
-    ]
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'HOME☘️', icon: 'dashboard' }
+    }]
   }
 ]

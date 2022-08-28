@@ -97,7 +97,7 @@ public class LoginServiceImpl implements LoginService {
             }
             Userinfo userinfo = new Userinfo();
             userinfo.setRoles(list);
-            userinfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+            userinfo.setAvatar(userDto1.getUserHeadImg());
             userinfo.setName("Super Admin");
             userinfo.setIntroduction("I am a super administrator");
             return ResultData.success(userinfo);

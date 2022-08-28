@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.PageRoleMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.PageRole" id="pageRoleMap">
+        <result property="id" column="id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <!-- 页面编码 -->
+        <result property="pageCode" column="page_code"/>
+        <!-- 权限编码 -->
+        <result property="roleCode" column="role_code"/>
+    </resultMap>
+
+</mapper>

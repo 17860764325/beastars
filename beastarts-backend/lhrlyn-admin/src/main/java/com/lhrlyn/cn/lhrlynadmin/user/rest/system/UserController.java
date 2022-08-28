@@ -1,7 +1,9 @@
-package com.lhrlyn.cn.lhrlynadmin.user.rest;
+package com.lhrlyn.cn.lhrlynadmin.user.rest.system;
 
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
+import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.service.impl.UserServiceImpl;
+import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.getUserInfo.GetUserInfo;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,8 @@ public class UserController {
     public ObjectRestResponse<UserDto> gteUserInfo(HttpServletRequest request){
         String token = request.getHeader("token");
         GetUserInfo getUserInfo = new GetUserInfo();
-        UserDto userByToken = getUserInfo.getUserByToken(token);
-        return ObjectRestResponse.success(userByToken);
+        User userByToken = getUserInfo.getUserByToken(token);
+        UserDto userDto = BeanCopyUtils.beanCopy(userByToken, UserDto.class);
+        return ObjectRestResponse.success(userDto);
     }
 }
