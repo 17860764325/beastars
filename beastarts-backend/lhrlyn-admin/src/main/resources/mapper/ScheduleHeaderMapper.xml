@@ -9,6 +9,8 @@
         <result property="name" column="name"/>
         <result property="date" column="date"/>
         <result property="isOk" column="is_ok"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
@@ -21,6 +23,10 @@
             <if test="date != null and date != ''">
                 and sh.date > #{date}
             </if>
+            <if test="userId != null and userId != ''">
+                and sh.user_id = #{userId}
+            </if>
+
         </where>
         order by sh.create_time desc
     </select>

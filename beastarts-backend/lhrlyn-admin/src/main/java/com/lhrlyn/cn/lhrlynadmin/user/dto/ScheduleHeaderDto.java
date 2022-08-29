@@ -19,6 +19,10 @@ public class ScheduleHeaderDto {
 
     private String isOk;
 
+    private String UserId;
+
+    private String userName;
+
     private Date createTime;
 
     private Date updateTime;

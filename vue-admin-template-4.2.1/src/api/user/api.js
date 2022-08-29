@@ -8,3 +8,11 @@ export function getAllUsers() {
   })
 }
 
+// 获取当前登陆用户的id
+export function getUserId() {
+  return request({
+    url: '/user/sth/getUserInfoByToken',
+    method: 'get'
+  })
+}
+

@@ -5,15 +5,20 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
+import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleHeader;
+import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.service.ScheduleHeaderService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.ResultData;
+import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.TableResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +26,7 @@ import java.util.Map;
  * 日程
  * @author lhr
  * @date  2022/5/5 09:20
- * @param
+ * @z
  * @return:
  */
 @RestController
@@ -31,6 +36,9 @@ public class ScheduleController extends Controller {
     @Autowired
     private ScheduleHeaderService scheduleHeaderService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /**
      *  //TODO
      * @author lhr
@@ -39,17 +47,23 @@ public class ScheduleController extends Controller {
      * @return: com.lhrlyn.cn.lhrlynadmin.user.util.ResultData
      */
     @GetMapping ("/page")
-    public TableResultResponse<List<ScheduleHeaderDto>> page(@RequestParam Map<String, Object> map) {
+    public TableResultResponse<List<ScheduleHeaderDto>> page(@RequestParam Map<String, Object> map, HttpServletRequest request) {
         PageQuery query = new PageQuery(map,map);
         Page<ScheduleHeaderDto> result = PageHelper.startPage(query.getPage(), query.getLimit());
-        List<ScheduleHeaderDto> list = scheduleHeaderService.page(query);
+        String token = request.getHeader("token");
+        Object userDto = redisTemplate.opsForValue().get(token);
+        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
+        List<ScheduleHeaderDto> list = scheduleHeaderService.page(query,userDto1);
         TableResultResponse tableResultResponse = new TableResultResponse<>(result.getTotal(),list);
         return tableResultResponse;
     }
 
     @PostMapping("/add")
-    public ObjectRestResponse add(@RequestBody ScheduleHeaderDto scheduleHeaderDto){
-        return scheduleHeaderService.add(scheduleHeaderDto);
+    public ObjectRestResponse add(@RequestBody ScheduleHeaderDto scheduleHeaderDto,HttpServletRequest request){
+        String token = request.getHeader("token");
+        Object userDto = redisTemplate.opsForValue().get(token);
+        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
+        return scheduleHeaderService.add(scheduleHeaderDto,userDto1);
     }
 
     @GetMapping("/delete/{ids}")
@@ -70,8 +84,14 @@ public class ScheduleController extends Controller {
 
 
     @GetMapping("/edit/{id}")
-    public ObjectRestResponse<ScheduleHeaderDto> edit(@PathVariable("id") String id) {
-        ScheduleHeaderDto scheduleHeaderDto = scheduleHeaderService.edit(id);
+    public ObjectRestResponse<ScheduleHeaderDto> edit(@PathVariable("id") String id, HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Object userDto = redisTemplate.opsForValue().get(token);
+        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
+        ScheduleHeaderDto scheduleHeaderDto = scheduleHeaderService.edit(id,userDto1);
+        if (scheduleHeaderDto == null){
+            return ObjectRestResponse.failed();
+        }
         return ObjectRestResponse.success(scheduleHeaderDto);
     }
 

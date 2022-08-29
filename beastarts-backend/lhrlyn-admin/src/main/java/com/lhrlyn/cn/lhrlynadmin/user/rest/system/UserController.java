@@ -7,6 +7,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.getUserInfo.GetUserInfo;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+    @Autowired
+    private RedisTemplate redisTemplate;
     /**
      * @description: 返回用户的数据
      * @author lhr
@@ -47,9 +50,7 @@ public class UserController {
     @GetMapping("/getUserInfoByToken")
     public ObjectRestResponse<UserDto> gteUserInfo(HttpServletRequest request){
         String token = request.getHeader("token");
-        GetUserInfo getUserInfo = new GetUserInfo();
-        User userByToken = getUserInfo.getUserByToken(token);
-        UserDto userDto = BeanCopyUtils.beanCopy(userByToken, UserDto.class);
+        Object userDto = redisTemplate.opsForValue().get(token);
         return ObjectRestResponse.success(userDto);
     }
 }

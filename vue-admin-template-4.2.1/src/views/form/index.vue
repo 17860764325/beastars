@@ -12,37 +12,43 @@
         icon="el-icon-search"
         class="filter-item"
         @click="getList()"
-      >Query</el-button>
+      >Query
+      </el-button>
       <el-button
         type="primary"
         icon="el-icon-refresh"
         class="filter-item"
         @click="reset()"
-      >Reset</el-button>
+      >Reset
+      </el-button>
       <el-button
         type="primary"
         icon="el-icon-plus"
         class="filter-item"
         @click="add()"
-      >Add</el-button>
+      >Add
+      </el-button>
       <el-button
         type="danger"
         icon="el-icon-delete"
         class="filter-item"
         @click="deletes()"
-      >Delete</el-button>
+      >Delete
+      </el-button>
       <el-button
         type="success"
         icon="el-icon-check"
         class="filter-item"
         @click="ok()"
-      >OK</el-button>
+      >OK
+      </el-button>
       <el-button
         type="danger"
         icon="el-icon-close"
         class="filter-item"
         @click="no()"
-      >NO</el-button>
+      >NO
+      </el-button>
     </div>
     <hr-table
       ref="table"
@@ -64,7 +70,7 @@
       :title="'新增故事！'"
       :visible.sync="addVisible"
     >
-      <story-add @close="addDilogClose" />
+      <story-add @close="addDilogClose"/>
     </el-dialog>
     <el-dialog
       v-if="editVisible"
@@ -73,7 +79,7 @@
       :title="'修改故事！'"
       :visible.sync="editVisible"
     >
-      <story-edit :id="id" @close="editDilogClose" />
+      <story-edit :id="id" @close="editDilogClose"/>
     </el-dialog>
     <el-dialog
       v-if="deleteVisible"
@@ -93,6 +99,8 @@
 
 <script>
 import { page, deletes, statusOk, statusNo } from '@/api/ScheduleHeader/api.js'
+import { getUserId } from '@/api/user/api.js'
+
 export default {
   name: 'Documentation',
   components: {
@@ -104,6 +112,8 @@ export default {
   data() {
     return {
       page,
+      user: {},
+      boos: false,
       addVisible: false,
       editVisible: false,
       deleteVisible: false,
@@ -133,6 +143,12 @@ export default {
             showOverflowTooltip: true,
             label: '☑️是否完成了？',
             dictType: 'is_ok',
+            minWidth: 100
+          },
+          {
+            prop: 'userName',
+            showOverflowTooltip: true,
+            label: '用户',
             minWidth: 100
           }
         ],
@@ -167,7 +183,9 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
+    const res = await getUserId()
+    this.user = res.data
     this.getList()
   },
   methods: {
