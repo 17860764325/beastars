@@ -23,6 +23,15 @@ import QuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.bubble.css'
 import 'quill/dist/quill.snow.css'
+import Vant, { Lazyload } from 'vant'
+import 'vant/lib/index.css'
+
+Vue.use(Vant)
+Vue.use(Lazyload)
+
+import Vuelazyload from 'vue-lazyload'
+
+Vue.use(Vuelazyload, {})
 Vue.use(QuillEditor)
 
 /**

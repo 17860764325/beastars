@@ -41,8 +41,8 @@ public class loginController extends Controller {
      * @return: java.lang.String
      */
     @PostMapping("/user/login")
-    public ResultData login(@RequestBody UserDto user) {
-        return loginServiceImpl.checkUser(user);
+    public ResultData login(@RequestBody UserDto user,HttpServletRequest request) {
+        return loginServiceImpl.checkUser(user,request);
     }
 
     /**

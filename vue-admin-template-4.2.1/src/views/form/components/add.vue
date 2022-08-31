@@ -11,7 +11,7 @@
       <el-col>
         <img
           class="img"
-          src="../../../assets/images/909641.png"
+          v-lazy="require('../../../assets/images/909641.png')"
           alt="logo"
         >
       </el-col>

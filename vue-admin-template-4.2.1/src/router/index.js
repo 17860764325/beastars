@@ -58,6 +58,11 @@ export const asyncRouters = [{
     name: 'page',
     component: () => import('@/views/system/menu/index'),
     meta: { title: '页面管理', icon: 'eye-open' }
+  }, {
+    path: 'loginIpLog',
+    name: 'loginIpLog',
+    component: () => import('@/views/system/loginIpLog/index'),
+    meta: { title: '登陆系统记录', icon: 'eye-open' }
   }]
 }, {
   path: '/workBench', component: Layout, meta: { title: '工具台🛠', icon: 'nested' }, children: [{

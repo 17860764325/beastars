@@ -1,26 +1,29 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.UserRole;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Userinfo;
+import com.lhrlyn.cn.lhrlynadmin.user.enity.*;
+import com.lhrlyn.cn.lhrlynadmin.user.mapper.LoginIpLogMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.LoginService;
+import com.lhrlyn.cn.lhrlynadmin.user.util.IdWorker;
 import com.lhrlyn.cn.lhrlynadmin.user.util.ResultData;
 import com.lhrlyn.cn.lhrlynadmin.user.util.ReturnCode;
+import com.lhrlyn.cn.lhrlynadmin.user.util.addressUtil.AddressUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
+import com.lhrlyn.cn.lhrlynadmin.user.util.getLoginIp.IPUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.util.tokenJWT.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Role;
-
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.lhrlyn.cn.lhrlynadmin.user.util.ReturnCode.USER_IS_HASED;
@@ -37,6 +40,8 @@ public class LoginServiceImpl implements LoginService {
     private UserRoleMapper userRoleMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private LoginIpLogMapper loginIpLogMapper;
 
     /**
      * 校验用户账号密码正确性
@@ -47,7 +52,7 @@ public class LoginServiceImpl implements LoginService {
      * @return:
      */
     @Override
-    public ResultData checkUser(UserDto user) {
+    public ResultData checkUser(UserDto user, HttpServletRequest request) {
         User user2 = BeanCopyUtils.beanCopy(user, User.class);
         // 进行查询
         User user1 = new User();
@@ -62,6 +67,20 @@ public class LoginServiceImpl implements LoginService {
                 String token = JwtUtil.sign(userDto.getUserid().intValue());
                 redisTemplate.opsForValue().set(token, userDto, Duration.ofMinutes(30L));
                 userDto.setToken(token);
+                // 存储ip
+                String ip = IPUtil.getIp(request);
+                LoginIpLog loginIpLog = new LoginIpLog();
+                IdWorker idWorker = new IdWorker(1,1);
+                long l = idWorker.nextId();
+                loginIpLog.setId(l);
+                loginIpLog.setUserId(userDto.getUserid());
+                loginIpLog.setUserIp(ip);
+                loginIpLog.setUserName(userDto.getUsername());
+                loginIpLog.setCreateBy(userDto.getUsername());
+                loginIpLog.setCreateTime(new Date());
+                String address = AddressUtils.getAlibaba(ip);
+                loginIpLog.setAddress(address);
+                loginIpLogMapper.insert(loginIpLog);
                 return ResultData.success(userDto);
 
             }

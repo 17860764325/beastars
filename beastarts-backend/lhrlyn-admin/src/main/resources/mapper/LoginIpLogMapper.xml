@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.LoginIpLogMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.LoginIpLog" id="loginIpLogMap">
+        <result property="id" column="id"/>
+        <!-- 登陆用户 -->
+        <result property="userId" column="user_id"/>
+        <!-- 用户名称 -->
+        <result property="userName" column="user_name"/>
+        <!-- 登陆ip -->
+        <result property="userIp" column="user_ip"/>
+        <result property="address" column="address"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="page" resultMap="loginIpLogMap" parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
+        select lg.* from login_ip_log lg
+        <where>
+            <if test="userName != null and userName != ''">
+                and lg.user_name like '%${userName}%'
+            </if>
+        </where>
+        order by lg.create_time desc
+    </select>
+
+</mapper>

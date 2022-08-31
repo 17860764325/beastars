@@ -53,4 +53,6 @@ public class UserController {
         Object userDto = redisTemplate.opsForValue().get(token);
         return ObjectRestResponse.success(userDto);
     }
+
+
 }

@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <!-- <div class="dashboard-text">Dear {{ name }} master, I'm glad to serve you! </div> -->
     <img
-      :src="require('../../assets/weekWallPaper/'+emptyImage)"
+      v-lazy="require('../../assets/weekWallPaper/'+emptyImage)"
       class="emptyImage"
       alt="logoHome"
     >

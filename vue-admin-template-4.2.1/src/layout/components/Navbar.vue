@@ -1,17 +1,17 @@
 <template>
   <div class="navbar">
-    <img class="backageImage" src="../../assets/navbar_image/猫咪.png">
-    <img class="backageImage" src="../../assets/navbar_image/2.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/3.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/1.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/4.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/5.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/6.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/7.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/8.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/9.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/10.png" @click="imageClick('1')">
-    <img class="backageImage" src="../../assets/navbar_image/11.png" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/猫咪.png')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/2.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/3.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/1.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/4.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/5.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/6.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/7.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/8.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/9.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/10.png')" @click="imageClick('1')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/11.png')" @click="imageClick('1')">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
 
     <breadcrumb class="breadcrumb-container"/>
@@ -19,7 +19,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img  :src="require('../../assets/navbar_image/'+ (avatar? avatar:'1.png'))" class="user-avatar">
+          <img  v-lazy="require('../../assets/navbar_image/'+ (avatar? avatar:'1.png'))" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
