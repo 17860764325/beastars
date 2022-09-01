@@ -6,6 +6,7 @@
       class="emptyImage"
       alt="logoHome"
     >
+<!--    也可以吧背景图片片去掉，然后换成主页的内容具体内容还没想好-->
   </div>
 </template>
 

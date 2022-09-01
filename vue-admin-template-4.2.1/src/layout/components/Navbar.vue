@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/猫咪.png')">
+    <img class="backageImage" v-lazy="require('../../assets/navbar_image/12.png')">
     <img class="backageImage" v-lazy="require('../../assets/navbar_image/2.png')" @click="imageClick('1')">
     <img class="backageImage" v-lazy="require('../../assets/navbar_image/3.png')" @click="imageClick('1')">
     <img class="backageImage" v-lazy="require('../../assets/navbar_image/1.png')" @click="imageClick('1')">
@@ -19,7 +19,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img  v-lazy="require('../../assets/navbar_image/'+ (avatar? avatar:'1.png'))" class="user-avatar">
+          <img  v-lazy="require('../../assets/'+ (avatar? avatar:'1.png'))" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -44,7 +44,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import { getInfo } from '@/api/user'
+import { getUserInfo } from '@/api/user/api.js'
 
 export default {
   components: {
@@ -62,8 +62,9 @@ export default {
     }
   },
   async created() {
-    const res = await getInfo()
-    this.avatar = res.data.avatar
+    const res = await getUserInfo()
+    console.log(res)
+    this.avatar = res.data.userHeadImg
   },
   methods: {
     toggleSideBar() {
@@ -148,8 +149,7 @@ export default {
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
+          width: 60px;
           border-radius: 10px;
         }
 

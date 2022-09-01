@@ -7,11 +7,11 @@
           <div class="headImgDiv">
             <img
               class="headImg"
-              :src="require('../../../../assets/navbar_image/'+item.userHeadImg)"
+              :src="require('../../../../assets/'+item.userHeadImg)"
             />
           </div>
           <!--  背景图-->
-          <img class="img" :src="require('../../../../assets/weekWallPaper/'+ item.backagegroundImg)"/>
+          <img class="img" :src="require('../../../../assets/'+ item.backagegroundImg)"/>
         </el-row>
         <el-row class="cardMessage">
           <el-tag>User Name:

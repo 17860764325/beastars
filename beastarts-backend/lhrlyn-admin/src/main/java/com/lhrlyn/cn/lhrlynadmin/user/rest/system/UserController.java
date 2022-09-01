@@ -9,6 +9,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ import java.util.List;
  * @date 2022/8/12 16:03
  */
 @RestController
-@RequestMapping("/user/sth")
+@RequestMapping("/system/user/sth")
 public class UserController {
 
     @Autowired
@@ -51,7 +52,39 @@ public class UserController {
     public ObjectRestResponse<UserDto> gteUserInfo(HttpServletRequest request){
         String token = request.getHeader("token");
         Object userDto = redisTemplate.opsForValue().get(token);
-        return ObjectRestResponse.success(userDto);
+        UserDto userDto1 = BeanCopyUtils.beanCopy(userDto, UserDto.class);
+        UserDto userDto2 = userServiceImpl.getUserInfo(userDto1);
+        return ObjectRestResponse.success(userDto2);
+    }
+
+    /**
+     * @description: 存储user的头像
+     * @param: userHeadImg
+     * @return: void
+     * @author lhr
+     * @date: 2022/8/31 23:45
+     */
+    @GetMapping("/setUserHeadImg/navbar_image/{userHeadImg}")
+    public ObjectRestResponse setUserHeadImg (@PathVariable("userHeadImg") String userHeadImg,HttpServletRequest request){
+        String token = request.getHeader("token");
+        Object userDto = redisTemplate.opsForValue().get(token);
+        User user = BeanCopyUtils.beanCopy(userDto, User.class);
+        return userServiceImpl.saveUserHeadImg(userHeadImg,user);
+    }
+
+    /**
+     * @description: 存储user的背景图片
+     * @param: userHeadImg
+     * @return: void
+     * @author lhr
+     * @date: 2022/8/31 23:45
+     */
+    @GetMapping("/setUserBackgroundImg/weekWallPaper/{userBackgroundImg}")
+    public ObjectRestResponse setUserBackgroundImg (@PathVariable("userBackgroundImg") String userBackgroundImg, HttpServletRequest request){
+        String token = request.getHeader("token");
+        Object userDto = redisTemplate.opsForValue().get(token);
+        User user = BeanCopyUtils.beanCopy(userDto, User.class);
+       return userServiceImpl.saveUserBackageImg(userBackgroundImg,user);
     }
 
 

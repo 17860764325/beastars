@@ -54,4 +54,32 @@ public class UserServiceImpl implements UserService {
         }
         return  objectRestResponse.data(userDtos);
     }
+
+    @Override
+    public ObjectRestResponse saveUserHeadImg(String userHeadImg, User user) {
+        User selectUser = new User();
+        selectUser.setUserid(user.getUserid());
+        User user1 = userMapper.selectOne(selectUser);
+        user1.setUserHeadImg("navbar_image/" + userHeadImg);
+        userMapper.updateByPrimaryKey(user1);
+        return ObjectRestResponse.success();
+    }
+
+    @Override
+    public ObjectRestResponse saveUserBackageImg(String userBackGroundImg, User user) {
+        User selectUser = new User();
+        selectUser.setUserid(user.getUserid());
+        User user1 = userMapper.selectOne(selectUser);
+        user1.setBackagegroundImg("weekWallPaper/" + userBackGroundImg);
+        userMapper.updateByPrimaryKey(user1);
+        return ObjectRestResponse.success();
+    }
+
+    @Override
+    public UserDto getUserInfo(UserDto userDto1) {
+        User user = new User();
+        user.setUserid(userDto1.getUserid());
+        User user1 = userMapper.selectOne(user);
+        return BeanCopyUtils.beanCopy(user1,UserDto.class);
+    }
 }
