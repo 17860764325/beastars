@@ -20,11 +20,26 @@
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
           <h2>基本信息:</h2>
-
-          <el-button @click="openChooseImg('1')">更改背景</el-button>
-          <el-button @click="openChooseImg('2')">更改头像</el-button>
+          <el-button @click="edit()"><i class="el-icon-edit"></i>
+          </el-button>
+          <hr-form
+            ref="hrTable"
+            :formDisabled="(!this.isEdit)"
+            :form-disabled="false"
+            :form.sync="form"
+            :field-list="fieldList"
+          />
+          <div>
+            <el-button class="button" type="primary" >保存</el-button>
+          </div>
         </el-tab-pane>
-        <el-tab-pane label="其他">其他</el-tab-pane>
+        <el-tab-pane label="其他">
+          <h2>头像以及背景</h2>
+          <div>
+            <el-button @click="openChooseImg('1')">更改背景</el-button>
+            <el-button @click="openChooseImg('2')">更改头像</el-button>
+          </div>
+        </el-tab-pane>
         <el-tab-pane label="其他">其他</el-tab-pane>
         <el-tab-pane label="其他">其他</el-tab-pane>
       </el-tabs>
@@ -64,7 +79,49 @@ export default {
         sync: false,
         type: undefined
       },
-      userInfo: undefined
+      userInfo: undefined,
+      isEdit: false,
+      form: [],
+      fieldList: [
+        {
+          type: 'text',
+          label: '昵称',
+          prop: 'name',
+          rules: {
+            required: true
+          }
+        },
+        {
+          type: 'text',
+          label: '账户名称',
+          prop: 'username',
+          rules: { required: true }
+        },
+        {
+          type: 'password',
+          label: '什么时候做？',
+          prop: 'password',
+          rules: { required: true }
+        },
+        {
+          type: 'text',
+          label: '电话',
+          prop: 'phone',
+          rules: { required: true }
+        },
+        {
+          type: 'text',
+          label: '邮箱',
+          prop: 'email',
+          rules: { required: true }
+        },
+        {
+          type: 'text',
+          label: '简介',
+          prop: 'about',
+          rules: { required: true }
+        }
+      ]
     }
   },
   created() {
@@ -72,6 +129,9 @@ export default {
     this.getLsit()
   },
   methods: {
+    edit() {
+      this.isEdit = !this.isEdit
+    },
     openChooseImg(data) {
       if (data === '1') {
         // 选择背景图片
@@ -86,6 +146,7 @@ export default {
     async getLsit() {
       const res = await getUserInfo()
       this.userInfo = res.data
+      this.form = res.data
     },
     closeChangeImg() {
       this.chooseImg.sync = false
@@ -138,5 +199,10 @@ export default {
   background: linear-gradient(white, white) padding-box, repeating-linear-gradient(-45deg, red 0, red 12.5%, transparent 0, transparent 25%, #58a 0, #58a 37.5%, transparent 0, transparent 50%) 0/5em 5em;
   width: 130px;
   height: 100px;
+}
+
+.button {
+  text-align: center;
+  margin: 10px;
 }
 </style>

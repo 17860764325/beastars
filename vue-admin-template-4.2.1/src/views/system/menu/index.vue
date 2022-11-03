@@ -54,7 +54,6 @@
 
 <script>
 import { getPageList, getPageInfoByCode, getMaxPageCode, getRouterListFromMysql } from '@/api/system/page'
-import { constantRoutes } from '@/router'
 
 let id = 1000
 

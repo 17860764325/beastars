@@ -184,12 +184,13 @@ export default {
     }
   },
   async created() {
+    await this.getList()
     const res = await getUserId()
     this.user = res.data
-    this.getList()
   },
   methods: {
     async getList() {
+      console.log(123)
       const res = await page(this.listQuery)
       this.tableInfo.data = res.data.rows
     },

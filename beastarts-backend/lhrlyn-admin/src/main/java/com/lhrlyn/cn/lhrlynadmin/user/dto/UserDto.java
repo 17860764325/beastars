@@ -9,6 +9,7 @@ import java.util.List;
 public class UserDto implements Serializable {
     private Long userid;
     private String username;
+    private String name ;
     private String phone;
     private String email;
     private String password;
