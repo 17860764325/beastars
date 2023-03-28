@@ -128,8 +128,8 @@ public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
         userRole.setUserId(user.getUserid());
         List<UserRole> select = roleMapper.select(userRole);
         for (UserRole role : select) {
-            // 如果权限为总经理不能进行修改
-            if (role.getRoleId() == 2){
+            // 如果权限为user普通用户不能进行修改
+            if (role.getRoleId() == 4){
                 f= true;
             }
 

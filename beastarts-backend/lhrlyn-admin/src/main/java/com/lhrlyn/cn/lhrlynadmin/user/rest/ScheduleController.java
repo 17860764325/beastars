@@ -83,6 +83,14 @@ public class ScheduleController extends Controller {
 
 
 
+    /** 
+     * @description: 修改前的的权限校验 
+     * @param: id
+request 
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse<com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto> 
+     * @author lhr
+     * @date: 2023/3/28 18:54
+     */ 
     @GetMapping("/edit/{id}")
     public ObjectRestResponse<ScheduleHeaderDto> edit(@PathVariable("id") String id, HttpServletRequest request) {
         String token = request.getHeader("token");
@@ -90,7 +98,7 @@ public class ScheduleController extends Controller {
         User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
         ScheduleHeaderDto scheduleHeaderDto = scheduleHeaderService.edit(id,userDto1);
         if (scheduleHeaderDto == null){
-            return ObjectRestResponse.failed();
+            return ObjectRestResponse.failed("您的权限  不够不可以进行修改？ ");
         }
         return ObjectRestResponse.success(scheduleHeaderDto);
     }
