@@ -16,11 +16,28 @@
       @row-click="handleRowClick"
     >
       <!-- 复选框（可以选择多个） -->
-      <el-table-column v-if="selection" key="selection" align="center" type="selection" width="55" fixed="left"/>
+      <el-table-column
+        v-if="selection"
+        key="selection"
+        align="center"
+        type="selection"
+        width="55"
+        fixed="left"
+      />
       <!-- 单选框（只能选择单个） -->
-      <el-table-column v-if="singleSelect" key="singleSelect" align="center" width="55" fixed="left">
+      <el-table-column
+        v-if="singleSelect"
+        key="singleSelect"
+        align="center"
+        width="55"
+        fixed="left"
+      >
         <template #default="scope">
-          <el-radio v-model="singleSelectValue" :label="scope.row[pk]" @change="singleSelectionChange(scope.row)"/>
+          <el-radio
+            v-model="singleSelectValue"
+            :label="scope.row[pk]"
+            @change="singleSelectionChange(scope.row)"
+          />
         </template>
       </el-table-column>
       <!-- 序号 -->
@@ -32,12 +49,14 @@
         :width="fieldList.length === 0 ? '' : 55"
       >
         <template #default="scope">
-          <span>{{ scope.$index + 1 + (listInfo.query.page - 1) * listInfo.query.limit }}</span>
+          <span>{{
+            scope.$index + 1 + (listInfo.query.page - 1) * listInfo.query.limit
+          }}</span>
         </template>
       </el-table-column>
       <!-- 这个是正常传进来的列，进行循环 -->
       <el-table-column
-        v-for="(item, index) in newFieldList.filter(item => item.show)"
+        v-for="(item, index) in newFieldList.filter((item) => item.show)"
         :key="`${index}-${item.prop}`"
         :label="item.label"
         :prop="item.prop"
@@ -52,26 +71,36 @@
         <template #default="scope">
           <!-- slot自定义列 -->
           <template v-if="item.type === 'slot'">
-            <slot :name="`col-${item.prop}`" :row="scope.row"/>
+            <slot :name="`col-${item.prop}`" :row="scope.row" />
           </template>
           <!-- 日期 -->
           <template v-else-if="item.type === 'date'">
-            <span v-if="scope.row[item.prop]">{{ formatter(scope.row[item.prop], 'yyyy-MM-dd hh:mm:ss') }}</span>
+            <span v-if="scope.row[item.prop]">{{
+              formatter(scope.row[item.prop], 'yyyy-MM-dd hh:mm:ss')
+            }}</span>
           </template>
           <!-- 链接 -->
           <template v-else-if="item.type === 'link'">
-            <a style="color: #409eff" @click="openLink(item, scope.row)">{{ scope.row[item.prop] }}</a>
+            <a style="color: #409eff" @click="openLink(item, scope.row)">{{
+              scope.row[item.prop]
+            }}</a>
           </template>
           <!-- 复杂标签 -->
           <div v-else-if="item.type === 'tag' && item.tagOptions">
-            <el-tag :type="getTagType(scope.row, item)">{{ getTagValue(scope.row, item) }}</el-tag>
+            <el-tag :type="getTagType(scope.row, item)">{{
+              getTagValue(scope.row, item)
+            }}</el-tag>
           </div>
           <!-- 简单标签 -->
           <el-tag v-else-if="item.type === 'tag' && !item.tagOptions">
             {{ scope.row[item.prop] }}
           </el-tag>
           <!-- 图片 -->
-          <img v-else-if="item.type === 'image' && scope.row[item.prop]" height="50px" :src="scope.row[item.prop]">
+          <img
+            v-else-if="item.type === 'image' && scope.row[item.prop]"
+            height="50px"
+            :src="scope.row[item.prop]"
+          />
           <!-- 文件 -->
           <sv-upload-file
             v-else-if="item.type === 'file' && scope.row[item.prop]"
@@ -82,7 +111,9 @@
             :multiple="true"
           />
           <!-- 其他 -->
-          <span v-else>{{ dictFilter(scope.row[item.prop], dicts[item.dictType]) }}</span>
+          <span v-else>{{
+            dictFilter(scope.row[item.prop], dicts[item.dictType])
+          }}</span>
         </template>
         <!-- 嵌套表格 -->
         <template v-if="item.children">
@@ -99,7 +130,9 @@
             :fixed="childItem.fixed"
           >
             <template #default="scope">
-              <span>{{ dictFilter(scope.row[childItem.prop], dicts[childItem.dictType]) }}</span>
+              <span>{{
+                dictFilter(scope.row[childItem.prop], dicts[childItem.dictType])
+              }}</span>
             </template>
           </el-table-column>
         </template>
@@ -110,7 +143,6 @@
         key="handle"
         :fixed="handle.fixed"
         :align="handle.align || 'center'"
-
         :width="handle.width"
         :min-width="handle.minWidth"
       >
@@ -118,13 +150,17 @@
           <template v-for="(item, index) in handle.btList">
             <!-- 自定义操作类型 -->
             <slot
-              v-if="item.slot && item.show && !btnHideSet(item.event, scope.row)"
+              v-if="
+                item.slot && item.show && !btnHideSet(item.event, scope.row)
+              "
               :name="`bt-${item.event}`"
               :data="{ item, row: scope.row }"
             />
             <!-- 操作按钮 -->
             <el-button
-              v-if="!item.slot && item.show && !btnHideSet(item.event, scope.row)"
+              v-if="
+                !item.slot && item.show && !btnHideSet(item.event, scope.row)
+              "
               :key="index"
               size="small"
               :type="item.type"
@@ -330,8 +366,8 @@ export default {
     checkedList() {
       if (this.checkedList && this.checkedList.length && this.rows) {
         // 设置当前选中项
-        this.checkedList.forEach(selected => {
-          const row = this.rows.find(item => item[this.pk] === selected)
+        this.checkedList.forEach((selected) => {
+          const row = this.rows.find((item) => item[this.pk] === selected)
           this.$nextTick(() => {
             if (!row) return
             this.$refs.table.toggleRowSelection(row, true)
@@ -363,15 +399,14 @@ export default {
         this.newFieldList = this.geneNewFieldList()
       } else {
         // const response = await getColumnSetting(this.module)
-        this.newFieldList =
-          this.geneNewFieldList()
+        this.newFieldList = this.geneNewFieldList()
       }
     },
     // 根据前台定义生成列设置，过滤掉hidden隐藏的列，并且把显示的列设置show为true
     geneNewFieldList() {
       const newFieldList = this.fieldList
-        .filter(el => !el.hidden)
-        .map(item => {
+        .filter((el) => !el.hidden)
+        .map((item) => {
           this.$set(item, 'show', true)
           return item
         })
@@ -380,7 +415,7 @@ export default {
     // 根据数据库种保存的列设置做处理
     geneNewFieldListForModule(oldFieldList) {
       // 前台设置的列设置为fieldList过滤掉隐藏列
-      const newFieldList = this.fieldList.filter(el => !el.hidden)
+      const newFieldList = this.fieldList.filter((el) => !el.hidden)
       let storedInDbFields = []
       const newAddFields = []
       // 遍历前台列设置
@@ -388,17 +423,21 @@ export default {
         // 前台列对象item
         const item = { ...newFieldList[index] }
         // 获得当前列在数据库中存储的数据
-        const oldIndex = oldFieldList.findIndex(el => item.prop === el.prop)
+        const oldIndex = oldFieldList.findIndex((el) => item.prop === el.prop)
         // 判断，如果后台中没有oldIndex不为-1，在item中记录在后台存存储的顺序，获得是否展示show，获取列设置width或者minWidth，把数据存储到storedInDbFields中
         // 如果oldIndex为false说明为前台新增列，设置show属性为true，找到其前一列的属性prop，将其存储到新增表单属性数组newAddFields中
         if (oldIndex !== -1) {
           item.orderNum = oldIndex
           item.show = oldFieldList[oldIndex].show
           if (item.width) {
-            item.width = oldFieldList[oldIndex].width ? oldFieldList[oldIndex].width : item.width
+            item.width = oldFieldList[oldIndex].width
+              ? oldFieldList[oldIndex].width
+              : item.width
           }
           if (item.minWidth) {
-            item.minWidth = oldFieldList[oldIndex].minWidth ? oldFieldList[oldIndex].minWidth : item.minWidth
+            item.minWidth = oldFieldList[oldIndex].minWidth
+              ? oldFieldList[oldIndex].minWidth
+              : item.minWidth
           }
           storedInDbFields.push(item)
         } else {
@@ -412,11 +451,13 @@ export default {
       // 遍历newAddFields
       // 如果不存在前一列的属性，将其放到第一列
       // 否则将其插入到前一列的下一列
-      newAddFields.forEach(item => {
+      newAddFields.forEach((item) => {
         if (!item.preProp) {
           storedInDbFields = [item, ...storedInDbFields]
         } else {
-          const preIndex = storedInDbFields.findIndex(el => el.prop === item.preProp)
+          const preIndex = storedInDbFields.findIndex(
+            (el) => el.prop === item.preProp
+          )
           storedInDbFields.splice(preIndex + 1, 0, item)
         }
       })
@@ -424,7 +465,7 @@ export default {
     },
     // 对数组进行排序
     compareArray(prop) {
-      return function(a, b) {
+      return function (a, b) {
         const value1 = a[prop]
         const value2 = b[prop]
         return value1 - value2
@@ -433,7 +474,7 @@ export default {
     // 拖动列对列宽进行保存
     changeColumnWidth(newWidth, oldWidth, column) {
       if (!this.module) return
-      this.newFieldList.forEach(el => {
+      this.newFieldList.forEach((el) => {
         if (el.prop === column.property) {
           if (el.minWidth) {
             el.minWidth = newWidth
@@ -448,8 +489,8 @@ export default {
     // 重置列设置
     async resetColumnSettings() {
       const newFieldList = this.fieldList
-        .filter(el => !el.hidden)
-        .map(item => {
+        .filter((el) => !el.hidden)
+        .map((item) => {
           this.$set(item, 'show', true)
           return item
         })
@@ -470,7 +511,9 @@ export default {
       for (const key in this.query) {
         const queryValue = this.query[key]
         if (this.queryValueIsTrue(queryValue)) {
-          obj[key] = Array.isArray(queryValue) ? queryValue.join(',') : queryValue
+          obj[key] = Array.isArray(queryValue)
+            ? queryValue.join(',')
+            : queryValue
         }
       }
       // 如果不需要分页，则无分页相关参数
@@ -487,7 +530,7 @@ export default {
       if (!this.api) return
       this.$store.dispatch('app/loadingStart')
       this.api(this.handleParams(), this.queryList)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             this.rows = []
             if (this.pager) {
@@ -503,9 +546,11 @@ export default {
               this.$emit('selection-change', undefined)
             }
             // 设置当前选中项
-            this.checkedList.forEach(selected => {
-              const row = this.rows.find(item => item[this.pk] === selected)
-              this.$nextTick(() => this.$refs.table.toggleRowSelection(row, true))
+            this.checkedList.forEach((selected) => {
+              const row = this.rows.find((item) => item[this.pk] === selected)
+              this.$nextTick(() =>
+                this.$refs.table.toggleRowSelection(row, true)
+              )
             })
           } else {
             this.$message({
@@ -534,14 +579,18 @@ export default {
     // 获取标签类型
     getTagType(row, item) {
       if (row[item.prop] !== undefined && row[item.prop] !== null) {
-        return item.tagOptions[row[item.prop]] ? item.tagOptions[row[item.prop]].type : 'primary'
+        return item.tagOptions[row[item.prop]]
+          ? item.tagOptions[row[item.prop]].type
+          : 'primary'
       }
       return 'primary'
     },
     // 获取标签值
     getTagValue(row, item) {
       if (row[item.prop] !== undefined && row[item.prop] !== null) {
-        return item.tagOptions[row[item.prop]] ? item.tagOptions[row[item.prop]].name : ''
+        return item.tagOptions[row[item.prop]]
+          ? item.tagOptions[row[item.prop]].name
+          : ''
       }
     },
     // 单选选中行数据
@@ -572,7 +621,7 @@ export default {
       let query = {}
       // 行数据上获取的参数
       if (item.params && item.params.length) {
-        item.params.forEach(el => {
+        item.params.forEach((el) => {
           query[el] = row[el]
         })
       }
@@ -594,7 +643,7 @@ export default {
         let path = item.path
         // 动态路由参数
         if (item.dynamicRouteParams) {
-          item.dynamicRouteParams.forEach(el => {
+          item.dynamicRouteParams.forEach((el) => {
             path += `/${row[el] || el}`
           })
         }
@@ -629,14 +678,22 @@ export default {
         'm+': $this.getMinutes(),
         's+': $this.getSeconds(),
         'q+': Math.floor(($this.getMonth() + 3) / 3),
-        'S': $this.getMilliseconds()
+        S: $this.getMilliseconds()
       }
       if (/(y+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
+        fmt = fmt.replace(
+          RegExp.$1,
+          ($this.getFullYear() + '').substr(4 - RegExp.$1.length)
+        )
       }
       for (var k in o) {
         if (new RegExp('(' + k + ')').test(fmt)) {
-          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+          fmt = fmt.replace(
+            RegExp.$1,
+            RegExp.$1.length === 1
+              ? o[k]
+              : ('00' + o[k]).substr(('' + o[k]).length)
+          )
         }
       }
       return fmt
@@ -702,7 +759,7 @@ export default {
     dictFilter(val, dictList) {
       if (!dictList) return val
       // 会出现一种情况，那就是，如果字典值有数字也有字符串怎么办
-      const dict = dictList.find(el => el.dictValue === val)
+      const dict = dictList.find((el) => el.dictValue === val)
       if (dict) {
         return dict.dictLabel
       } else {
@@ -712,8 +769,8 @@ export default {
 
     async dictFilter1(val, dictType) {
       if (!dictType) return val
-      await this.getDicts(dictType).then(res => {
-        res.data.forEach(el => {
+      await this.getDicts(dictType).then((res) => {
+        res.data.forEach((el) => {
           if (Number(el.dictValue) === val) {
             return el.dictLabel
           }

@@ -1,19 +1,19 @@
 <template>
-  <div class="app-container ">
+  <div class="app-container">
     <el-row class="row">
-
       <el-col>
         <h1>Do what you want to do!</h1>
       </el-col>
       <el-col>
-        <hr-form ref="hrTable" :form-disabled="false" :form.sync="form" :field-list="fieldList" />
+        <hr-form
+          ref="hrTable"
+          :form-disabled="false"
+          :form.sync="form"
+          :field-list="fieldList"
+        />
       </el-col>
       <el-col>
-        <img
-          class="img"
-          src="../../../assets/images/909641.png"
-          alt="logo"
-        >
+        <img class="img" src="../../../assets/images/909641.png" alt="logo" />
       </el-col>
     </el-row>
 
@@ -25,13 +25,12 @@
 </template>
 
 <script>
-
 import { editObj, getDictInfoById } from '@/api/ScheduleHeader/api'
 export default {
   name: 'Documentation',
   props: {
     // eslint-disable-next-line vue/require-default-prop
-    id: String
+    id: Number
   },
   data() {
     return {
@@ -49,7 +48,6 @@ export default {
           prop: 'date',
           rules: { required: true }
         }
-
       ]
     }
   },
@@ -58,11 +56,11 @@ export default {
     this.form = res.data
   },
   methods: {
-    async  submit() {
+    async submit() {
       console.log('submit')
       if (this.$refs.hrTable.validate()) {
         console.log(this.form)
-        await editObj(this.form).then(res => {
+        await editObj(this.form).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -89,18 +87,15 @@ export default {
     centrl() {
       this.$emit('close')
     }
-
   }
 }
 </script>
 <style lang="scss" scoped>
-.img{
-
-width: 50%;
-
+.img {
+  width: 50%;
 }
-.row{
-  display:  flex;
-  flex-direction: column
+.row {
+  display: flex;
+  flex-direction: column;
 }
 </style>

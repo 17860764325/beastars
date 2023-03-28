@@ -7,12 +7,18 @@
       <el-card class="imgCard">
         <div class="backgroundImgDiv">
           <!--        背景-->
-          <img class="backgroundImg" :src="require('../../../assets/' + userInfo.backagegroundImg)"/>
+          <img
+            class="backgroundImg"
+            :src="require('../../../assets/' + userInfo.backagegroundImg)"
+          />
         </div>
       </el-card>
       <div class="headImgDiv">
         <!--        头像 -->
-        <img class="headImg" :src="require('../../../assets/' + userInfo.userHeadImg)"/>
+        <img
+          class="headImg"
+          :src="require('../../../assets/' + userInfo.userHeadImg)"
+        />
       </div>
     </el-row>
     <!--    下面信息-->
@@ -20,20 +26,19 @@
       <el-tabs type="border-card">
         <el-tab-pane label="基本信息">
           <h2>基本信息:</h2>
-          <el-button @click="edit()"><i class="el-icon-edit"></i>
-          </el-button>
+          <el-button @click="edit()"><i class="el-icon-edit"></i> </el-button>
           <hr-form
             ref="hrTable"
-            :formDisabled="(!this.isEdit)"
+            :formDisabled="!this.isEdit"
             :form-disabled="false"
             :form.sync="form"
             :field-list="fieldList"
           />
           <div>
-            <el-button class="button" type="primary" >保存</el-button>
+            <el-button class="button" type="primary">保存</el-button>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="其他">
+        <el-tab-pane label="头像以及背景">
           <h2>头像以及背景</h2>
           <div>
             <el-button @click="openChooseImg('1')">更改背景</el-button>
@@ -175,7 +180,6 @@ export default {
 .backgroundImgDiv {
   width: 100%;
   height: 100px;
-
 }
 
 .backgroundImg {
@@ -196,7 +200,19 @@ export default {
   padding: 5px;
   border: 5px solid transparent;
   border-radius: 10px;
-  background: linear-gradient(white, white) padding-box, repeating-linear-gradient(-45deg, red 0, red 12.5%, transparent 0, transparent 25%, #58a 0, #58a 37.5%, transparent 0, transparent 50%) 0/5em 5em;
+  background: linear-gradient(white, white) padding-box,
+    repeating-linear-gradient(
+        -45deg,
+        red 0,
+        red 12.5%,
+        transparent 0,
+        transparent 25%,
+        #58a 0,
+        #58a 37.5%,
+        transparent 0,
+        transparent 50%
+      )
+      0/5em 5em;
   width: 130px;
   height: 100px;
 }

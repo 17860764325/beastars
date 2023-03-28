@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container ">
+  <div class="app-container">
     <div class="query">
       <el-input
         v-model="listQuery.date"
@@ -12,42 +12,42 @@
         icon="el-icon-search"
         class="filter-item"
         @click="getList()"
-      >Query
+        >Query
       </el-button>
       <el-button
         type="primary"
         icon="el-icon-refresh"
         class="filter-item"
         @click="reset()"
-      >Reset
+        >Reset
       </el-button>
       <el-button
         type="primary"
         icon="el-icon-plus"
         class="filter-item"
         @click="add()"
-      >Add
+        >Add
       </el-button>
       <el-button
         type="danger"
         icon="el-icon-delete"
         class="filter-item"
         @click="deletes()"
-      >Delete
+        >Delete
       </el-button>
       <el-button
         type="success"
         icon="el-icon-check"
         class="filter-item"
         @click="ok()"
-      >OK
+        >OK
       </el-button>
       <el-button
         type="danger"
         icon="el-icon-close"
         class="filter-item"
         @click="no()"
-      >NO
+        >NO
       </el-button>
     </div>
     <hr-table
@@ -70,7 +70,7 @@
       :title="'新增故事！'"
       :visible.sync="addVisible"
     >
-      <story-add @close="addDilogClose"/>
+      <story-add @close="addDilogClose" />
     </el-dialog>
     <el-dialog
       v-if="editVisible"
@@ -79,12 +79,12 @@
       :title="'修改故事！'"
       :visible.sync="editVisible"
     >
-      <story-edit :id="id" @close="editDilogClose"/>
+      <story-edit :id="id" @close="editDilogClose" />
     </el-dialog>
     <el-dialog
       v-if="deleteVisible"
       class="isDelete"
-      width="20%"
+      width="30%"
       :title="'删除'"
       :visible.sync="deleteVisible"
     >
@@ -99,7 +99,7 @@
 
 <script>
 import { page, deletes, statusOk, statusNo } from '@/api/ScheduleHeader/api.js'
-import { getUserId } from '@/api/user/api.js'
+// import { getUserId } from '@/api/user/api.js'
 
 export default {
   name: 'Documentation',
@@ -129,21 +129,21 @@ export default {
             prop: 'name',
             showOverflowTooltip: true,
             label: '👀想做事情名称',
-            minWidth: 100
+            minWidth: 200
           },
           {
             prop: 'date',
             showOverflowTooltip: true,
             label: '🕐准备什么时候做？',
             type: 'date',
-            minWidth: 100
+            minWidth: 200
           },
           {
             prop: 'isOk',
             showOverflowTooltip: true,
             label: '☑️是否完成了？',
             dictType: 'is_ok',
-            minWidth: 100
+            minWidth: 200
           },
           {
             prop: 'userName',
@@ -185,8 +185,8 @@ export default {
   },
   async created() {
     await this.getList()
-    const res = await getUserId()
-    this.user = res.data
+    // const res = await getUserId()
+    // this.user = res.data
   },
   methods: {
     async getList() {
@@ -216,7 +216,7 @@ export default {
     },
     detail(data) {
       console.log(data)
-      this.$router.push({ name: 'dateDetail', params: { id: data.id }})
+      this.$router.push({ name: 'dateDetail', params: { id: data.id } })
     },
     // 添加数据
     add() {
@@ -246,14 +246,14 @@ export default {
     },
     async ok() {
       if (this.selectedRows.length > 0) {
-        this.selectedRows.forEach(element => {
+        this.selectedRows.forEach((element) => {
           if (this.selectedRows[this.selectedRows.length - 1] === element) {
             this.ids = this.ids + element.id
           } else {
             this.ids = this.ids + element.id + ','
           }
         })
-        await statusOk(this.ids).then(res => {
+        await statusOk(this.ids).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -280,14 +280,14 @@ export default {
     },
     async no() {
       if (this.selectedRows.length > 0) {
-        this.selectedRows.forEach(element => {
+        this.selectedRows.forEach((element) => {
           if (this.selectedRows[this.selectedRows.length - 1] === element) {
             this.ids = this.ids + element.id
           } else {
             this.ids = this.ids + element.id + ','
           }
         })
-        await statusNo(this.ids).then(res => {
+        await statusNo(this.ids).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -314,14 +314,14 @@ export default {
     },
     yesDelete() {
       if (this.selectedRows.length > 0) {
-        this.selectedRows.forEach(element => {
+        this.selectedRows.forEach((element) => {
           if (this.selectedRows[this.selectedRows.length - 1] === element) {
             this.ids = this.ids + element.id
           } else {
             this.ids = this.ids + element.id + ','
           }
         })
-        deletes(this.ids).then(res => {
+        deletes(this.ids).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',

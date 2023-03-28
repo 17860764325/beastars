@@ -25,7 +25,13 @@ import 'quill/dist/quill.bubble.css'
 import 'quill/dist/quill.snow.css'
 import Vant, { Lazyload } from 'vant'
 import 'vant/lib/index.css'
+import VueQuillEditor from 'vue-quill-editor'
+// 引入相关css
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
+Vue.use(VueQuillEditor)
 Vue.use(Vant)
 Vue.use(Lazyload)
 
