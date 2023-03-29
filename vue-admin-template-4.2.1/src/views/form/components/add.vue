@@ -1,31 +1,30 @@
 <template>
-  <div class="app-container ">
-    <el-row class="row">
-
-      <el-col>
-        <h1>Do what you want to do!</h1>
-      </el-col>
-      <el-col>
-        <hr-form ref="hrTable" :form-disabled="false" :form.sync="form" :field-list="fieldList" />
-      </el-col>
-      <el-col>
-        <img
-          class="img"
-          v-lazy="require('../../../assets/images/909641.png')"
-          alt="logo"
-        >
-      </el-col>
-    </el-row>
+  <div class="app-container">
+    <el-col>
+      <h1>Do you want to do this?</h1>
+      <div class="imgDiv">
+        <img class="img" src="../../../assets/images/909641.png" alt="logo" />
+      </div>
+    </el-col>
+    <el-col>
+      <hr-form
+        ref="hrTable"
+        :form-disabled="false"
+        :form.sync="form"
+        :field-list="fieldList"
+      />
+    </el-col>
 
     <div style="text-align: center">
-      <el-button @click="submit()">DO IT!</el-button>
-      <el-button @click="centrl()">NO I DONT WANT DO THIS!</el-button>
+      <el-button type="danger" @click="centrl()"
+        >NO I DONT WANT DO THIS!</el-button
+      >
+      <el-button type="success" @click="submit()">YES I WANT!</el-button>
     </div>
   </div>
 </template>
 
 <script>
-
 import { addObj } from '@/api/ScheduleHeader/api'
 export default {
   name: 'Documentation',
@@ -35,26 +34,43 @@ export default {
       fieldList: [
         {
           type: 'text',
-          label: '想做的事情？是什么？',
+          label: '事件名称：',
           prop: 'name',
-          rules: { required: true }
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
         },
         {
-          type: 'date',
-          label: '什么时候做？',
+          type: 'datetime',
+          label: '什么时候完成：',
           prop: 'date',
-          rules: { required: true }
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
+        },
+        {
+          prop: 'remarks',
+          label: '备注',
+          type: 'textarea',
+          rules: { required: false },
+          sm: 24,
+          md: 24,
+          lg: 24,
+          xl: 24
         }
-
       ]
     }
   },
   methods: {
-    async  submit() {
+    async submit() {
       console.log('submit')
       if (this.$refs.hrTable.validate()) {
         console.log(this.form)
-        await addObj(this.form).then(res => {
+        await addObj(this.form).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -81,18 +97,35 @@ export default {
     centrl() {
       this.$emit('close')
     }
-
   }
 }
 </script>
 <style lang="scss" scoped>
-.img{
-
-width: 50%;
-
+.img {
+  width: 100%;
+  border: 5px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(white, white) padding-box,
+    repeating-linear-gradient(
+        -45deg,
+        red 0,
+        red 12.5%,
+        transparent 0,
+        transparent 25%,
+        #58a 0,
+        #58a 37.5%,
+        transparent 0,
+        transparent 50%
+      )
+      0/5em 5em;
 }
-.row{
-  display:  flex;
-  flex-direction: column
+.imgDiv {
+  height: 200px;
+  border: 5px grey solid;
+  overflow-y: auto;
+}
+.row {
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    登录用户名称:
     <el-input
       v-model="listQuery.userName"
       style="width: 200px"
@@ -11,14 +12,14 @@
       icon="el-icon-search"
       class="filter-item"
       @click="getList()"
-    >Query
+      >Query
     </el-button>
     <el-button
       type="primary"
       icon="el-icon-refresh"
       class="filter-item"
       @click="reset()"
-    >Reset
+      >Reset
     </el-button>
     <hr-table
       ref="table"
@@ -67,7 +68,8 @@ export default {
             showOverflowTooltip: true,
             label: '登陆用户的ip？',
             minWidth: 100
-          }, {
+          },
+          {
             prop: 'address',
             showOverflowTooltip: true,
             label: '地址？',
@@ -110,11 +112,9 @@ export default {
       })
       this.tableInfo.data = res.data.rows
     }
-
   }
 }
 </script>
 
 <style scoped>
-
 </style>

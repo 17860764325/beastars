@@ -1,9 +1,12 @@
 <template>
-  <div class="app-container ">
-    <hr-form ref="hrTable" :form-disabled="false" :form.sync="form" :field-list="fieldList" />
-    <div
-      style="text-align: center"
-    >
+  <div class="app-container">
+    <hr-form
+      ref="hrTable"
+      :form-disabled="false"
+      :form.sync="form"
+      :field-list="fieldList"
+    />
+    <div style="text-align: center">
       <el-button @click="submit()">确定</el-button>
       <el-button @click="centrl()">取消</el-button>
     </div>
@@ -11,7 +14,6 @@
 </template>
 
 <script>
-
 import { addObj } from '@/api/dict/api'
 export default {
   name: 'Documentation',
@@ -23,32 +25,49 @@ export default {
           type: 'text',
           label: '字典类型',
           prop: 'dictType',
-          rules: { required: true }
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
         },
         {
           type: 'text',
           label: '字典名称',
           prop: 'dictLabel',
-          rules: { required: true }
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
         },
         {
           type: 'text',
           label: '字典值',
           prop: 'dictValue',
-          rules: { required: true }
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
         },
         {
           type: 'text',
           label: '字典排序',
           prop: 'dictSort',
-          rules: { required: true }
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
         },
         {
           type: 'select',
           label: '是否默认',
           prop: 'isDefault',
           dict: 'yes_no',
-          tooltip: 'type: select，选择框类型，绑定事件，下拉框的数据直接获取数据字典', // 帮助文本，用小问号显示，可以方html或者字符串
+          tooltip:
+            'type: select，选择框类型，绑定事件，下拉框的数据直接获取数据字典', // 帮助文本，用小问号显示，可以方html或者字符串
           event: 'selectTypeEvent',
           rules: { required: true },
           // filterable: true, // 是否可以过滤条件
@@ -56,20 +75,20 @@ export default {
           // disabled: true, // 是否禁用，非必选
           // class: 'text-type-class', // 在<style></style>中定义class，加到输入框el-input上，非必选
           // style: 'width: 60%' // 设置输入框el-input的样式，非必选
-          sm: 24,
-          md: 24,
-          lg: 24,
-          xl: 24
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
         }
       ]
     }
   },
   methods: {
-    async  submit() {
+    async submit() {
       console.log('submit')
       if (this.$refs.hrTable.validate()) {
         console.log(this.form)
-        await addObj(this.form).then(res => {
+        await addObj(this.form).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -96,12 +115,11 @@ export default {
     centrl() {
       this.$emit('close')
     }
-
   }
 }
 </script>
 <style lang="scss" scoped>
-.query{
+.query {
   margin-top: 10px;
   margin-bottom: 20px;
 }

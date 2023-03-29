@@ -28,14 +28,16 @@
           <h2>基本信息:</h2>
           <el-button @click="edit()"><i class="el-icon-edit"></i> </el-button>
           <hr-form
-            ref="hrTable"
+            ref="hrTableChangeUsreInfo"
             :formDisabled="!this.isEdit"
             :form-disabled="false"
             :form.sync="form"
             :field-list="fieldList"
           />
           <div>
-            <el-button class="button" type="primary">保存</el-button>
+            <el-button class="button" type="primary" @click="save"
+              >保存</el-button
+            >
           </div>
         </el-tab-pane>
         <el-tab-pane label="头像以及背景">
@@ -70,7 +72,7 @@
 <script>
 import selectImage from '@/views/system/user/components/SelectImage'
 // import store from '@/store'
-import { getUserInfo } from '@/api/user/api.js'
+import { getUserInfo, changeUserInfo } from '@/api/user/api.js'
 
 export default {
   components: {
@@ -103,8 +105,8 @@ export default {
           rules: { required: true }
         },
         {
-          type: 'password',
-          label: '什么时候做？',
+          type: 'text',
+          label: '密码',
           prop: 'password',
           rules: { required: true }
         },
@@ -157,6 +159,34 @@ export default {
       this.chooseImg.sync = false
       this.getLsit()
       // this.$router.go(0)
+    },
+    async save() {
+      console.log(this.form)
+      if (!this.$refs.hrTableChangeUsreInfo.validate()) {
+        this.$notify({
+          title: '失败',
+          message: '请填写完整信息!',
+          type: 'error'
+        })
+      } else {
+        await changeUserInfo(this.form).then((res) => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+            this.$emit('close')
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+          this.isEdit = !this.isEdit
+        })
+      }
     }
   }
 }

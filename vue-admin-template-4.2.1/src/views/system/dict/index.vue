@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container ">
+  <div class="app-container">
     <div class="query">
       数据字典值内容:
       <el-input
@@ -15,10 +15,34 @@
         class="filter-item"
         type="text"
       />
-      <el-button type="primary" icon="el-icon-search" class="filter-item" @click="getList()">Query</el-button>
-      <el-button type="primary" icon="el-icon-refresh" class="filter-item" @click="reset()">Reset</el-button>
-      <el-button type="primary" icon="el-icon-plus" class="filter-item" @click="addDilogOpen()">Add</el-button>
-      <el-button type="danger" icon="el-icon-delete" class="filter-item" @click="deletes()">Delete</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+        class="filter-item"
+        @click="getList()"
+        >Query</el-button
+      >
+      <el-button
+        type="primary"
+        icon="el-icon-refresh"
+        class="filter-item"
+        @click="reset()"
+        >Reset</el-button
+      >
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        class="filter-item"
+        @click="addDilogOpen()"
+        >Add</el-button
+      >
+      <el-button
+        type="danger"
+        icon="el-icon-delete"
+        class="filter-item"
+        @click="deletes()"
+        >Delete</el-button
+      >
     </div>
     <hr-table
       ref="table"
@@ -35,26 +59,21 @@
     />
     <el-dialog
       v-if="addVisible"
-      width="80%"
+      width="60%"
       append-to-body
       :title="'新增数据字典'"
       :visible.sync="addVisible"
     >
-      <dict-add
-        @close="addDilogClose"
-      />
+      <dict-add @close="addDilogClose" />
     </el-dialog>
     <el-dialog
       v-if="editVisible"
-      width="80%"
+      width="60%"
       append-to-body
       :title="'修改数据字典'"
       :visible.sync="editVisible"
     >
-      <dict-edit
-        :id="id"
-        @close="editClose"
-      />
+      <dict-edit :id="id" @close="editClose" />
     </el-dialog>
     <el-dialog
       v-if="deleteVisible"
@@ -133,7 +152,6 @@ export default {
             dictType: 'status',
             minWidth: 100
           }
-
         ],
         handle: {
           minWidth: 200,
@@ -169,7 +187,7 @@ export default {
       const res = await page(this.listQuery)
       this.tableInfo.data = res.data.rows
     },
-    async  reset() {
+    async reset() {
       this.listQuery.dictType = undefined
       this.listQuery.dictLabel = undefined
       const res = await page({
@@ -214,14 +232,14 @@ export default {
     },
     yesDelete() {
       if (this.selectedRow.length > 0) {
-        this.selectedRow.forEach(element => {
+        this.selectedRow.forEach((element) => {
           if (this.selectedRow[this.selectedRow.length - 1] === element) {
             this.ids = this.ids + element.dictCode
           } else {
             this.ids = this.ids + element.dictCode + ','
           }
         })
-        deletes(this.ids).then(res => {
+        deletes(this.ids).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -255,7 +273,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.query{
+.query {
   margin-top: 10px;
   margin-bottom: 20px;
 }

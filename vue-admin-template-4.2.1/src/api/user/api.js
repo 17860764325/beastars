@@ -32,3 +32,20 @@ export function setUserBackgroundImg(userBackgroundImg) {
   })
 }
 
+// 获根据ID修改用户的密码
+export function changePassWord(data) {
+  return request({
+    url: '/system/user/sth/changeUserPassword',
+    method: 'post',
+    data
+  })
+}
+
+// 用户个人修改自己的信息
+export function changeUserInfo(data) {
+  return request({
+    url: '/system/user/sth/changeUserInfo',
+    method: 'post',
+    data
+  })
+}

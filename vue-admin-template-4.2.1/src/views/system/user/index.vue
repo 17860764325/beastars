@@ -4,9 +4,11 @@
       <el-tab-pane label="用户管理" name="userManagement">
         <userManagement></userManagement>
       </el-tab-pane>
-      <el-tab-pane label="权限分配" name="roleManagement">权限分配</el-tab-pane>
       <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-      <el-tab-pane label="组织架构图" name="organizationalStructure">组织架构图</el-tab-pane>
+      <el-tab-pane label="权限分配" name="roleManagement">权限分配</el-tab-pane>
+      <el-tab-pane label="权限页面关联" name="organizationalStructure"
+        >权限页面关联</el-tab-pane
+      >
     </el-tabs>
   </div>
 </template>

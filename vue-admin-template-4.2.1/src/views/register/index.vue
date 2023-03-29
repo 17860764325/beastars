@@ -1,10 +1,17 @@
 <template>
-  <div class="app-container ">
+  <div class="app-container">
     <!--  注册页面，填写基本信息，设置用户名称和密码 不选择背景头像和头像，背景拖片和头像在自己的个人中心自己更改，初始化是默认的-->
-    <hr-form ref="registerForm" :form-disabled="false" :form.sync="form" :field-list="fieldList"/>
-    <el-row style="display: flex;justify-content: space-between">
+    <hr-form
+      ref="registerForm"
+      :form-disabled="false"
+      :form.sync="form"
+      :field-list="fieldList"
+    />
+    <el-row style="display: flex; justify-content: space-between">
       <el-button @click="register()">注册</el-button>
-      <el-button style="float: right" @click="login()">已有账号？现在登陆</el-button>
+      <el-button style="float: right" @click="login()"
+        >已有账号？现在登陆</el-button
+      >
     </el-row>
   </div>
 </template>
@@ -77,7 +84,6 @@ export default {
           lg: 12,
           xl: 12
         }
-
       ]
     }
   },
@@ -91,7 +97,7 @@ export default {
           // 两次密码相同
           // 向后端发送请求，存储信息
           const res = await regist(this.form)
-          if (res.status === 200)                 {
+          if (res.status === 200) {
             this.$notify({
               title: '成功',
               message: '操作成功',
@@ -125,5 +131,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

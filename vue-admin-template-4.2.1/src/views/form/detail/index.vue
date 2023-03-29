@@ -1,5 +1,12 @@
 <template>
   <div class="app-container">
+    <el-button
+      type="primary"
+      style="width: 15%"
+      @click="cancel()"
+      icon="el-icon-d-arrow-left"
+      >返回</el-button
+    >
     <!-- 图片上传组件辅助，组件内添加v-show=“false”属性，把该组件隐藏起来。-->
     <el-upload
       class="avatar-uploader"
@@ -19,8 +26,14 @@
       @focus="onEditorFocus($event)"
       @change="onEditorChange($event)"
     />
-    <div style="text-align: center">
-      <el-button @click="save()">保存</el-button>
+    <div style="text-align: right; margin-top: 20px">
+      <el-button
+        type="success"
+        style="width: 15%"
+        @click="save()"
+        icon="el-icon-check"
+        >保存</el-button
+      >
     </div>
   </div>
 </template>
@@ -156,6 +169,9 @@ export default {
           })
         }
       })
+    },
+    cancel() {
+      this.$router.push({ name: 'index' })
     }
   }
 }

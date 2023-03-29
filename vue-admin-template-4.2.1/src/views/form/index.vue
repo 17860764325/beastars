@@ -1,12 +1,19 @@
 <template>
   <div class="app-container">
     <div class="query">
+      <span>日期：</span>
+      <el-date-picker v-model="listQuery.startDate" placeholder="开始日期">
+      </el-date-picker>
+      <span>✈️✈️</span>
+      <el-date-picker v-model="listQuery.endDate" placeholder="结束日期">
+      </el-date-picker>
+      <span style="margin-top: 20px">事件名称：</span>
       <el-input
-        v-model="listQuery.date"
         style="width: 200px"
-        class="filter-item"
-        type="date"
-      />
+        v-model="listQuery.name"
+        placeholder="事件名称"
+      >
+      </el-input>
       <el-button
         type="primary"
         icon="el-icon-search"
@@ -66,7 +73,7 @@
     <el-dialog
       v-if="addVisible"
       class="addDialog"
-      width="80%"
+      width="40%"
       :title="'新增故事！'"
       :visible.sync="addVisible"
     >
@@ -75,7 +82,7 @@
     <el-dialog
       v-if="editVisible"
       class="addDialog"
-      width="80%"
+      width="40%"
       :title="'修改故事！'"
       :visible.sync="editVisible"
     >
@@ -126,16 +133,35 @@ export default {
         fieldList: [
           // 交易形式
           {
+            prop: 'userName',
+            showOverflowTooltip: true,
+            label: '创建人',
+            minWidth: 100
+          },
+          {
             prop: 'name',
             showOverflowTooltip: true,
             label: '👀想做事情名称',
+            minWidth: 150
+          },
+          {
+            prop: 'createTime',
+            showOverflowTooltip: true,
+            label: '🕐创建时间',
+            type: 'date',
             minWidth: 200
           },
           {
             prop: 'date',
             showOverflowTooltip: true,
-            label: '🕐准备什么时候做？',
+            label: '🕐准备什么时候完成？',
             type: 'date',
+            minWidth: 200
+          },
+          {
+            prop: 'remarks',
+            showOverflowTooltip: true,
+            label: '备注',
             minWidth: 200
           },
           {
@@ -143,13 +169,7 @@ export default {
             showOverflowTooltip: true,
             label: '☑️是否完成了？',
             dictType: 'is_ok',
-            minWidth: 200
-          },
-          {
-            prop: 'userName',
-            showOverflowTooltip: true,
-            label: '用户',
-            minWidth: 100
+            minWidth: 150
           }
         ],
         handle: {
@@ -175,7 +195,9 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        date: undefined
+        startDate: undefined,
+        endDate: undefined,
+        name: undefined
       },
       test: {
         a: '1',
@@ -195,7 +217,9 @@ export default {
       this.tableInfo.data = res.data.rows
     },
     async reset() {
-      this.listQuery.date = undefined
+      this.listQuery.startDate = undefined
+      this.listQuery.endDate = undefined
+      this.listQuery.name = undefined
       const res = await page({
         page: 1,
         limit: 20
@@ -358,5 +382,8 @@ export default {
 .query {
   margin-top: 10px;
   margin-bottom: 20px;
+}
+.filter-item {
+  margin: 5px;
 }
 </style>

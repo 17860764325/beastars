@@ -3,7 +3,7 @@
     <el-col
       style="width: 30%; margin: 10px"
       v-for="item in userList"
-      v-bind:key="item.id"
+      v-bind:key="item.userid"
     >
       <el-card class="card">
         <el-row>
@@ -23,7 +23,7 @@
         <el-row class="cardMessage">
           <el-tag
             >名称:
-            <el-tag type="warning">{{ item.username }}</el-tag>
+            <el-tag type="warning">{{ item.name }}</el-tag>
           </el-tag>
           <el-tag
             >关于:
@@ -43,10 +43,14 @@
             </el-tag>
           </el-col>
           <el-col>
-            <el-tag type="success"><a @click="edit">查看用户信息</a></el-tag>
-            <el-tag type="warning"><a @click="edit">编辑用户信息</a></el-tag>
+            <el-tag type="warning"
+              ><a @click="editUserInfofunction(item)">编辑用户信息</a></el-tag
+            >
             <el-tag type="danger"
-              ><a @click="changePasword(item.id)">修改/密码</a></el-tag
+              ><a @click="changePasword(item.userid)">修改密码</a></el-tag
+            >
+            <el-tag type="danger"
+              ><a @click="userCharacter(item)">角色</a></el-tag
             >
           </el-col>
         </el-row>
@@ -60,23 +64,65 @@
       :visible.sync="changePasswordVisable"
     >
       <h3>请输入您想修改的密码</h3>
-      <el-input type="password" v-model="newPassword"></el-input>
+      新密码:<el-input type="password" v-model="newPassword"></el-input>
+      重新输入新密码:<el-input
+        type="password"
+        v-model="newPasswordTow"
+      ></el-input>
       <div style="text-align: center">
         <el-button @click="yesChangePassword()">YES!</el-button>
         <el-button @click="noChangePassword()">NO!</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      v-if="editUserInfoVisable"
+      width="80%"
+      :title="'用户信息修改'"
+      :visible.sync="editUserInfoVisable"
+    >
+      <editUserInfo
+        @close="editUserInfoVisable = false"
+        :item="editUserInfo"
+      ></editUserInfo>
+    </el-dialog>
+
+    <el-dialog
+      v-if="userCharactervisable"
+      width="38%"
+      :title="'用户角色修改'"
+      :visible.sync="userCharactervisable"
+    >
+      <characterUser
+        :item="editUserInfo"
+        @close="userCharactervisable = false"
+      ></characterUser>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getAllUsers } from '@/api/user/api.js'
+import { getAllUsers, changePassWord } from '@/api/user/api.js'
+import editUserInfo from './editUserInfo.vue'
+import characterUser from './character/characterUser.vue'
 
 export default {
   data() {
     return {
+      // 修改密码弹窗是否弹出
       changePasswordVisable: false,
+      // 第一遍输入的新密码
       newPassword: undefined,
+      // 第二遍输入的密码
+      newPasswordTow: undefined,
+      // 修改信息弹窗是否弹出
+      editUserInfoVisable: false,
+      // 要修改的人员的信息
+      editUserInfo: undefined,
+      // 当前用户的id
+      userId: undefined,
+      // 用户角色的弹唱是否弹出
+      userCharactervisable: false,
       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
       userList: [
         {
@@ -85,6 +131,10 @@ export default {
         }
       ]
     }
+  },
+  components: {
+    characterUser,
+    editUserInfo
   },
   created() {
     // 初始化查询出权限如果是管理员可以管理所有用户
@@ -102,13 +152,48 @@ export default {
       console.log('123123')
     },
     changePasword(id) {
-      console.log(id)
+      this.userId = id
       this.changePasswordVisable = true
     },
     noChangePassword() {
       this.changePasswordVisable = false
     },
-    yesChangePassword() {}
+    async yesChangePassword() {
+      if (this.newPassword !== this.newPasswordTow) {
+        this.$notify({
+          title: '失败',
+          message: '两次密码输入的不一样!',
+          type: 'error'
+        })
+        return
+      }
+      const param = { userid: this.userId, password: this.newPassword }
+      await changePassWord(param).then((res) => {
+        if (res.status === 200) {
+          this.$notify({
+            title: '成功',
+            message: '操作成功',
+            type: 'success'
+          })
+          this.$emit('close')
+        } else {
+          this.$notify({
+            title: '失败',
+            message: res.message,
+            type: 'error'
+          })
+        }
+        this.changePasswordVisable = false
+      })
+    },
+    async editUserInfofunction(item) {
+      this.editUserInfo = item
+      this.editUserInfoVisable = true
+    },
+    userCharacter(item) {
+      this.editUserInfo = item
+      this.userCharactervisable = true
+    }
   }
 }
 </script>
