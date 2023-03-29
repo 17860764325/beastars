@@ -13,5 +13,27 @@
         <!-- 是否起作用 -->
         <result property="isVoid" column="is_void"/>
     </resultMap>
+    <select id="page" parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample" resultType="com.lhrlyn.cn.lhrlynadmin.user.enity.Role">
+        select id,
+        role_name,
+        role_about,
+        is_void
+        from role
+        <where>
+            <if test="roleName != null and roleName != ''">
+                and role_name = #{roleName}
+            </if>
+        </where>
+    </select>
+    <select id="getCharacterByUserId" parameterType="java.lang.String" resultType="com.lhrlyn.cn.lhrlynadmin.user.enity.Role">
+        select
+            r.id,
+            r.role_name,
+            r.role_about,
+            r.is_void
+        from role r
+                 left join user_roles ur on r.id = ur.role_id
+        where ur.user_id = #{id}
+    </select>
 
 </mapper>

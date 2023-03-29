@@ -68,6 +68,7 @@ public class LoginServiceImpl implements LoginService {
                 redisTemplate.opsForValue().set(token, userDto, Duration.ofMinutes(30L));
                 userDto.setToken(token);
                 // 存储ip
+                //  TODO 因为目前没有网络所以暂时讲则需要连网注册ip地址的功能先屏掉
                 String ip = IPUtil.getIp(request);
                 LoginIpLog loginIpLog = new LoginIpLog();
                 IdWorker idWorker = new IdWorker(1,1);

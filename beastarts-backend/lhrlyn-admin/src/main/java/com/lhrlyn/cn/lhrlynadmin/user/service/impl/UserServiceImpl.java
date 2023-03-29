@@ -12,6 +12,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import cn.hutool.core.collection.CollUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,5 +82,38 @@ public class UserServiceImpl implements UserService {
         user.setUserid(userDto1.getUserid());
         User user1 = userMapper.selectOne(user);
         return BeanCopyUtils.beanCopy(user1,UserDto.class);
+    }
+
+    /** 
+     * @description: 修改密码逻辑 
+     * @param: user 
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse 
+     * @author lhr
+     * @date: 2023/3/28 19:45
+     */ 
+    public ObjectRestResponse changePassword(User user) {
+        User userSelect = userMapper.selectByPrimaryKey(user);
+        userSelect.setPassword(user. getPassword());
+        int i = userMapper.updateByPrimaryKeySelective(userSelect);
+        if (i>0){
+            return ObjectRestResponse. success("修改成功");
+        }
+        return ObjectRestResponse. failed("修改失败");
+    }
+
+    /**
+     * @description: 用户自己修改自己的信息
+     * @param: userDto
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse
+     * @author lhr
+     * @date: 2023/3/28 20:17
+     */
+    public ObjectRestResponse changUserInfo(UserDto userDto) {
+        User user = BeanCopyUtils.beanCopy(userDto, User.class);
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i > 0){
+            return ObjectRestResponse. success("修改成功");
+        }
+        return ObjectRestResponse. failed("修改失败");
     }
 }

@@ -1,5 +1,9 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
@@ -39,16 +43,23 @@ public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
         userRole.setUserId(user.getUserid());
         List<UserRole> select = roleMapper.select(userRole);
         for (UserRole role : select) {
-            if (role.getRoleId() == 1 || role.getRoleId() == 2){
+            if (role.getRoleId() == 1 || role.getRoleId() == 2) {
                 flag = true;
             }
         }
-        if (flag){
+        if (flag) {
+            if (StrUtil.isNotEmpty((String)query.get("startDate"))) {
+                query.put("startDate", DateUtil.format(DateUtil.beginOfDay(DateUtil.parse((String) query.get("startDate"))), DatePattern.NORM_DATETIME_FORMAT));
+
+            }
+            if (StrUtil.isNotEmpty((String)query.get("endDate"))){
+                query.put("endDate", DateUtil.format(DateUtil.endOfDay(DateUtil.parse((String) query.get("endDate"))), DatePattern.NORM_DATETIME_FORMAT));
+            }
             List<ScheduleHeader> page = scheduleHeaderMapper.page(query);
             List<ScheduleHeaderDto> scheduleHeaderDtos = BeanCopyUtils.listCopy(page, ScheduleHeaderDto.class);
             return scheduleHeaderDtos;
-        }else {
-            query.put("userId",user.getUserid());
+        } else {
+            query.put("userId", user.getUserid());
             List<ScheduleHeader> page = scheduleHeaderMapper.page(query);
             List<ScheduleHeaderDto> scheduleHeaderDtos = BeanCopyUtils.listCopy(page, ScheduleHeaderDto.class);
             return scheduleHeaderDtos;
@@ -122,19 +133,19 @@ public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
     }
 
     @Override
-    public ScheduleHeaderDto edit(String id,User user) {
+    public ScheduleHeaderDto edit(String id, User user) {
         boolean f = false;
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserid());
         List<UserRole> select = roleMapper.select(userRole);
         for (UserRole role : select) {
             // 如果权限为user普通用户不能进行修改
-            if (role.getRoleId() == 4){
-                f= true;
+            if (role.getRoleId() == 4) {
+                f = true;
             }
 
         }
-        if (f){
+        if (f) {
             return null;
         }
         ScheduleHeader scheduleHeader = new ScheduleHeader();

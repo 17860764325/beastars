@@ -89,7 +89,7 @@ public class ScheduleController extends Controller {
 request 
      * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse<com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto> 
      * @author lhr
-     * @date: 2023/3/28 18:54
+     * @date: 2023/3/28 19:42
      */ 
     @GetMapping("/edit/{id}")
     public ObjectRestResponse<ScheduleHeaderDto> edit(@PathVariable("id") String id, HttpServletRequest request) {

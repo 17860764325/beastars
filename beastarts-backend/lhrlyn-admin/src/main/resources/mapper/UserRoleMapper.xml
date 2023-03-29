@@ -13,5 +13,8 @@
         <!-- 是否生效 1生效2不生效 -->
         <result property="isVoid" column="is_void"/>
     </resultMap>
+    <delete id="deleteByUserId" parameterType="java.lang.String">
+        delete from user_roles where user_id = #{userId}
+    </delete>
 
 </mapper>

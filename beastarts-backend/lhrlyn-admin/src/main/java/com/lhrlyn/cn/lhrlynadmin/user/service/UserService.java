@@ -14,4 +14,8 @@ public interface UserService {
     ObjectRestResponse saveUserBackageImg(String userBackGroundImg, User user);
 
     UserDto getUserInfo(UserDto userDto1);
+
+    public ObjectRestResponse changePassword(User user);
+
+    public ObjectRestResponse changUserInfo(UserDto userDto);
 }

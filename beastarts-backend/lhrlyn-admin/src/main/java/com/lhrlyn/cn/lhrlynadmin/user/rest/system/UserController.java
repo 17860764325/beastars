@@ -8,10 +8,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.getUserInfo.GetUserInfo;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -30,6 +27,7 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
     @Autowired
     private RedisTemplate redisTemplate;
+
     /**
      * @description: 返回用户的数据
      * @author lhr
@@ -37,7 +35,7 @@ public class UserController {
      * @version 1.0
      */
     @GetMapping("/list")
-    public ObjectRestResponse<List<UserDto>> list(){
+    public ObjectRestResponse<List<UserDto>> list() {
         return userServiceImpl.list();
     }
 
@@ -49,7 +47,7 @@ public class UserController {
      * @date: 2022/8/24 15:51
      */
     @GetMapping("/getUserInfoByToken")
-    public ObjectRestResponse<UserDto> gteUserInfo(HttpServletRequest request){
+    public ObjectRestResponse<UserDto> gteUserInfo(HttpServletRequest request) {
         String token = request.getHeader("token");
         Object userDto = redisTemplate.opsForValue().get(token);
         UserDto userDto1 = BeanCopyUtils.beanCopy(userDto, UserDto.class);
@@ -65,11 +63,11 @@ public class UserController {
      * @date: 2022/8/31 23:45
      */
     @GetMapping("/setUserHeadImg/navbar_image/{userHeadImg}")
-    public ObjectRestResponse setUserHeadImg (@PathVariable("userHeadImg") String userHeadImg,HttpServletRequest request){
+    public ObjectRestResponse setUserHeadImg(@PathVariable("userHeadImg") String userHeadImg, HttpServletRequest request) {
         String token = request.getHeader("token");
         Object userDto = redisTemplate.opsForValue().get(token);
         User user = BeanCopyUtils.beanCopy(userDto, User.class);
-        return userServiceImpl.saveUserHeadImg(userHeadImg,user);
+        return userServiceImpl.saveUserHeadImg(userHeadImg, user);
     }
 
     /**
@@ -80,11 +78,36 @@ public class UserController {
      * @date: 2022/8/31 23:45
      */
     @GetMapping("/setUserBackgroundImg/weekWallPaper/{userBackgroundImg}")
-    public ObjectRestResponse setUserBackgroundImg (@PathVariable("userBackgroundImg") String userBackgroundImg, HttpServletRequest request){
+    public ObjectRestResponse setUserBackgroundImg(@PathVariable("userBackgroundImg") String userBackgroundImg, HttpServletRequest request) {
         String token = request.getHeader("token");
         Object userDto = redisTemplate.opsForValue().get(token);
         User user = BeanCopyUtils.beanCopy(userDto, User.class);
-       return userServiceImpl.saveUserBackageImg(userBackgroundImg,user);
+        return userServiceImpl.saveUserBackageImg(userBackgroundImg, user);
+    }
+
+    /** 
+     * @description: 修改密码
+     * @param: user 
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse 
+     * @author lhr
+     * @date: 2023/3/28 19:45
+     */ 
+    @PostMapping("/changeUserPassword")
+    public ObjectRestResponse changePassword(@RequestBody User user) {
+       return  userServiceImpl.changePassword(user);
+    }
+
+    /**
+     * @description: 用户自己修改自己的信息
+     * @param: userDto
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse
+     * @author lhr
+     * @date: 2023/3/28 20:17
+     */
+    @PostMapping("/changeUserInfo")
+
+    public ObjectRestResponse changUserInfo(@RequestBody UserDto userDto){
+        return userServiceImpl.changUserInfo(userDto);
     }
 
 

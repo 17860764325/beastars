@@ -3,28 +3,36 @@
 
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.ScheduleHeaderMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleHeader" id="ScheduleHeaderResultMap">
-        <id property="id" column="id" />
+        <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="date" column="date"/>
         <result property="isOk" column="is_ok"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
+        <result property="remarks" column="remarks"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <select id="page" resultMap="ScheduleHeaderResultMap" parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
+    <select id="page" resultMap="ScheduleHeaderResultMap"
+            parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
         select
-          sh.*
+        sh.*
         from schedule_header sh
         <where>
-            <if test="date != null and date != ''">
-                and sh.date > #{date}
+            <if test="startDate != null and startDate != ''">
+                and sh.date <![CDATA[ >= ]]> #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and sh.date <![CDATA[ <= ]]> #{endDate}
             </if>
             <if test="userId != null and userId != ''">
                 and sh.user_id = #{userId}
+            </if>
+        <if test="name != null and name != ''">
+                and sh.name like N'%${ name}%'
             </if>
 
         </where>

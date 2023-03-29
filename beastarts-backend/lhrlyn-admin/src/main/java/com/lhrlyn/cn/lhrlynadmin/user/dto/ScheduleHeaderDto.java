@@ -1,5 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,6 +16,7 @@ public class ScheduleHeaderDto {
 
     private String name;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
 
     private String isOk;
@@ -22,7 +24,9 @@ public class ScheduleHeaderDto {
     private String UserId;
 
     private String userName;
+    private String remarks;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Date updateTime;

@@ -1,4 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.util.addressUtil;
+
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
@@ -32,11 +34,12 @@ import java.util.Map;
  */
 
 /**
- *  根据IP地址获取详细的地域信息
- *  @project:personGocheck
- *  @class:AddressUtils.java
- *  @author:heguanhua E-mail:37809893@qq.com
- *  @date：Nov 14, 2012 6:38:25 PM
+ * 根据IP地址获取详细的地域信息
+ *
+ * @project:personGocheck
+ * @class:AddressUtils.java
+ * @author:heguanhua E-mail:37809893@qq.com
+ * @date：Nov 14, 2012 6:38:25 PM
  */
 public class AddressUtils {
 
@@ -83,27 +86,29 @@ public class AddressUtils {
      * @version 1.0
      */
     public static String getAlibaba(String ip) {
-        Map map = new HashMap();
-        map.put("ip", ip);
-        map.put("accessKey", "alibaba-inc");
-        String result = post("http://ip.taobao.com/outGetIpInfo", map);
-        Map valueMap = JSONObject.parseObject(result, Map.class);
-
-        // 请求成功，解析响应数据
-        if ("query success".equals(valueMap.get("msg"))) {
-            Map<String, String> dataMap = (Map<String, String>) valueMap.get("data");
-            String country = dataMap.get("country");
-            String region = dataMap.get("region");
-            String city = dataMap.get("city");
-            return country + region + city;
+        if (ip. equals("127.0.0.1")){
+                return "XXXX内网IP";
+        }else{
+            Map map = new HashMap();
+            map.put("ip", ip);
+            map.put("accessKey", "alibaba-inc");
+            String result = post("http://ip.taobao.com/outGetIpInfo", map);
+            Map valueMap = JSONObject.parseObject(result, Map.class);
+            // 请求成功，解析响应数据
+            if ("query success".equals(valueMap.get("msg"))) {
+                Map<String, String> dataMap = (Map<String, String>) valueMap.get("data");
+                String country = dataMap.get("country");
+                String region = dataMap.get("region");
+                String city = dataMap.get("city");
+                return country + region + city;
+            }
         }
         return "";
     }
 
 
-
     public static String post(String url, Map<String, String> mapParameter) {
-        System.out.println("开始请求: url = {}, mapParameter = {}, charset = {}"+ url+ mapParameter);
+        System.out.println("开始请求: url = {}, mapParameter = {}, charset = {}" + url + mapParameter);
         // 创建httpClient的默认实例
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             // 创建POST请求
@@ -122,7 +127,7 @@ public class AddressUtils {
             // 执行post请求
             try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
                 if (response != null) {
-                    System.out.println("请求成功, 响应状态: {}"+ response.getStatusLine().getStatusCode());
+                    System.out.println("请求成功, 响应状态: {}" + response.getStatusLine().getStatusCode());
                     HttpEntity httpEntity = response.getEntity();
                     // 如果返回的内容不为空
                     if (httpEntity != null) {
@@ -130,11 +135,11 @@ public class AddressUtils {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("请求异常: e = {}"+e);
+                System.out.println("请求异常: e = {}" + e);
                 e.printStackTrace();
             }
         } catch (Exception e) {
-            System.out.println("请求异常: e = {}"+ e);
+            System.out.println("请求异常: e = {}" + e);
             e.printStackTrace();
         }
         return null;

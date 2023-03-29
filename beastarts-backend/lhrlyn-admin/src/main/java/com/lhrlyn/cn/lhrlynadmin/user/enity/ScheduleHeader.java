@@ -1,5 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.enity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ public class ScheduleHeader {
     private Long id;
     @Column(name = "name")
     private String name;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "date")
     private Date date;
     @Column(name = "is_ok")
@@ -24,6 +26,11 @@ public class ScheduleHeader {
     private String userId;
     @Column(name = "user_name")
     private String userName;
+
+    @Column(name = "remarks")
+    private String remarks;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_time")
     private Date createTime;
     @Column(name = "update_time")
