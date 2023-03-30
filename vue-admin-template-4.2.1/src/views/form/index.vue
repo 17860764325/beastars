@@ -2,10 +2,20 @@
   <div class="app-container">
     <div class="query">
       <span>日期：</span>
-      <el-date-picker v-model="listQuery.startDate" placeholder="开始日期">
+      <el-date-picker
+        v-model="listQuery.startDate"
+        type="date"
+        value-format="yyyy-MM-dd"
+        placeholder="开始日期"
+      >
       </el-date-picker>
       <span>✈️✈️</span>
-      <el-date-picker v-model="listQuery.endDate" placeholder="结束日期">
+      <el-date-picker
+        v-model="listQuery.endDate"
+        type="date"
+        value-format="yyyy-MM-dd"
+        placeholder="结束日期"
+      >
       </el-date-picker>
       <span style="margin-top: 20px">事件名称：</span>
       <el-input
