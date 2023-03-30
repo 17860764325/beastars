@@ -29,6 +29,8 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
 
     @Value("${upload.imagePath}")
     private String uploadImagePath;
+    @Value("${upload.imagePathMapping}")
+    private String imagePathMapping;
 
     @Override
     public ScheduleItemDto getInfo(String id) {
@@ -65,8 +67,10 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
             e.printStackTrace();
         }
         // 返回文件路径
-        return ObjectRestResponse.success(path.toString());
+        return ObjectRestResponse.success(imagePathMapping + fileName);
     }
+
+
 
     /**
      * @description: 详情保存方法

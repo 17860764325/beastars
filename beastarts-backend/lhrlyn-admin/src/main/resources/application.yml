@@ -43,3 +43,4 @@ logging:
               mapper: debug
 upload:
   imagePath: /Users/emlynchen/Pictures/leigexi
+  imagePathMapping: http://127.0.0.1:8081/doctor/
