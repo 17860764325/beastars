@@ -5,6 +5,7 @@ const defaultSettings = require('./src/settings.js')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
+var webpack = require('webpack')
 
 const name = defaultSettings.title || 'vue Admin Template' // page title
 // If your port is set to 80,
@@ -55,7 +56,15 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    plugins: [
+
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      })
+
+    ]
   },
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test

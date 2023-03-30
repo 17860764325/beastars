@@ -43,8 +43,12 @@
         <el-tab-pane label="头像以及背景">
           <h2>头像以及背景</h2>
           <div>
-            <el-button @click="openChooseImg('1')">更改背景</el-button>
-            <el-button @click="openChooseImg('2')">更改头像</el-button>
+            <el-button type="primary" @click="openChooseImg('1')"
+              >更改背景</el-button
+            >
+            <el-button type="success" @click="openChooseImg('2')"
+              >更改头像</el-button
+            >
           </div>
         </el-tab-pane>
         <el-tab-pane label="其他">其他</el-tab-pane>

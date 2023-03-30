@@ -17,8 +17,9 @@
       :before-upload="beforeUpload"
       :headers="headers"
     />
-
+    <!-- 为什么是绿色的背景色，因为护眼！ -->
     <quill-editor
+      style="background-color: #c7edcc"
       ref="myQuillEditor"
       v-model="data.dataAbout"
       :options="editorOption"
@@ -44,8 +45,13 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import Cookies from 'js-cookie'
-
+import imageResize from 'quill-image-resize-module' // 富文本实现图片编辑功能
+import { ImageDrop } from 'quill-image-drop-module' // 图片拖动组件引用
+import Quill from 'quill'
 import { quillEditor } from 'vue-quill-editor'
+Quill.register('modules/imageDrop', ImageDrop) // 图片拖动组件引用
+Quill.register('modules/imageResize', imageResize) // 富文本实现图片编辑功能
+
 // 保存
 import { getInfo, saveInfo } from '@/api/ScheduleItem/api'
 export default {
@@ -70,6 +76,15 @@ export default {
             delay: 1000,
             maxStack: 50,
             userOnly: false
+          },
+          imageDrop: true,
+          imageResize: {
+            displayStyles: {
+              backgroundColor: 'black',
+              border: 'none',
+              color: 'white'
+            },
+            modules: ['Resize', 'DisplaySize', 'Toolbar']
           },
           toolbar: {
             container: [
@@ -136,7 +151,6 @@ export default {
     },
     beforeUpload(file) {},
     uploadSuccess(res) {
-      console.log(res.data, '-----------')
       // 获取富文本组件实例
       const quill = this.$refs.myQuillEditor.quill
       // 如果上传成功
@@ -144,6 +158,7 @@ export default {
         // 获取光标所在位置
         const length = quill.getSelection().index
         // 插入图片，res为服务器返回的图片链接地址
+        console.log(res.data, '-----------')
         quill.insertEmbed(length, 'image', res.data)
         // 调整光标到最后
         quill.setSelection(length + 1)
