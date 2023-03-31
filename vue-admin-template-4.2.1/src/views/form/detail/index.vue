@@ -19,7 +19,6 @@
     />
     <!-- 为什么是绿色的背景色，因为护眼！ -->
     <quill-editor
-      style="height: 550px"
       ref="myQuillEditor"
       v-model="data.dataAbout"
       :options="editorOption"
@@ -27,7 +26,7 @@
       @focus="onEditorFocus($event)"
       @change="onEditorChange($event)"
     />
-    <div style="text-align: right; margin-top: 50px">
+    <div style="text-align: right; margin-top: 20px">
       <el-button
         type="success"
         style="width: 15%"

@@ -23,6 +23,7 @@ import { getUserFatherRouterPaths, getUserSonRouterPaths } from '../../api/syste
  * @param roles
  */
 export async function filterAsyncRoutes(routes, roles) {
+  // 循环所有的路有有权限的返回true就显示，没有权限的返回false就不加入到路由里面
   // 循环所有的路由
   // routes.forEach(route => {
   //   const tmp = { ...route }
@@ -43,11 +44,14 @@ export async function filterAsyncRoutes(routes, roles) {
   //     element.component = () => import(data)
   //   })
   // })
+
+  // 获取所有的父页面
   const father = await getUserFatherRouterPaths()
+  // 获取所有的子页面
   const son = await getUserSonRouterPaths()
 
   const fatherRouters = []
-
+  // 循环父页面
   father.data.forEach(item => {
     asyncRouters.forEach(elemrnt => {
       if (item === elemrnt.path) {
@@ -66,6 +70,7 @@ export async function filterAsyncRoutes(routes, roles) {
   })
   console.log(error404)
   fatherRouters.push(error404)
+  console.log(fatherRouters, '筛选过后的路有列表')
   return fatherRouters
 }
 
@@ -77,9 +82,8 @@ const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     // 静态路由
-    console.log(routes,'routers')
+    console.log(routes, 'routers')
     state.routes = constantRoutes.concat(routes) // 将过滤后的路由和constantRoutes存起来
-
   }
 }
 
@@ -87,9 +91,11 @@ const mutations = {
 // 根据纯属进来的roles，筛选出路由
 const actions = {
   generateRoutes({ commit }, roles) {
+    // 压根就没有将当前人的权限传输过来
+    console.log(roles, 'roles')
     return new Promise(async resolve => {
       // 路由是否有admin,有直接全部显示
-      // 过滤路由
+      // 过滤路由（过滤出当前用户能看见的页面和菜单）
       const accessedRoutes = await filterAsyncRoutes(asyncRoutes, roles)
       console.log(accessedRoutes, 'acc')
       // accessedRoutes这个就是当前角色可见的动态路由

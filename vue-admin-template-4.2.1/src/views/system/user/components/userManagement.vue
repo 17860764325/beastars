@@ -89,7 +89,7 @@
 
     <el-dialog
       v-if="userCharactervisable"
-      width="38%"
+      width="75%"
       :title="'用户角色修改'"
       :visible.sync="userCharactervisable"
     >

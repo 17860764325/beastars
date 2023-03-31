@@ -1,34 +1,11 @@
 <template>
   <div class="app-container">
     <div class="query">
-      <span>日期：</span>
-      <el-date-picker
-        v-model="listQuery.startDate"
-        type="date"
-        value-format="yyyy-MM-dd"
-        placeholder="开始日期"
-      >
-      </el-date-picker>
-      <span>✈️✈️</span>
-      <el-date-picker
-        v-model="listQuery.endDate"
-        type="date"
-        value-format="yyyy-MM-dd"
-        placeholder="结束日期"
-      >
-      </el-date-picker>
-      <span style="margin-top: 20px">事件名称：</span>
+      <span style="margin-top: 20px">权限名称：</span>
       <el-input
         style="width: 200px"
-        v-model="listQuery.name"
-        placeholder="事件名称"
-      >
-      </el-input>
-      <span style="margin-top: 20px">创建人</span>
-      <el-input
-        style="width: 200px"
-        v-model="listQuery.userName"
-        placeholder="创建人"
+        v-model="listQuery.roleName"
+        placeholder="权限名称"
       >
       </el-input>
       <el-button
@@ -59,20 +36,14 @@
         @click="deletes()"
         >Delete
       </el-button>
-      <el-button
-        type="success"
-        icon="el-icon-check"
-        class="filter-item"
-        @click="ok()"
-        >OK
-      </el-button>
-      <el-button
-        type="danger"
-        icon="el-icon-close"
-        class="filter-item"
-        @click="no()"
-        >NO
-      </el-button>
+    </div>
+    <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949">
+    </el-switch>
+    <div
+      v-show="value"
+      style="width: 200px; height: 20px; background-color: bisque"
+    >
+      你在哪瞎几把点什么？
     </div>
     <hr-table
       ref="table"
@@ -91,19 +62,28 @@
       v-if="addVisible"
       class="addDialog"
       width="40%"
-      :title="'新增故事！'"
+      :title="'新增权限！'"
       :visible.sync="addVisible"
     >
-      <story-add @close="addDilogClose" />
+      <role-add @close="addDilogClose" />
     </el-dialog>
     <el-dialog
       v-if="editVisible"
       class="addDialog"
       width="40%"
-      :title="'修改故事！'"
+      :title="'修改权限！'"
       :visible.sync="editVisible"
     >
-      <story-edit :id="id" @close="editDilogClose" />
+      <role-edit :id="id" @close="editDilogClose" />
+    </el-dialog>
+    <el-dialog
+      v-if="rolePageVisable"
+      class="addDialog"
+      width="75%"
+      :title="title + '页面权限对应！'"
+      :visible.sync="rolePageVisable"
+    >
+      <role-page :id="id" @close="rolePageVisable = false" />
     </el-dialog>
     <el-dialog
       v-if="deleteVisible"
@@ -122,25 +102,30 @@
 </template>
 
 <script>
-import { page, deletes, statusOk, statusNo } from '@/api/ScheduleHeader/api.js'
-import { getUserInfo } from '@/api/user/api.js'
+import { page, deletes } from '@/api/role/api.js'
+// import { getUserInfo } from '@/api/user/api.js'
 
 export default {
   name: 'Documentation',
   components: {
-    // 新增
-    'story-add': () => import('./components/add'),
-    // 编辑
-    'story-edit': () => import('./components/edit')
+    // // 新增
+    'role-add': () => import('./components/roleAdd'),
+    // // 编辑
+    'role-edit': () => import('./components/roleEdit'),
+    // 分配页面权限
+    'role-page': () => import('./components/rolePage.vue')
   },
   data() {
     return {
+      value: false,
+      title: undefined,
       page,
       user: {},
       boos: false,
       addVisible: false,
       editVisible: false,
       deleteVisible: false,
+      rolePageVisable: false,
       ids: '',
       id: undefined,
       selectedRows: [],
@@ -150,42 +135,22 @@ export default {
         fieldList: [
           // 交易形式
           {
-            prop: 'userName',
+            prop: 'roleName',
             showOverflowTooltip: true,
-            label: '创建人',
+            label: '权限名称',
             minWidth: 100
           },
           {
-            prop: 'name',
+            prop: 'roleAbout',
             showOverflowTooltip: true,
-            label: '👀想做事情名称',
+            label: '权限关于',
             minWidth: 150
           },
           {
-            prop: 'createTime',
+            prop: 'isVoid',
             showOverflowTooltip: true,
-            label: '🕐创建时间',
-            type: 'date',
-            minWidth: 200
-          },
-          {
-            prop: 'date',
-            showOverflowTooltip: true,
-            label: '🕐准备什么时候完成？',
-            type: 'date',
-            minWidth: 200
-          },
-          {
-            prop: 'remarks',
-            showOverflowTooltip: true,
-            label: '备注',
-            minWidth: 200
-          },
-          {
-            prop: 'isOk',
-            showOverflowTooltip: true,
-            label: '☑️是否完成了？',
-            dictType: 'is_ok',
+            dictType: 'yes_no',
+            label: '权限是否生效？',
             minWidth: 150
           }
         ],
@@ -195,7 +160,7 @@ export default {
           btList: [
             {
               type: 'text',
-              label: '📝书写策划',
+              label: '分配界面',
               event: 'detail',
               show: true
             },
@@ -212,10 +177,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        startDate: undefined,
-        endDate: undefined,
-        name: undefined,
-        userName: undefined
+        roleName: undefined
       },
       test: {
         a: '1',
@@ -224,9 +186,6 @@ export default {
     }
   },
   async created() {
-    await getUserInfo().then((res) => {
-      this.listQuery.userName = res.data.username
-    })
     await this.getList()
     // const res = await getUserId()
     // this.user = res.data
@@ -238,10 +197,7 @@ export default {
       this.tableInfo.data = res.data.rows
     },
     async reset() {
-      this.listQuery.startDate = undefined
-      this.listQuery.endDate = undefined
-      this.listQuery.name = undefined
-      this.listQuery.userName = undefined
+      this.listQuery.roleName = undefined
 
       const res = await page({
         page: 1,
@@ -263,7 +219,10 @@ export default {
     },
     detail(data) {
       console.log(data)
-      this.$router.push({ name: 'dateDetail', params: { id: data.id } })
+      this.id = data.id
+      this.title = data.roleName
+      this.rolePageVisable = true
+      //   this.$router.push({ name: 'dateDetail', params: { id: data.id } })
     },
     // 添加数据
     add() {

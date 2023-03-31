@@ -28,7 +28,7 @@ export function getPageList() {
   })
 }
 
-export function getPageInfoByCode(code ) {
+export function getPageInfoByCode(code) {
   return request({
     url: '/page/getPageInfoByCode/' + code,
     method: 'get'
@@ -39,5 +39,27 @@ export function getMaxPageCode() {
   return request({
     url: '/page/getMaxPageCode',
     method: 'get'
+  })
+}
+
+export function getPagesByRoleId(roleId) {
+  return request({
+    url: '/page/getPagesByRoleId/' + roleId,
+    method: 'get'
+  })
+}
+
+export function getAllPages(roleId) {
+  return request({
+    url: '/page/getAllPages',
+    method: 'get'
+  })
+}
+
+export function saveRolePages(data) {
+  return request({
+    url: '/page/saveRolePages',
+    method: 'post',
+    data: data
   })
 }

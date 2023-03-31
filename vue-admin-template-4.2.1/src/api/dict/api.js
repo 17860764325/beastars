@@ -42,7 +42,7 @@ export function getDictInfoById(id) {
   })
 }
 
-// 字典值新增
+// 字典值修改
 export function editObj(obj) {
   return request({
     url: '/dict/edit',

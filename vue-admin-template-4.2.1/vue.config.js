@@ -39,7 +39,7 @@ module.exports = {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       '/api': {
-        target: `http://8.130.54.79:8080/`,
+        target: `http://localhost:8081/`,
         ws: true,
         pathRewrite: {
           '^/api': '' // 请求的时候是用这个api就可以

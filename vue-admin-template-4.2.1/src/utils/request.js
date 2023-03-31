@@ -87,8 +87,9 @@ service.interceptors.response.use(
             location.reload()
           })
         })
+      } else {
+        return Promise.reject(new Error(res.message || 'Error'))
       }
-      return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res
     }

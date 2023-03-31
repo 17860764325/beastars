@@ -165,6 +165,7 @@ export default {
     },
     // 注册页面方法
     register() {
+      console.log('打开注册弹窗')
       // 跳转到注册界面
       this.registerVisable = true
     }
