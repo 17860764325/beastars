@@ -40,7 +40,7 @@ public class RoleServiceImpl implements RoleService {
      @Override
     public List<Role> page(PageQuery query) {
         List<Role> page = roleMapper.page(query);
-        List<Role> DictDtos = BeanCopyUtils.listCopy(page, Role.class);
+            List<Role> DictDtos = BeanCopyUtils.listCopy(page, Role.class);
         return DictDtos;
     }
 
@@ -87,4 +87,47 @@ public class RoleServiceImpl implements RoleService {
         }
         return ObjectRestResponse.success();
     }
+
+   @Override
+    public ObjectRestResponse delete(String ids) {
+            int i = roleMapper.deleteByIds(ids);
+        if(i >= 1){
+            return ObjectRestResponse.success();
+        }else {
+            return ObjectRestResponse.failed();
+        }
+
+    }
+
+    @Override
+    public Role edit(String id) {
+        Role role = new Role();
+        role.setId(Long.valueOf(id));
+        Role role1 = roleMapper.selectOne(role);
+        return role1;
+    }
+
+    @Override
+    public boolean editDictDate(Role role) {
+        int i = roleMapper.updateByPrimaryKey(role);
+         if (i > 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean add(Role role) {
+
+        int  i = roleMapper.insert(role);
+
+        if (i > 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 }

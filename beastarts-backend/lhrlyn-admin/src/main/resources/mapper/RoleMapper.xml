@@ -13,7 +13,7 @@
         <!-- 是否起作用 -->
         <result property="isVoid" column="is_void"/>
     </resultMap>
-    <select id="page" parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample" resultType="com.lhrlyn.cn.lhrlynadmin.user.enity.Role">
+    <select id="page" parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample" resultMap="roleMap">
         select id,
         role_name,
         role_about,
@@ -21,7 +21,7 @@
         from role
         <where>
             <if test="roleName != null and roleName != ''">
-                and role_name = #{roleName}
+                and role_name like '%${roleName}%'
             </if>
         </where>
     </select>

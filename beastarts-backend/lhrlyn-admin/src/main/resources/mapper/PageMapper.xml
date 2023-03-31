@@ -40,6 +40,28 @@
     <select id="getMaxPageCode" resultType="java.lang.Integer">
         SELECT  max(page_code + 0) from page
     </select>
+    <select id="getPagesByRoleId" resultMap="pageMap">
+
+select p.id,
+       p.create_by,
+       p.create_time,
+       p.update_by,
+       p.update_time,
+       p.page_code,
+       p.page_name,
+       p.icon,
+       p.path,
+       p.name,
+       p.page_parent_code,
+       p.page_path,
+       p.page_query,
+       p.page_perms,
+       p.page_type,
+       p.page_status
+from page p
+         left join page_role pr on p.page_code = pr.page_code
+where pr.role_code = #{roleId}
+    </select>
 
 
 </mapper>

@@ -58,6 +58,8 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
         } else if (file.getOriginalFilename().contains("jpeg")) {
             fileName += ".jpeg";
 
+        }else if (file.getOriginalFilename().contains("HEIC")){
+            fileName += ".HEIC";
         }
         // 将文件保存到上传目录
         Path path = Paths.get(uploadImagePath + "/" + fileName);

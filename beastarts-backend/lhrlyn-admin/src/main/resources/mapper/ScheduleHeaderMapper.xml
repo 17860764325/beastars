@@ -23,16 +23,19 @@
         from schedule_header sh
         <where>
             <if test="startDate != null and startDate != ''">
-                and sh.date <![CDATA[ >= ]]> #{startDate}
+                and sh.create_time <![CDATA[ >= ]]> #{startDate}
             </if>
             <if test="endDate != null and endDate != ''">
-                and sh.date <![CDATA[ <= ]]> #{endDate}
+                and sh.create_time <![CDATA[ <= ]]> #{endDate}
             </if>
             <if test="userId != null and userId != ''">
                 and sh.user_id = #{userId}
             </if>
         <if test="name != null and name != ''">
                 and sh.name like N'%${ name}%'
+            </if>
+        <if test="userName != null and userName != ''">
+                and sh.user_name like N'%${ userName}%'
             </if>
 
         </where>

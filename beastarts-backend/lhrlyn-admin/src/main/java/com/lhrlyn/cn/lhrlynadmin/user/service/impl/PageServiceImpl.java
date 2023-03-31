@@ -1,5 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.Meta;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
@@ -7,11 +8,13 @@ import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.PageRole;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.UserRole;
+import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.PageRoleVO;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.PageMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.PageRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.PageService;
+import com.lhrlyn.cn.lhrlynadmin.user.util.IdWorker;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -232,5 +235,37 @@ public class PageServiceImpl implements PageService {
             }
         }
         return ObjectRestResponse.success(paths);
+    }
+
+    public ObjectRestResponse getPagesByRoleId(String roleId) {
+        List<Page> pages = pageMapper.getPagesByRoleId(roleId);
+        return ObjectRestResponse.success(pages);
+    }
+
+    public ObjectRestResponse getAllPages() {
+        List<Page> pages = pageMapper.selectAll();
+        return ObjectRestResponse.success(pages);
+    }
+
+    public ObjectRestResponse saveRolePages(PageRoleVO pageRoleVO,User user) {
+        List<PageRole> resultList = new ArrayList<>();
+        for (String pageId : pageRoleVO.getPageIds()) {
+            PageRole pageRole = new PageRole();
+            pageRole.setRoleCode(pageRoleVO.getRoleId());
+            pageRole.setPageCode(pageId);
+//             IdWorker idWorker = new IdWo
+            
+            pageRole.setCreateBy(user.getUsername());
+            pageRole.setCreateTime(DateUtil.date());
+            resultList.add(pageRole);
+        }
+        // 进行全删全建，将之前这个用户的全部删除，然后重新插入
+        pageRoleMapper.deleteByUserId(pageRoleVO.getRoleId());
+        // 全建
+        int i = pageRoleMapper.insertList(resultList);
+        if (i <= 0){
+            return ObjectRestResponse.failed("保存失败");
+        }
+        return ObjectRestResponse.success();
     }
 }

@@ -14,5 +14,8 @@
         <!-- 权限编码 -->
         <result property="roleCode" column="role_code"/>
     </resultMap>
+    <delete id="deleteByUserId">
+         delete from page_role where role_code = #{roleId}
+    </delete>
 
 </mapper>

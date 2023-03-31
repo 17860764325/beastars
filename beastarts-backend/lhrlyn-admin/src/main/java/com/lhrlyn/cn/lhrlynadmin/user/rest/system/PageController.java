@@ -5,6 +5,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.PageRoleVO;
 import com.lhrlyn.cn.lhrlynadmin.user.rest.Controller;
 import com.lhrlyn.cn.lhrlynadmin.user.service.impl.PageServiceImpl;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
@@ -12,10 +13,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.getUserInfo.GetUserInfo;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,6 +30,9 @@ public class PageController extends Controller {
 
     @Autowired
     private PageServiceImpl pageService;
+
+     @Autowired
+    private RedisTemplate redisTemplate;
 
 
 
@@ -69,6 +70,25 @@ public class PageController extends Controller {
     @GetMapping("/getMaxPageCode")
     public ObjectRestResponse<Integer> getMaxPageCode(){
         return pageService.getMaxPageCode();
+    }
+
+
+    @GetMapping("/getPagesByRoleId/{roleId}")
+    public ObjectRestResponse getPagesByRoleId(@PathVariable("roleId") String roleId){
+        return pageService.getPagesByRoleId(roleId);
+    }
+
+    @GetMapping("/getAllPages")
+    public ObjectRestResponse getAllPages(){
+        return pageService.getAllPages();
+    }
+
+    @PostMapping("/saveRolePages")
+    public ObjectRestResponse saveRolePages(@RequestBody PageRoleVO pageRoleVO,HttpServletRequest request){
+         String token = request.getHeader("token");
+        Object userDto = redisTemplate.opsForValue().get(token);
+        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
+        return pageService.saveRolePages(pageRoleVO,userDto1);
     }
 
 

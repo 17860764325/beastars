@@ -4,6 +4,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.PageRoleVO;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 
 import java.util.List;
@@ -27,4 +28,9 @@ public interface PageService {
     ObjectRestResponse<List<String>> getUserFatherRouterPaths(User userDto1);
 
     ObjectRestResponse<List<String>> getUserSonRouterPaths(User userDto1);
+    public ObjectRestResponse getPagesByRoleId(String roleId) ;
+
+    public ObjectRestResponse getAllPages();
+
+    public ObjectRestResponse saveRolePages(PageRoleVO pageRoleVO,User user);
 }

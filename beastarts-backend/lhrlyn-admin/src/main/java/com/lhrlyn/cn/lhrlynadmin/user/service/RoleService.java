@@ -21,4 +21,12 @@ public interface RoleService {
     ObjectRestResponse getCharacterByUserId(String id);
 
     ObjectRestResponse saveCharacter(UserRolesVO userRolesVO);
+
+    ObjectRestResponse delete(String ids);
+
+    Role edit(String id);
+
+    boolean editDictDate(Role role);
+
+    boolean add(Role role);
 }

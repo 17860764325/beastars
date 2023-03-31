@@ -78,4 +78,45 @@ public class RoleController extends Controller {
     public ObjectRestResponse  saveCharacter(@RequestBody UserRolesVO userRolesVO){
         return roleService.saveCharacter(userRolesVO);
     }
+    
+    /** 
+     * @description: 删除权限
+     * @param: ids 
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse 
+     * @author lhr
+     * @date: 2023/3/31 10:45
+     */ 
+    @GetMapping("/delete/{ids}")
+    public ObjectRestResponse delete(@PathVariable("ids") String ids) {
+        return roleService.delete(ids);
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public ObjectRestResponse edit(@PathVariable("id") String id) {
+        Role role = roleService.edit(id);
+        return ObjectRestResponse.success(role);
+    }
+
+    @PostMapping("/edit")
+    public ObjectRestResponse edit(@RequestBody Role role) {
+        boolean add = roleService.editDictDate(role);
+        if (add) {
+            return ObjectRestResponse.success();
+        } else {
+            return ObjectRestResponse.failed("修改失败！");
+        }
+    }
+
+    @PostMapping("/add")
+    public ObjectRestResponse add(@RequestBody Role role) {
+        boolean add = roleService.add(role);
+        if (add) {
+            return ObjectRestResponse.success();
+        } else {
+            return ObjectRestResponse.failed("添加失败,数据库中已经有该权限值");
+        }
+
+    }
+
 }
