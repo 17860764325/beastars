@@ -23,7 +23,7 @@ export const constantRoutes = [
 
 // 动态路由
 export const asyncRouters = [{
-  path: '/form', component: Layout, children: [{
+  path: '/form', component: Layout, meta: { title: '日程日志', icon: 'table' }, children: [{
     path: 'index',
     name: 'index',
     component: () => import('@/views/form/index'),
@@ -35,7 +35,11 @@ export const asyncRouters = [{
     meta: { title: '事情详情计划🛎', icon: 'form' },
     props: true,
     hidden: true
-
+  }, {
+    path: 'test',
+    name: 'test',
+    component: () => import('@/views/form/index'),
+    meta: { title: 'test测试页面', icon: 'table' }
   }]
 }, {
   path: '/system', component: Layout, meta: { title: '系统管理⚙️', icon: 'eye-open' }, children: [{

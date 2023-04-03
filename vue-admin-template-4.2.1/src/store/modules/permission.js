@@ -53,21 +53,35 @@ export async function filterAsyncRoutes(routes, roles) {
   const fatherRouters = []
   // 循环父页面
   father.data.forEach(item => {
-    asyncRouters.forEach(elemrnt => {
-      if (item === elemrnt.path) {
-        const childrenCopy = []
-        son.data.forEach(son => {
-          elemrnt.children.forEach(children => {
-            if (son === children.path) {
-              childrenCopy.push(children)
-            }
-          })
-        })
-        elemrnt.children = childrenCopy
-        fatherRouters.push(elemrnt)
-      }
-    })
+    const fatherRouter = asyncRouters.find(router => router.path === item)
+    if (fatherRouter) {
+      const childrenCopy = son.data.reduce((acc, son) => {
+        const sonRouter = fatherRouter.children.find(router => router.path === son)
+        if (sonRouter) {
+          acc.push(sonRouter)
+        }
+        return acc
+      }, [])
+      fatherRouter.children = childrenCopy
+      fatherRouters.push(fatherRouter)
+    }
   })
+  /*
+  father.data.forEach(item => {
+    const fatherRouter = asyncRouters.find(router => router.path === item)
+    if (fatherRouter) {
+      const childrenCopy = []
+      son.data.forEach(son => {
+        const sonRouter = fatherRouter.children.find(router => router.path === son)
+        if (sonRouter) {
+          childrenCopy.push(sonRouter)
+        }
+      })
+      fatherRouter.children = childrenCopy
+      fatherRouters.push(fatherRouter)
+    }
+  })
+  */
   console.log(error404)
   fatherRouters.push(error404)
   console.log(fatherRouters, '筛选过后的路有列表')

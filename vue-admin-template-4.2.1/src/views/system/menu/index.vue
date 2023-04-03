@@ -4,7 +4,9 @@
       <el-col class="left">
         <el-card class="left-card">
           <el-button type="primary" @click="append(null)">新建目录</el-button>
-          <el-button type="primary" @click="getRouterList()">获取路由list</el-button>
+          <el-button type="primary" @click="getRouterList()"
+            >获取路由list</el-button
+          >
           <div class="block">
             <p>所有页面</p>
             <el-tree
@@ -15,37 +17,46 @@
               :expand-on-click-node="false"
               @node-click="handleCheckChange"
             >
-      <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
-        <span>
-          <el-button
-            :disabled="data.parentCode !== '0'"
-            class="create"
-            type="text"
-            size="mini"
-            @click="() => append(data)"
-          >
-            新增页面
-          </el-button>
-          <el-button
-            class="delete"
-            type="text"
-            size="mini"
-            @click="() => remove(node, data)"
-          >
-            删除页面
-          </el-button>
-        </span>
-      </span>
+              <span class="custom-tree-node" slot-scope="{ node, data }">
+                <span>{{ node.label }}</span>
+                <span>
+                  <el-button
+                    :disabled="data.parentCode !== '0'"
+                    class="create"
+                    type="text"
+                    size="mini"
+                    @click="() => append(data)"
+                  >
+                    新增页面
+                  </el-button>
+                  <el-button
+                    class="delete"
+                    type="text"
+                    size="mini"
+                    @click="() => remove(node, data)"
+                  >
+                    删除页面
+                  </el-button>
+                </span>
+              </span>
             </el-tree>
           </div>
         </el-card>
       </el-col>
       <el-col class="right">
         <el-card class="right-card">
-          <el-button type="primary" :disabled="save">保存！</el-button>
-          <el-button type="primary" :disabled="update">更新！</el-button>
-          <hr-form ref="registerForm" :form-disabled="false" :form.sync="form" :field-list="fieldList"/>
+          <el-button type="primary" @click="saveMethod" :disabled="save"
+            >保存！</el-button
+          >
+          <el-button type="primary" @click="updateMethod" :disabled="update"
+            >更新！</el-button
+          >
+          <hr-form
+            ref="pageForm"
+            :form-disabled="false"
+            :form.sync="form"
+            :field-list="fieldList"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -53,7 +64,14 @@
 </template>
 
 <script>
-import { getPageList, getPageInfoByCode, getMaxPageCode, getRouterListFromMysql } from '@/api/system/page'
+import {
+  getPageList,
+  getPageInfoByCode,
+  getMaxPageCode,
+  getRouterListFromMysql,
+  addObj,
+  editObj
+} from '@/api/system/page'
 
 let id = 1000
 
@@ -79,7 +97,37 @@ export default {
           type: 'text',
           label: '页面名称',
           prop: 'pageName',
-          rules: {},
+          rules: { required: true },
+          sm: 24,
+          md: 24,
+          lg: 24,
+          xl: 24
+        },
+        {
+          type: 'text',
+          label: 'icon',
+          prop: 'icon',
+          rules: { required: true },
+          sm: 24,
+          md: 24,
+          lg: 24,
+          xl: 24
+        },
+        {
+          type: 'text',
+          label: 'name',
+          prop: 'name',
+          rules: { required: true },
+          sm: 24,
+          md: 24,
+          lg: 24,
+          xl: 24
+        },
+        {
+          type: 'text',
+          label: 'path',
+          prop: 'path',
+          rules: { required: true },
           sm: 24,
           md: 24,
           lg: 24,
@@ -100,7 +148,7 @@ export default {
           type: 'text',
           label: '路由地址',
           prop: 'pagePath',
-          rules: {},
+          rules: { required: true },
           sm: 24,
           md: 24,
           lg: 24,
@@ -120,7 +168,10 @@ export default {
           type: 'radio',
           label: '页面类型',
           prop: 'pageType',
-          options: [{ label: '页面', value: 'C' }, { label: '菜单', value: 'M' }],
+          options: [
+            { label: '页面', value: 'C' },
+            { label: '菜单', value: 'M' }
+          ],
           rules: { required: true },
           sm: 24,
           md: 24,
@@ -136,11 +187,11 @@ export default {
   methods: {
     async append(data) {
       let num = 0
-      this.treeData.forEach(element => {
+      this.treeData.forEach((element) => {
         if (element.label === '子页面') {
           num++
         }
-        element.children.forEach(item => {
+        element.children.forEach((item) => {
           if (item.label === '子页面') {
             num++
           }
@@ -151,10 +202,20 @@ export default {
         id = res.data + 1
         console.log(id)
         if (data === null) {
-          const newChild = { id: id++, label: '子页面', parentCode: '0', children: [] }
+          const newChild = {
+            id: id++,
+            label: '子页面',
+            parentCode: '0',
+            children: []
+          }
           this.treeData.push(newChild)
         } else {
-          const newChild = { id: id++, label: '子页面', parentCode: data.id, children: [] }
+          const newChild = {
+            id: id++,
+            label: '子页面',
+            parentCode: data.id,
+            children: []
+          }
           // 如果该节点没有children则加上
           if (!data.children) {
             this.$set(data, 'children', [])
@@ -169,11 +230,10 @@ export default {
         })
       }
     },
-
     remove(node, data) {
       const parent = node.parent
       const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.id === data.id)
+      const index = children.findIndex((d) => d.id === data.id)
       children.splice(index, 1)
     },
     // 每次点击树节点，就会触发的
@@ -209,8 +269,75 @@ export default {
     },
     async getRouterList() {
       const res = await getRouterListFromMysql()
-      console.log(JSON.parse(this.$store.state.user.routerList, 'store里面的路由'))
+      console.log(
+        JSON.parse(this.$store.state.user.routerList, 'store里面的路由')
+      )
       console.log(res.data)
+    },
+    async saveMethod() {
+      console.log(this.form)
+      // 首先校验一下必填写的项目有没填写
+      if (this.$refs.pageForm.validate()) {
+        if (this.form.pageType === '菜单') {
+          this.form.pageType = 'M'
+        } else {
+          this.form.pageType = 'C'
+        }
+        await addObj(this.form).then((res) => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+            this.$emit('close')
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+        })
+      } else {
+        this.$notify({
+          title: '警告',
+          message: '请填写完整',
+          type: 'warning'
+        })
+      }
+    },
+    async updateMethod() {
+      console.log(this.form)
+      if (this.$refs.pageForm.validate()) {
+        if (this.form.pageType === '菜单') {
+          this.form.pageType = 'M'
+        } else {
+          this.form.pageType = 'C'
+        }
+        await editObj(this.form).then((res) => {
+          if (res.status === 200) {
+            this.$notify({
+              title: '成功',
+              message: '操作成功',
+              type: 'success'
+            })
+            this.$emit('close')
+          } else {
+            this.$notify({
+              title: '失败',
+              message: res.message,
+              type: 'error'
+            })
+          }
+        })
+      } else {
+        this.$notify({
+          title: '警告',
+          message: '请填写完整',
+          type: 'warning'
+        })
+      }
     }
   }
 }
@@ -231,7 +358,7 @@ export default {
 }
 
 .left {
-  height: 800px;
+  height: 700px;
   padding: 10px;
 }
 
@@ -240,7 +367,12 @@ export default {
 }
 
 .left-card {
-  height: 600px;
+  height: 700px;
+  overflow-y: auto;
+}
+
+.right-card {
+  height: 700px;
   overflow-y: auto;
 }
 

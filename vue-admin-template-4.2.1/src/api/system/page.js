@@ -63,3 +63,19 @@ export function saveRolePages(data) {
     data: data
   })
 }
+
+export function addObj(data) {
+  return request({
+    url: '/page/add',
+    method: 'post',
+    data: data
+  })
+}
+
+export function editObj(data) {
+  return request({
+    url: '/page/edit',
+    method: 'post',
+    data: data
+  })
+}
