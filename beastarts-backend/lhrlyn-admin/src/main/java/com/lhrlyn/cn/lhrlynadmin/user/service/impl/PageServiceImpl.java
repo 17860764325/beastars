@@ -2,6 +2,7 @@ package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.Meta;
+import com.lhrlyn.cn.lhrlynadmin.user.dto.PageDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
@@ -15,12 +16,16 @@ import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.PageService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.IdWorker;
+import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 /**
  * 页面管理
@@ -137,7 +142,6 @@ public class PageServiceImpl implements PageService {
         }
         return list;
     }
-
     /**
      * @description: 所有页面的树结构数据返回
      * @param:
@@ -184,11 +188,17 @@ public class PageServiceImpl implements PageService {
                 TreeDateDto treeDateDto1 = new TreeDateDto();
                 treeDateDto1.setId(page.getPageCode());
                 treeDateDto1.setLabel(page.getPageName());
+                treeDateDto1.setPath(page.getPath());
+                treeDateDto1.setName(page.getName());
+                treeDateDto1.setIcon(page.getIcon());
                 treeDateDto1.setParentCode(page.getPageParentCode());
                 childrens.add(treeDateDto1);
             }
             treeDateDto.setId(firstPage.getPageCode());
             treeDateDto.setLabel(firstPage.getPageName());
+            treeDateDto.setPath(firstPage.getPath());
+                treeDateDto.setName(firstPage.getName());
+                treeDateDto.setIcon(firstPage.getIcon());
             treeDateDto.setParentCode(firstPage.getPageParentCode());
             treeDateDto.setChildren(childrens);
             result.add(treeDateDto);
@@ -267,5 +277,27 @@ public class PageServiceImpl implements PageService {
             return ObjectRestResponse.failed("保存失败");
         }
         return ObjectRestResponse.success();
+    }
+
+    public ObjectRestResponse edit(PageDto pageDto) {
+        Page page = BeanCopyUtils.beanCopy(pageDto, Page.class);
+        int i = pageMapper.updateByPrimaryKeySelective(page);
+        if (i > 0){
+            return ObjectRestResponse.success("更新成功！");
+        }else {
+            return ObjectRestResponse.failed("更新失败！");
+
+        }
+    }
+
+    public ObjectRestResponse add(PageDto pageDto) {
+        Page page = BeanCopyUtils.beanCopy(pageDto, Page.class);
+        int insert = pageMapper.insert(page);
+        if (insert> 0){
+            return ObjectRestResponse.success("插入页面成功！");
+        }else{
+            return ObjectRestResponse.failed("插入页面失败！");
+        }
+
     }
 }

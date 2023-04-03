@@ -1,5 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.rest.system;
 
+import com.lhrlyn.cn.lhrlynadmin.user.dto.PageDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
@@ -89,6 +90,31 @@ public class PageController extends Controller {
         Object userDto = redisTemplate.opsForValue().get(token);
         User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
         return pageService.saveRolePages(pageRoleVO,userDto1);
+    }
+
+    /**
+     * @description: 新增页面
+     * @param: pageDto
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse
+     * @author lhr
+     * @date: 2023/4/2 23:08
+     */
+    @PostMapping("/add")
+    public ObjectRestResponse add(@RequestBody PageDto pageDto){
+        return pageService.add(pageDto);
+    }
+
+
+    /**
+     * @description: 修改原有页面配置
+     * @param: pageDto
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse
+     * @author lhr
+     * @date: 2023/4/2 23:09
+     */
+     @PostMapping("/edit")
+    public ObjectRestResponse edit(@RequestBody PageDto pageDto){
+        return pageService.edit(pageDto);
     }
 
 

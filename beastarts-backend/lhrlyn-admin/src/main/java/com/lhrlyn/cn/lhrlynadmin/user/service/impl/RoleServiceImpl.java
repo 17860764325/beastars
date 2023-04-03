@@ -80,6 +80,7 @@ public class RoleServiceImpl implements RoleService {
         }
         // 进行全删全建，将之前这个用户的全部删除，然后重新插入
         userRoleMapper.deleteByUserId(userRolesVO.getUserId());
+        
         // 全建
         int i = userRoleMapper.insertList(resultList);
         if (i <= 0){
@@ -98,6 +99,7 @@ public class RoleServiceImpl implements RoleService {
         }
 
     }
+    
 
     @Override
     public Role edit(String id) {

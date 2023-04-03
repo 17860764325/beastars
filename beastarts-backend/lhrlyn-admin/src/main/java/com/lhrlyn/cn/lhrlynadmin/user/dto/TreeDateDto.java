@@ -15,5 +15,8 @@ public class TreeDateDto {
     private String id;
     private String label;
     private String ParentCode;
+    private String path;
+    private String name;
+    private String icon;
     private List<TreeDateDto> children;
 }

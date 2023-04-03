@@ -1,5 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service;
 
+import com.lhrlyn.cn.lhrlynadmin.user.dto.PageDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
@@ -33,4 +34,8 @@ public interface PageService {
     public ObjectRestResponse getAllPages();
 
     public ObjectRestResponse saveRolePages(PageRoleVO pageRoleVO,User user);
+
+    public ObjectRestResponse add(PageDto pageDto);
+
+    public ObjectRestResponse edit(PageDto pageDto);
 }
