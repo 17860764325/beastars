@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
@@ -15,6 +17,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.service.ScheduleHeaderService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
+import com.lhrlyn.cn.lhrlynadmin.user.util.response.TableResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -36,7 +39,7 @@ public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
     private UserRoleMapper roleMapper;
 
     @Override
-    public List<ScheduleHeaderDto> page(PageQuery query, User user) {
+    public TableResultResponse<List<ScheduleHeaderDto>> page(Map<String, Object> params, User user) {
         boolean flag = false;
         // 判断是否是管理员或者是总经理
         UserRole userRole = new UserRole();
@@ -47,22 +50,24 @@ public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
                 flag = true;
             }
         }
+        Page<ScheduleHeaderDto> result = PageHelper.startPage(Integer.parseInt(params.get("page").toString()), Integer.parseInt(params.get("limit").toString()));
         if (flag) {
-            if (StrUtil.isNotEmpty((String)query.get("startDate"))) {
-                query.put("startDate", DateUtil.format(DateUtil.beginOfDay(DateUtil.parse((String) query.get("startDate"))), DatePattern.NORM_DATETIME_FORMAT));
-
+            if (StrUtil.isNotEmpty((String) params.get("startDate"))) {
+                params.put("startDate", DateUtil.format(DateUtil.beginOfDay(DateUtil.parse((String) params.get("startDate"))), DatePattern.NORM_DATETIME_FORMAT));
             }
-            if (StrUtil.isNotEmpty((String)query.get("endDate"))){
-                query.put("endDate", DateUtil.format(DateUtil.endOfDay(DateUtil.parse((String) query.get("endDate"))), DatePattern.NORM_DATETIME_FORMAT));
+            if (StrUtil.isNotEmpty((String) params.get("endDate"))) {
+                params.put("endDate", DateUtil.format(DateUtil.endOfDay(DateUtil.parse((String) params.get("endDate"))), DatePattern.NORM_DATETIME_FORMAT));
             }
-            List<ScheduleHeader> page = scheduleHeaderMapper.page(query);
+            List<ScheduleHeader> page = scheduleHeaderMapper.page(params);
             List<ScheduleHeaderDto> scheduleHeaderDtos = BeanCopyUtils.listCopy(page, ScheduleHeaderDto.class);
-            return scheduleHeaderDtos;
+            TableResultResponse tableResultResponse = new TableResultResponse<>(result.getTotal(), scheduleHeaderDtos);
+            return tableResultResponse;
         } else {
-            query.put("userId", user.getUserid());
-            List<ScheduleHeader> page = scheduleHeaderMapper.page(query);
+            params.put("userId", user.getUserid());
+            List<ScheduleHeader> page = scheduleHeaderMapper.page(params);
             List<ScheduleHeaderDto> scheduleHeaderDtos = BeanCopyUtils.listCopy(page, ScheduleHeaderDto.class);
-            return scheduleHeaderDtos;
+             TableResultResponse tableResultResponse = new TableResultResponse<>(result.getTotal(), scheduleHeaderDtos);
+            return tableResultResponse;
         }
 
     }

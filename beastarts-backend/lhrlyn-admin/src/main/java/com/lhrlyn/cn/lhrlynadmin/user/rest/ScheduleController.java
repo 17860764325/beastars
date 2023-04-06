@@ -12,6 +12,7 @@ import com.lhrlyn.cn.lhrlynadmin.user.service.ScheduleHeaderService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.ResultData;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
+import com.lhrlyn.cn.lhrlynadmin.user.util.redis.RedisUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.TableResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class ScheduleController extends Controller {
     private ScheduleHeaderService scheduleHeaderService;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     /**
      *  //TODO
@@ -48,22 +49,18 @@ public class ScheduleController extends Controller {
      */
     @GetMapping ("/page")
     public TableResultResponse<List<ScheduleHeaderDto>> page(@RequestParam Map<String, Object> map, HttpServletRequest request) {
-        PageQuery query = new PageQuery(map,map);
-        Page<ScheduleHeaderDto> result = PageHelper.startPage(query.getPage(), query.getLimit());
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
-        List<ScheduleHeaderDto> list = scheduleHeaderService.page(query,userDto1);
-        TableResultResponse tableResultResponse = new TableResultResponse<>(result.getTotal(),list);
-        return tableResultResponse;
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return scheduleHeaderService.page(map,userInfoByToken);
+
     }
 
+    
     @PostMapping("/add")
     public ObjectRestResponse add(@RequestBody ScheduleHeaderDto scheduleHeaderDto,HttpServletRequest request){
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
-        return scheduleHeaderService.add(scheduleHeaderDto,userDto1);
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return scheduleHeaderService.add(scheduleHeaderDto,userInfoByToken);
     }
 
     @GetMapping("/delete/{ids}")
@@ -94,9 +91,8 @@ request
     @GetMapping("/edit/{id}")
     public ObjectRestResponse<ScheduleHeaderDto> edit(@PathVariable("id") String id, HttpServletRequest request) {
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User userDto1 = BeanCopyUtils.beanCopy(userDto, User.class);
-        ScheduleHeaderDto scheduleHeaderDto = scheduleHeaderService.edit(id,userDto1);
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        ScheduleHeaderDto scheduleHeaderDto = scheduleHeaderService.edit(id,userInfoByToken);
         if (scheduleHeaderDto == null){
             return ObjectRestResponse.failed("您的权限  不够不可以进行修改？ ");
         }

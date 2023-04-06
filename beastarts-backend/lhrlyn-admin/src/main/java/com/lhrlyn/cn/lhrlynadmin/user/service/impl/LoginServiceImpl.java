@@ -1,5 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.*;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.LoginIpLogMapper;
@@ -65,7 +66,7 @@ public class LoginServiceImpl implements LoginService {
                 // 比较成功
                 // 生成token
                 String token = JwtUtil.sign(userDto.getUserid().intValue());
-                redisTemplate.opsForValue().set(token, userDto, Duration.ofMinutes(30L));
+                redisTemplate.opsForValue().set(token, JSONUtil.toJsonStr(userDto), Duration.ofMinutes(30L));
                 userDto.setToken(token);
                 // 存储ip
                 //  TODO 因为目前没有网络所以暂时讲则需要连网注册ip地址的功能先屏掉

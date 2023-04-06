@@ -1,5 +1,9 @@
 package com.lhrlyn.cn.lhrlynadmin.user.rest.system;
 
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
@@ -16,6 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +33,6 @@ public class loginController extends Controller {
     private LoginServiceImpl loginServiceImpl;
     @Autowired
     private PageServiceImpl pageService;
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     /**
      * 登录测试
      * http://127.0.0.1:8080/lhrlyn/admin/user/login
@@ -41,8 +43,8 @@ public class loginController extends Controller {
      * @return: java.lang.String
      */
     @PostMapping("/user/login")
-    public ResultData login(@RequestBody UserDto user,HttpServletRequest request) {
-        return loginServiceImpl.checkUser(user,request);
+    public ResultData login(@RequestBody UserDto user, HttpServletRequest request) {
+        return loginServiceImpl.checkUser(user, request);
     }
 
     /**
@@ -58,10 +60,11 @@ public class loginController extends Controller {
 
 
     /**
-     *  获取用户信息，包括权限和一些基本信息
-     * @author lhr
-     * @date  2022/1/17 9:07 下午
+     * 获取用户信息，包括权限和一些基本信息
+     *
      * @param
+     * @author lhr
+     * @date 2022/1/17 9:07 下午
      * @return: com.lhrlyn.cn.lhrlynadmin.user.enity.Userinfo
      */
     @GetMapping("/user/info")
@@ -73,24 +76,22 @@ public class loginController extends Controller {
     /**
      * @description: 返回该用户所有能访问的页面的path
      * @param: request
-     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse<java.util.List<java.lang.String>>
+     * @return: com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse<java.util.List < java.lang.String>>
      * @author lhr
      * @date: 2022/8/28 01:24
      */
     @GetMapping("/user/getUserFatherRouterPaths")
-    public ObjectRestResponse<List<String>> getUserRouterFatherPaths(HttpServletRequest request){
+    public ObjectRestResponse<List<String>> getUserRouterFatherPaths(HttpServletRequest request) {
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User userDto1 = BeanCopyUtils.beanCopy(userDto,User.class);
-        return pageService.getUserFatherRouterPaths(userDto1);
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return pageService.getUserFatherRouterPaths(userInfoByToken);
     }
 
     @GetMapping("/user/getUserSonRouterPaths")
-    public ObjectRestResponse<List<String>> getUserRouterSonPaths(HttpServletRequest request){
+    public ObjectRestResponse<List<String>> getUserRouterSonPaths(HttpServletRequest request) {
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User userDto1 = BeanCopyUtils.beanCopy(userDto,User.class);
-        return pageService.getUserSonRouterPaths(userDto1);
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return pageService.getUserSonRouterPaths(userInfoByToken);
     }
 
     /**
@@ -101,11 +102,10 @@ public class loginController extends Controller {
      * @date: 2022/8/26 13:48
      */
     @GetMapping("/user/routerList")
-    public ObjectRestResponse<List<RouterDto>> getPageListRouter(HttpServletRequest request){
+    public ObjectRestResponse<List<RouterDto>> getPageListRouter(HttpServletRequest request) {
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User userDto1 = BeanCopyUtils.beanCopy(userDto,User.class);
-        return  pageService.getPageListRouter(userDto1);
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return pageService.getPageListRouter(userInfoByToken);
     }
 
 
@@ -116,7 +116,7 @@ public class loginController extends Controller {
     }
 
     @PostMapping("/user/logout")
-    public void Logout(){
+    public void Logout() {
 
     }
 

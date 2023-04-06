@@ -1,10 +1,13 @@
 package com.lhrlyn.cn.lhrlynadmin.user.rest.system;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.service.impl.UserServiceImpl;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.getUserInfo.GetUserInfo;
+import com.lhrlyn.cn.lhrlynadmin.user.util.redis.RedisUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,7 +29,7 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     /**
      * @description: 返回用户的数据
@@ -49,9 +52,9 @@ public class UserController {
     @GetMapping("/getUserInfoByToken")
     public ObjectRestResponse<UserDto> gteUserInfo(HttpServletRequest request) {
         String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        UserDto userDto1 = BeanCopyUtils.beanCopy(userDto, UserDto.class);
-        UserDto userDto2 = userServiceImpl.getUserInfo(userDto1);
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        UserDto userDtoCopy = BeanCopyUtils.beanCopy(userInfoByToken, UserDto.class);
+        UserDto userDto2 = userServiceImpl.getUserInfo(userDtoCopy);
         return ObjectRestResponse.success(userDto2);
     }
 
@@ -64,10 +67,9 @@ public class UserController {
      */
     @GetMapping("/setUserHeadImg/navbar_image/{userHeadImg}")
     public ObjectRestResponse setUserHeadImg(@PathVariable("userHeadImg") String userHeadImg, HttpServletRequest request) {
-        String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User user = BeanCopyUtils.beanCopy(userDto, User.class);
-        return userServiceImpl.saveUserHeadImg(userHeadImg, user);
+     String token = request.getHeader("token");
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return userServiceImpl.saveUserHeadImg(userHeadImg, userInfoByToken);
     }
 
     /**
@@ -79,10 +81,9 @@ public class UserController {
      */
     @GetMapping("/setUserBackgroundImg/weekWallPaper/{userBackgroundImg}")
     public ObjectRestResponse setUserBackgroundImg(@PathVariable("userBackgroundImg") String userBackgroundImg, HttpServletRequest request) {
-        String token = request.getHeader("token");
-        Object userDto = redisTemplate.opsForValue().get(token);
-        User user = BeanCopyUtils.beanCopy(userDto, User.class);
-        return userServiceImpl.saveUserBackageImg(userBackgroundImg, user);
+      String token = request.getHeader("token");
+        User userInfoByToken = redisUtils.getUserInfoByToken(token);
+        return userServiceImpl.saveUserBackageImg(userBackgroundImg, userInfoByToken);
     }
 
     /** 

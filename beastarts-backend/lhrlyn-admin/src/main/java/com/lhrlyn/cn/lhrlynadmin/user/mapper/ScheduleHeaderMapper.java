@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ScheduleHeaderMapper extends CurdMapper<ScheduleHeader> {
 
-    List<ScheduleHeader> page(PageQuery query);
+    List<ScheduleHeader> page(Map<String, Object> params);
 }

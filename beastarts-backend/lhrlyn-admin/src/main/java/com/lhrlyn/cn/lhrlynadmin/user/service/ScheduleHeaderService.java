@@ -6,12 +6,14 @@ import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
 import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
+import com.lhrlyn.cn.lhrlynadmin.user.util.response.TableResultResponse;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ScheduleHeaderService {
 
-    List<ScheduleHeaderDto> page(PageQuery query, User userDto);
+   TableResultResponse<List<ScheduleHeaderDto>> page(Map<String, Object> params, User userDto);
 
     ObjectRestResponse add(ScheduleHeaderDto scheduleHeaderDto,User user);
 
