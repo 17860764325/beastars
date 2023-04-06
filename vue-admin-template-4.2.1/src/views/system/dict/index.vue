@@ -169,7 +169,7 @@ export default {
       tableData: [],
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         dictType: undefined,
         dictLabel: undefined
       },

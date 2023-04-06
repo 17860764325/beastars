@@ -337,7 +337,7 @@ export default {
         query: {
           page: 1,
           // 每页条数
-          limit: 20
+          limit: 10
         }
       },
       newFieldList: [],
@@ -528,7 +528,6 @@ export default {
     // 获取数据
     getList() {
       if (!this.api) return
-      this.$store.dispatch('app/loadingStart')
       this.api(this.handleParams(), this.queryList)
         .then((res) => {
           if (res.status === 200) {
@@ -561,9 +560,7 @@ export default {
             })
           }
         })
-        .finally(() => {
-          this.$store.dispatch('app/loadingEnd')
-        })
+        .finally(() => {})
     },
     // 改变每页显示数量
     handleSizeChange(val) {

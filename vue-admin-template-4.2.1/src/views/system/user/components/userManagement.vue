@@ -161,8 +161,20 @@ export default {
     async yesChangePassword() {
       if (this.newPassword !== this.newPasswordTow) {
         this.$notify({
-          title: '失败',
+          title: '错误',
           message: '两次密码输入的不一样!',
+          type: 'error'
+        })
+        return
+      } else if (
+        this.newPassword === null ||
+        this.newPassword === undefined ||
+        this.newPasswordTow === null ||
+        this.newPasswordTow === undefined
+      ) {
+        this.$notify({
+          title: '错误',
+          message: '密码不允许为空！',
           type: 'error'
         })
         return
