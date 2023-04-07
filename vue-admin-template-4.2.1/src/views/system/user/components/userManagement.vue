@@ -149,7 +149,7 @@ export default {
     },
     // 点击操作按钮触发事件
     edit() {
-      console.log('123123')
+      //  console.log('123123')
     },
     changePasword(id) {
       this.userId = id

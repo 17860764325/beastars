@@ -4,28 +4,37 @@
     <div v-if="headImg">
       <h2>所有头像：</h2>
       <div class="pageHead">
-        <div style="width:100%;display: flex">
+        <div style="width: 100%; display: flex">
           <el-card
             v-for="(item, index) in imgHeadList"
             v-bind:key="index"
-            :class="selectedIndex === index?'cardHeadSelected':'cardHeadNoSelected'"
+            :class="
+              selectedIndex === index
+                ? 'cardHeadSelected'
+                : 'cardHeadNoSelected'
+            "
           >
             <img
-              style="width: 80px; height: 80px; border: 1px solid;"
-              :src="require('../../../../assets/'+ item)"
-              @click="chooseImg(item,index)"
+              style="width: 80px; height: 80px; border: 1px solid"
+              :src="require('../../../../assets/' + item)"
+              @click="chooseImg(item, index)"
             />
             <!--      加上一个选中时候显示的图标-->
           </el-card>
         </div>
       </div>
-      <div style="display: flex; justify-content: space-evenly;">
+      <div style="display: flex; justify-content: space-evenly">
         <!--      用户原本的图标-->
         <div>
           <h2>原头像：</h2>
           <img
-            style="width: 130px; height: 100px; border: 1px solid;  border-radius: 5px;"
-            :src="require('../../../../assets/'+ userLocalImg)"
+            style="
+              width: 130px;
+              height: 100px;
+              border: 1px solid;
+              border-radius: 5px;
+            "
+            :src="require('../../../../assets/' + userLocalImg)"
           />
         </div>
 
@@ -33,12 +42,16 @@
         <div>
           <h2>更改后的头像：</h2>
           <img
-            style="width: 130px; height: 100px; border: 1px solid;   border-radius: 5px;"
-            :src="require('../../../../assets/'+ headImgSelected)"
+            style="
+              width: 130px;
+              height: 100px;
+              border: 1px solid;
+              border-radius: 5px;
+            "
+            :src="require('../../../../assets/' + headImgSelected)"
           />
         </div>
       </div>
-
     </div>
     <!--修改背景图片-->
     <div v-if="backGroundImg" style="display: flex">
@@ -46,17 +59,32 @@
         <h2>所有背景图：</h2>
         <div class="pageBackground">
           <div
-            style="width:100%;height: 250px;display: flex;flex-wrap: wrap;justify-content: center;  overflow-y: auto;"
+            style="
+              width: 100%;
+              height: 250px;
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              overflow-y: auto;
+            "
           >
             <el-card
               v-for="(item, index) in imgBackgroundList"
               v-bind:key="index"
-              :class="selectedIndex === index?'cardBackgroundSelected':'cardBackgroundNoSelected'"
+              :class="
+                selectedIndex === index
+                  ? 'cardBackgroundSelected'
+                  : 'cardBackgroundNoSelected'
+              "
             >
               <img
-                :class="selectedIndex === index?'imgBackgroundSelected':'imgBackgroundNoSelected'"
-                :src="require('../../../../assets/'+ item)"
-                @click="chooseImg(item,index)"
+                :class="
+                  selectedIndex === index
+                    ? 'imgBackgroundSelected'
+                    : 'imgBackgroundNoSelected'
+                "
+                :src="require('../../../../assets/' + item)"
+                @click="chooseImg(item, index)"
               />
               <!--      加上一个选中时候显示的图标-->
             </el-card>
@@ -71,20 +99,22 @@
             <div class="headImgDiv">
               <img
                 class="headImg"
-                :src="require('../../../../assets/'+userLocalImg)"
+                :src="require('../../../../assets/' + userLocalImg)"
               />
             </div>
             <!--  背景图-->
-            <img class="img" :src="require('../../../../assets/'+ backgroundImgSelected)"/>
+            <img
+              class="img"
+              :src="require('../../../../assets/' + backgroundImgSelected)"
+            />
           </el-row>
           <h2>主页预览效果～</h2>
         </el-card>
       </div>
     </div>
-<!--    提交 操作-->
+    <!--    提交 操作-->
     <el-button @click="closeDilog()">取消...</el-button>
     <el-button @click="changeImg()" type="primary">确认修改！</el-button>
-
   </div>
 </template>
 
@@ -112,15 +142,42 @@ export default {
       backGroundImg: false,
       list: [],
       selectedIndex: undefined,
-      imgHeadList: ['navbar_image/1.png', 'navbar_image/2.png', 'navbar_image/3.png', 'navbar_image/4.png', 'navbar_image/5.png', 'navbar_image/6.png', 'navbar_image/7.png', 'navbar_image/8.png', 'navbar_image/9.png', 'navbar_image/10.png', 'navbar_image/11.png'],
-      imgBackgroundList: ['weekWallPaper/1.jpg', 'weekWallPaper/2.jpg', 'weekWallPaper/3.png', 'weekWallPaper/4.png', 'weekWallPaper/5.jpg', 'weekWallPaper/6.jpg', 'weekWallPaper/7.jpg', 'weekWallPaper/8.jpg', 'weekWallPaper/9.jpg', 'weekWallPaper/10.jpg', 'weekWallPaper/11.jpg', 'weekWallPaper/12.jpg', 'weekWallPaper/13.png', 'weekWallPaper/14.jpg'],
+      imgHeadList: [
+        'navbar_image/1.png',
+        'navbar_image/2.png',
+        'navbar_image/3.png',
+        'navbar_image/4.png',
+        'navbar_image/5.png',
+        'navbar_image/6.png',
+        'navbar_image/7.png',
+        'navbar_image/8.png',
+        'navbar_image/9.png',
+        'navbar_image/10.png',
+        'navbar_image/11.png'
+      ],
+      imgBackgroundList: [
+        'weekWallPaper/1.jpg',
+        'weekWallPaper/2.jpg',
+        'weekWallPaper/3.png',
+        'weekWallPaper/4.png',
+        'weekWallPaper/5.jpg',
+        'weekWallPaper/6.jpg',
+        'weekWallPaper/7.jpg',
+        'weekWallPaper/8.jpg',
+        'weekWallPaper/9.jpg',
+        'weekWallPaper/10.jpg',
+        'weekWallPaper/11.jpg',
+        'weekWallPaper/12.jpg',
+        'weekWallPaper/13.png',
+        'weekWallPaper/14.jpg'
+      ],
       selected: false,
       headImgSelected: undefined,
       backgroundImgSelected: undefined
     }
   },
   created() {
-    console.log(this.type)
+    //  console.log(this.type)
     if (this.type === 'b') {
       this.backgroundImgSelected = this.userLocalBackGroundImg
       this.headImg = false
@@ -130,15 +187,15 @@ export default {
       this.headImg = true
       this.backGroundImg = false
     }
-    console.log(this.list)
+    //  console.log(this.list)
   },
   methods: {
     chooseImg(data, index) {
       // 选中状态
       this.selected = true
       this.selectedIndex = index
-      console.log(data)
-      console.log(this.type === 'b')
+      //  console.log(data)
+      //  console.log(this.type === 'b')
       if (this.type === 'b') {
         this.backgroundImgSelected = data
       } else if (this.type === 'h') {
@@ -169,7 +226,7 @@ export default {
           this.closeDilog()
         } else {
           // 保存更改值
-          setUserBackgroundImg(this.backgroundImgSelected).then(res => {
+          setUserBackgroundImg(this.backgroundImgSelected).then((res) => {
             if (res.status === 200) {
               this.$notify({
                 title: '成功',
@@ -204,7 +261,7 @@ export default {
           })
           this.closeDilog()
         } else {
-          setUserHeadImg(this.headImgSelected).then(res => {
+          setUserHeadImg(this.headImgSelected).then((res) => {
             if (res.status === 200) {
               this.$notify({
                 title: '成功',
@@ -277,7 +334,6 @@ export default {
   border: 2px solid #f6b26b;
   border-radius: 5px;
   text-align: center;
-
 }
 
 .imgBackgroundNoSelected {
@@ -314,5 +370,4 @@ export default {
   top: 125px;
   left: 10px;
 }
-
 </style>

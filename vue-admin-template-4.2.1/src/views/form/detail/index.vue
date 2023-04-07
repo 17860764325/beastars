@@ -137,15 +137,15 @@ export default {
   methods: {
     // 失去焦点
     onEditorBlur(date) {
-      console.log(date, 'onEditorBlur')
+      //  console.log(date, 'onEditorBlur')
     },
     // 获得焦点
     onEditorFocus(date) {
-      console.log(date, 'onEditorFocus')
+      //  console.log(date, 'onEditorFocus')
     },
     // 值发生变化
     onEditorChange(date) {
-      console.log(date.html, 'onEditorChange')
+      //  console.log(date.html, 'onEditorChange')
       this.data.dataAbout = date.html
     },
     beforeUpload(file) {},
@@ -157,7 +157,7 @@ export default {
         // 获取光标所在位置
         const length = quill.getSelection().index
         // 插入图片，res为服务器返回的图片链接地址
-        console.log(res.data, '-----------')
+        //  console.log(res.data, '-----------')
         quill.insertEmbed(length, 'image', res.data)
         // 调整光标到最后
         quill.setSelection(length + 1)

@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     async getList() {
-      console.log(123)
+      //  console.log(123)
       const res = await page(this.listQuery)
       this.tableInfo.data = res.data.rows
     },
@@ -218,7 +218,7 @@ export default {
       }
     },
     detail(data) {
-      console.log(data)
+      //  console.log(data)
       this.id = data.id
       this.title = data.roleName
       this.rolePageVisable = true
@@ -226,7 +226,7 @@ export default {
     },
     // 添加数据
     add() {
-      console.log('add')
+      //  console.log('add')
       this.addVisible = true
     },
     addDilogClose() {

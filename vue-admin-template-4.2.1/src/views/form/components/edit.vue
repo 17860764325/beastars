@@ -77,9 +77,9 @@ export default {
   },
   methods: {
     async submit() {
-      console.log('submit')
+      //  console.log('submit')
       if (this.$refs.hrTable.validate()) {
-        console.log(this.form)
+        //  console.log(this.form)
         await editObj(this.form).then((res) => {
           if (res.status === 200) {
             this.$notify({

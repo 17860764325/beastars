@@ -93,7 +93,7 @@ export default {
       if (this.$refs.registerForm.validate()) {
         // 再次校验，两次密码是否正确？
         if (this.form.password === this.form.rePassword) {
-          console.log(this.form)
+          //  console.log(this.form)
           // 两次密码相同
           // 向后端发送请求，存储信息
           const res = await regist(this.form)
@@ -122,7 +122,7 @@ export default {
       }
     },
     login() {
-      console.log('asdfasdfa')
+      //  console.log('asdfasdfa')
       // 登陆只需要将弹窗关闭即可
       this.$emit('close')
     }

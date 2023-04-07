@@ -1,6 +1,11 @@
 <template>
-  <div class="app-container ">
-    <hr-form ref="hrTable" :form-disabled="false" :form.sync="form" :field-list="fieldList" />
+  <div class="app-container">
+    <hr-form
+      ref="hrTable"
+      :form-disabled="false"
+      :form.sync="form"
+      :field-list="fieldList"
+    />
     <div style="text-align: center">
       <el-button @click="submit()">确定</el-button>
       <el-button @click="centrl()">取消</el-button>
@@ -9,7 +14,6 @@
 </template>
 
 <script>
-
 import { editObj, getDictInfoById } from '@/api/dict/api'
 export default {
   name: 'Documentation',
@@ -51,7 +55,8 @@ export default {
           label: '是否默认',
           prop: 'isDefault',
           dict: 'yes_no',
-          tooltip: 'type: select，选择框类型，绑定事件，下拉框的数据直接获取数据字典', // 帮助文本，用小问号显示，可以方html或者字符串
+          tooltip:
+            'type: select，选择框类型，绑定事件，下拉框的数据直接获取数据字典', // 帮助文本，用小问号显示，可以方html或者字符串
           event: 'selectTypeEvent',
           rules: { required: true },
           // filterable: true, // 是否可以过滤条件
@@ -69,16 +74,16 @@ export default {
   },
 
   async created() {
-    console.log(this.id)
+    //  console.log(this.id)
     const res = await getDictInfoById(this.id)
     this.form = res.data
   },
   methods: {
-    async  submit() {
-      console.log('submit')
+    async submit() {
+      //  console.log('submit')
       if (this.$refs.hrTable.validate()) {
-        console.log(this.form)
-        await editObj(this.form).then(res => {
+        //  console.log(this.form)
+        await editObj(this.form).then((res) => {
           if (res.status === 200) {
             this.$notify({
               title: '成功',
@@ -105,12 +110,11 @@ export default {
     centrl() {
       this.$emit('close')
     }
-
   }
 }
 </script>
 <style lang="scss" scoped>
-.query{
+.query {
   margin-top: 10px;
   margin-bottom: 20px;
 }

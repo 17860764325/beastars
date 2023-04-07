@@ -183,18 +183,22 @@ export default {
     this.getList()
   },
   methods: {
-    async getList() {
-      const res = await page(this.listQuery)
-      this.tableInfo.data = res.data.rows
+    // async getList() {
+    //   const res = await page(this.listQuery)
+    //   this.tableInfo.data = res.data.rows
+    // },
+    getList() {
+      this.tableInfo.refresh = Math.random()
     },
     async reset() {
       this.listQuery.dictType = undefined
       this.listQuery.dictLabel = undefined
-      const res = await page({
-        page: 1,
-        limit: 20
-      })
-      this.tableInfo.data = res.data.rows
+      // const res = await page({
+      //   page: 1,
+      //   limit: 20
+      // })
+      // this.tableInfo.data = res.data.rows
+      this.getList()
     },
     handleClick(event, data) {
       switch (event) {
@@ -207,7 +211,7 @@ export default {
     },
     selectionChange(rows) {
       this.selectedRow = rows
-      console.log(rows)
+      //  console.log(rows)
     },
     editOpen(data) {
       this.id = data.dictCode

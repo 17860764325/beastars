@@ -145,7 +145,7 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          console.log(this.redirect)
+          //  console.log(this.redirect)
           this.$store
             .dispatch('user/login', this.loginForm)
             .then(() => {
@@ -158,14 +158,14 @@ export default {
               this.loading = false
             })
         } else {
-          console.log('error submit!!')
+          //  console.log('error submit!!')
           return false
         }
       })
     },
     // 注册页面方法
     register() {
-      console.log('打开注册弹窗')
+      //  console.log('打开注册弹窗')
       // 跳转到注册界面
       this.registerVisable = true
     }

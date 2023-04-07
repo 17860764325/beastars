@@ -165,7 +165,7 @@ export default {
       // this.$router.go(0)
     },
     async save() {
-      console.log(this.form)
+      //  console.log(this.form)
       if (!this.$refs.hrTableChangeUsreInfo.validate()) {
         this.$notify({
           title: '失败',

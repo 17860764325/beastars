@@ -100,17 +100,12 @@ export default {
     this.getList()
   },
   methods: {
-    async getList() {
-      const res = await page(this.listQuery)
-      this.tableInfo.data = res.data.rows
+    getList() {
+      this.tableInfo.refresh = Math.random()
     },
     async reset() {
-      this.listQuery.date = undefined
-      const res = await page({
-        page: 1,
-        limit: 20
-      })
-      this.tableInfo.data = res.data.rows
+      this.listQuery.userName = undefined
+      this.getList()
     }
   }
 }

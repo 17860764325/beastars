@@ -1,38 +1,90 @@
 <template>
   <div class="navbar">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/12.png')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/2.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/3.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/1.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/4.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/5.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/6.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/7.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/8.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/9.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/10.png')" @click="imageClick('1')">
-    <img class="backageImage" v-lazy="require('../../assets/navbar_image/11.png')" @click="imageClick('1')">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/12.png')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/2.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/3.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/1.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/4.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/5.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/6.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/7.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/8.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/9.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/10.png')"
+      @click="imageClick('1')"
+    />
+    <img
+      class="backageImage"
+      v-lazy="require('../../assets/navbar_image/11.png')"
+      @click="imageClick('1')"
+    />
+    <hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
-    <breadcrumb class="breadcrumb-container"/>
+    <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img  v-lazy="require('../../assets/'+ (avatar? avatar:'1.png'))" class="user-avatar">
-          <i class="el-icon-caret-bottom"/>
+          <img
+            v-lazy="require('../../assets/' + (avatar ? avatar : '1.png'))"
+            class="user-avatar"
+          />
+          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
+            <el-dropdown-item> Home </el-dropdown-item>
           </router-link>
           <!-- <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a> -->
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">Log Out</span>
+            <span style="display: block" @click="logout">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -52,9 +104,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ])
+    ...mapGetters(['sidebar'])
   },
   data() {
     return {
@@ -63,7 +113,7 @@ export default {
   },
   async created() {
     const res = await getUserInfo()
-    console.log(res)
+    //  console.log(res)
     this.avatar = res.data.userHeadImg
   },
   methods: {
@@ -75,7 +125,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     imageClick(item) {
-      console.log(item)
+      //  console.log(item)
     }
   }
 }
@@ -87,10 +137,9 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .backageImage {
-
     border-radius: 20%;
     border: black solid 1px;
     height: 100%;
@@ -101,11 +150,11 @@ export default {
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background .3s;
+    transition: background 0.3s;
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
@@ -132,10 +181,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }

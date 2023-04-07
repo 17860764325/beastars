@@ -200,7 +200,7 @@ export default {
       if (num === 0) {
         const res = await getMaxPageCode()
         id = res.data + 1
-        console.log(id)
+        //  console.log(id)
         if (data === null) {
           const newChild = {
             id: id++,
@@ -240,7 +240,7 @@ export default {
     async handleCheckChange(data) {
       // 每次点击刷新右边的信息
       // 判断如果为新增加节点那就不进行后端查询
-      console.log(data)
+      //  console.log(data)
       // 每次点击就会显示这个页面的信息
       // 要进行判断，如果是新生成的节点那么就显示空的框
       if (data.label === '子页面') {
@@ -269,13 +269,11 @@ export default {
     },
     async getRouterList() {
       const res = await getRouterListFromMysql()
-      console.log(
-        JSON.parse(this.$store.state.user.routerList, 'store里面的路由')
-      )
+
       console.log(res.data)
     },
     async saveMethod() {
-      console.log(this.form)
+      //  console.log(this.form)
       // 首先校验一下必填写的项目有没填写
       if (this.$refs.pageForm.validate()) {
         if (this.form.pageType === '菜单') {
@@ -308,7 +306,7 @@ export default {
       }
     },
     async updateMethod() {
-      console.log(this.form)
+      //  console.log(this.form)
       if (this.$refs.pageForm.validate()) {
         if (this.form.pageType === '菜单') {
           this.form.pageType = 'M'

@@ -232,22 +232,15 @@ export default {
     // this.user = res.data
   },
   methods: {
-    async getList() {
-      console.log(123)
-      const res = await page(this.listQuery)
-      this.tableInfo.data = res.data.rows
+    getList() {
+      this.tableInfo.refresh = Math.random()
     },
     async reset() {
       this.listQuery.startDate = undefined
       this.listQuery.endDate = undefined
       this.listQuery.name = undefined
       this.listQuery.userName = undefined
-
-      const res = await page({
-        page: 1,
-        limit: 20
-      })
-      this.tableInfo.data = res.data.rows
+      this.getList()
     },
     handleClick(event, data) {
       switch (event) {
@@ -262,12 +255,12 @@ export default {
       }
     },
     detail(data) {
-      console.log(data)
+      //  console.log(data)
       this.$router.push({ name: 'dateDetail', params: { id: data.id } })
     },
     // 添加数据
     add() {
-      console.log('add')
+      //  console.log('add')
       this.addVisible = true
     },
     addDilogClose() {

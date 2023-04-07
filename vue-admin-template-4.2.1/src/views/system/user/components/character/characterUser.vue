@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     async savecharacter() {
-      console.log(this.value)
+      //  console.log(this.value)
       // 循环选中的权限，有几个角色就生成几个对象
       await saveCharacter({ userId: this.item.userid, roles: this.value }).then(
         (res) => {

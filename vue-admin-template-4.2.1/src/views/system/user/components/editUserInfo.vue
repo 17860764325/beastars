@@ -68,14 +68,14 @@ export default {
     }
   },
   created() {
-    console.log(this.item)
+    //  console.log(this.item)
     this.form = this.item
   },
   methods: {
     async submit() {
-      console.log('submit')
+      //  console.log('submit')
       if (this.$refs.hrTableeditUserInfo.validate()) {
-        console.log(this.form)
+        //  console.log(this.form)
         await changeUserInfo(this.form).then((res) => {
           if (res.status === 200) {
             this.$notify({

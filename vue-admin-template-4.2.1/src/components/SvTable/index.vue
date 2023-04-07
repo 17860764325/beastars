@@ -385,6 +385,7 @@ export default {
     const res = await getAllDicts()
     this.dicts = res.data
     this.initColumns()
+    this.handleSizeChange(10)
   },
   methods: {
     // 初始化列设置
@@ -527,6 +528,7 @@ export default {
     },
     // 获取数据
     getList() {
+      console.log('调用了svtable里面的getList')
       if (!this.api) return
       this.api(this.handleParams(), this.queryList)
         .then((res) => {
