@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class JwtTokenInterceptor implements HandlerInterceptor {
     @Resource
-    private RedisTemplate<String ,Object> redisTemplate;
+    private RedisTemplate<String ,String> redisTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws IOException {
