@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface ScheduleHeaderMapper extends CurdMapper<ScheduleHeader>, BaseMapper<ScheduleHeader>, com.baomidou.mybatisplus.core.mapper.BaseMapper<ScheduleHeader> {
+public interface ScheduleHeaderMapper extends CurdMapper<ScheduleHeader>,  com.baomidou.mybatisplus.core.mapper.BaseMapper<ScheduleHeader> {
 
     List<ScheduleHeader> page(Map<String, Object> params);
 }

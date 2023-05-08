@@ -1,4 +1,5 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScheduleHeaderserviceImpl implements ScheduleHeaderService {
+public class ScheduleHeaderserviceImpl extends ServiceImpl<ScheduleHeaderMapper, ScheduleHeader> implements ScheduleHeaderService {
 
     @Autowired
     private ScheduleHeaderMapper scheduleHeaderMapper;
