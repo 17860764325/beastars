@@ -1,10 +1,9 @@
 // 路由守卫
-import { constantRoutes, asyncRouters, error404 } from "../../router";
-import { asyncRoutes } from "../../router/asyncRoutes";
+import { constantRoutes, asyncRouters, error404 } from '../../router'
+import { asyncRoutes } from '../../router/asyncRoutes'
 import {
-  getUserFatherRouterPaths,
-  getUserSonRouterPaths
-} from "../../api/system/page";
+  getUserFatherRouterPaths, getUserSonRouterPaths, getRouterListFromMysql
+} from '../../api/system/page'
 
 /**
  * 使用meta。角色，以确定当前用户是否具有权限
@@ -47,30 +46,32 @@ export async function filterAsyncRoutes(routes, roles) {
   //     element.component = () => import(data)
   //   })
   // })
+  // console.log(res.data, '--------')
 
   // 获取所有的父页面
-  const father = await getUserFatherRouterPaths();
+  const father = await getUserFatherRouterPaths()
   // 获取所有的子页面
-  const son = await getUserSonRouterPaths();
+  const son = await getUserSonRouterPaths()
 
-  const fatherRouters = [];
+  const fatherRouters = []
   // 循环父页面
   father.data.forEach(item => {
-    const fatherRouter = asyncRouters.find(router => router.path === item);
+    // 从前端的陆游列表中获取
+    const fatherRouter = asyncRouters.find(router => router.path === item)
+    // 如果路由存在
     if (fatherRouter) {
       const childrenCopy = son.data.reduce((acc, son) => {
-        const sonRouter = fatherRouter.children.find(
-          router => router.path === son
-        );
+        const sonRouter = fatherRouter.children.find(router => router.path === son)
         if (sonRouter) {
-          acc.push(sonRouter);
+          acc.push(sonRouter)
         }
-        return acc;
-      }, []);
-      fatherRouter.children = childrenCopy;
-      fatherRouters.push(fatherRouter);
+        return acc
+      }, [])
+      fatherRouter.children = childrenCopy
+      fatherRouters.push(fatherRouter)
     }
-  });
+  })
+  // console.log(fatherRouters, '--------')
   /*
   father.data.forEach(item => {
     const fatherRouter = asyncRouters.find(router => router.path === item)
@@ -88,24 +89,23 @@ export async function filterAsyncRoutes(routes, roles) {
   })
   */
   //  console.log(error404)
-  fatherRouters.push(error404);
+  fatherRouters.push(error404)
   //  console.log(fatherRouters, '筛选过后的路有列表')
-  return fatherRouters;
+  return fatherRouters
 }
 
 const state = {
-  routes: [],
-  addRoutes: []
-};
+  routes: [], addRoutes: []
+}
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
-    state.addRoutes = routes;
+    state.addRoutes = routes
     // 静态路由
     //  console.log(routes, 'routers')
-    state.routes = constantRoutes.concat(routes); // 将过滤后的路由和constantRoutes存起来
+    state.routes = constantRoutes.concat(routes) // 将过滤后的路由和constantRoutes存起来
   }
-};
+}
 
 // 筛选
 // 根据纯属进来的roles，筛选出路由
@@ -116,19 +116,16 @@ const actions = {
     return new Promise(async resolve => {
       // 路由是否有admin,有直接全部显示
       // 过滤路由（过滤出当前用户能看见的页面和菜单）
-      const accessedRoutes = await filterAsyncRoutes(asyncRoutes, roles);
+      const accessedRoutes = await filterAsyncRoutes(asyncRoutes, roles)
       //  console.log(accessedRoutes, 'acc')
       // accessedRoutes这个就是当前角色可见的动态路由
       // 将过滤后的路由添加到路由表中
-      commit("SET_ROUTES", accessedRoutes);
-      resolve(accessedRoutes);
-    });
+      commit('SET_ROUTES', accessedRoutes)
+      resolve(accessedRoutes)
+    })
   }
-};
+}
 
 export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-};
+  namespaced: true, state, mutations, actions
+}

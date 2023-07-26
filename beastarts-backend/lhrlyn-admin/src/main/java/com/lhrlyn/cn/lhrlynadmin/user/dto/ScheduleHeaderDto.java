@@ -24,6 +24,7 @@ public class ScheduleHeaderDto {
     private String UserId;
 
     private String userName;
+
     private String remarks;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

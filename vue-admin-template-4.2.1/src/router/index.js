@@ -89,6 +89,11 @@ export const asyncRouters = [{
     name: 'study',
     component: () => import('@/views/workBench/study/index'),
     meta: { title: '成人高考资料📝', icon: 'dashboard' }
+  }, {
+    path: 'PunchTheClock',
+    name: 'PunchTheClock',
+    component: () => import('@/views/workBench/PunchTheClock/index'),
+    meta: { title: 'Keeping Life', icon: 'dashboard' }
   }
     // 考研，自媒体、模块
     // {

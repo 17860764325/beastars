@@ -5,35 +5,36 @@
         <el-card class="left-card">
           <el-button type="primary" @click="append(null)">新建目录</el-button>
           <el-button type="primary" @click="getRouterList()"
-            >获取路由list</el-button
+          >获取路由list
+          </el-button
           >
           <div class="block">
             <p>所有页面</p>
             <el-tree
-              :data="treeData"
-              show-checkbox
-              node-key="id"
-              default-expand-all
-              :expand-on-click-node="false"
-              @node-click="handleCheckChange"
+                :data="treeData"
+                show-checkbox
+                node-key="id"
+                default-expand-all
+                :expand-on-click-node="false"
+                @node-click="handleCheckChange"
             >
               <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}</span>
                 <span>
                   <el-button
-                    :disabled="data.parentCode !== '0'"
-                    class="create"
-                    type="text"
-                    size="mini"
-                    @click="() => append(data)"
+                      :disabled="data.parentCode !== '0'"
+                      class="create"
+                      type="text"
+                      size="mini"
+                      @click="() => append(data)"
                   >
                     新增页面
                   </el-button>
                   <el-button
-                    class="delete"
-                    type="text"
-                    size="mini"
-                    @click="() => remove(node, data)"
+                      class="delete"
+                      type="text"
+                      size="mini"
+                      @click="() => remove(node, data)"
                   >
                     删除页面
                   </el-button>
@@ -46,16 +47,18 @@
       <el-col class="right">
         <el-card class="right-card">
           <el-button type="primary" @click="saveMethod" :disabled="save"
-            >保存！</el-button
+          >保存！
+          </el-button
           >
           <el-button type="primary" @click="updateMethod" :disabled="update"
-            >更新！</el-button
+          >更新！
+          </el-button
           >
           <hr-form
-            ref="pageForm"
-            :form-disabled="false"
-            :form.sync="form"
-            :field-list="fieldList"
+              ref="pageForm"
+              :form-disabled="false"
+              :form.sync="form"
+              :field-list="fieldList"
           />
         </el-card>
       </el-col>
@@ -206,7 +209,8 @@ export default {
             id: id++,
             label: '子页面',
             parentCode: '0',
-            children: []
+            children: [],
+            flag: 'new'
           }
           this.treeData.push(newChild)
         } else {
@@ -214,7 +218,8 @@ export default {
             id: id++,
             label: '子页面',
             parentCode: data.id,
-            children: []
+            children: [],
+            flag: 'new'
           }
           // 如果该节点没有children则加上
           if (!data.children) {
@@ -243,7 +248,8 @@ export default {
       //  console.log(data)
       // 每次点击就会显示这个页面的信息
       // 要进行判断，如果是新生成的节点那么就显示空的框
-      if (data.label === '子页面') {
+      // 2023-07-26，查询后端数据库，如果咩有数据则为新加的页面，如果有数据就是修改页面
+      if (data.flag === 'new') {
         // 新页面
         this.save = false
         this.update = true
