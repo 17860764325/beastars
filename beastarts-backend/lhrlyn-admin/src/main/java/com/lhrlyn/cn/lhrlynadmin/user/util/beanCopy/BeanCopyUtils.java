@@ -52,12 +52,7 @@ public class BeanCopyUtils {
                 throw new RuntimeException(clazz + "没有默认无参构造函数，请在类上使用@NoArgsConstructor添加无参构造函数");
             }
             String jsonString = JSON.toJSONString(obj);
-            // 如果json串开头和结尾有 “ 需要将双引号替换为空
-            if (jsonString.startsWith("\"") && jsonString.endsWith("\"")) {
-                jsonString = jsonString.substring(1, jsonString.length() - 1);
-            }
-            String s = unescapeJava(jsonString);
-            JSONObject object = JSON.parseObject(s);
+            JSONObject object = JSON.parseObject(jsonString);
             if (removeEmpty) {
                 empty2Null(object);
             }
