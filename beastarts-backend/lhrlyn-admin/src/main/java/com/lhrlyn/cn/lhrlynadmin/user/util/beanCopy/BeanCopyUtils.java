@@ -51,8 +51,13 @@ public class BeanCopyUtils {
             } catch (NoSuchMethodException var9) {
                 throw new RuntimeException(clazz + "没有默认无参构造函数，请在类上使用@NoArgsConstructor添加无参构造函数");
             }
-
-            JSONObject object = JSON.parseObject(JSON.toJSONString(obj));
+            String jsonString = JSON.toJSONString(obj);
+            // 如果json串开头和结尾有 “ 需要将双引号替换为空
+            if (jsonString.startsWith("\"") && jsonString.endsWith("\"")) {
+                jsonString = jsonString.substring(1, jsonString.length() - 1);
+            }
+            String s = unescapeJava(jsonString);
+            JSONObject object = JSON.parseObject(s);
             if (removeEmpty) {
                 empty2Null(object);
             }
@@ -72,6 +77,80 @@ public class BeanCopyUtils {
             }
         }
     }
+
+     public static String unescapeJava(String str) {
+        if (str == null) {
+            return null;
+        }
+        int sz = str.length();
+        StringBuilder out = new StringBuilder(sz);
+        StringBuilder unicode = new StringBuilder(4);
+        boolean hadSlash = false;
+        boolean inUnicode = false;
+        for (int i = 0; i < sz; i++) {
+            char ch = str.charAt(i);
+            if (inUnicode) {
+                unicode.append(ch);
+                if (unicode.length() == 4) {
+                    try {
+                        int value = Integer.parseInt(unicode.toString(), 16);
+                        out.append((char) value);
+                        unicode.setLength(0);
+                        inUnicode = false;
+                        hadSlash = false;
+                    } catch (NumberFormatException nfe) {
+                        throw new IllegalArgumentException("Unable to parse unicode value: " + unicode, nfe);
+                    }
+                }
+                continue;
+            }
+            if (hadSlash) {
+                hadSlash = false;
+                switch (ch) {
+                    case '\\':
+                        out.append('\\');
+                        break;
+                    case '\'':
+                        out.append('\'');
+                        break;
+                    case '\"':
+                        out.append('"');
+                        break;
+                    case 'r':
+                        out.append('\r');
+                        break;
+                    case 'f':
+                        out.append('\f');
+                        break;
+                    case 't':
+                        out.append('\t');
+                        break;
+                    case 'n':
+                        out.append('\n');
+                        break;
+                    case 'b':
+                        out.append('\b');
+                        break;
+                    case 'u':
+                        inUnicode = true;
+                        break;
+                    default:
+                        out.append(ch);
+                        break;
+                }
+                continue;
+            } else if (ch == '\\') {
+                hadSlash = true;
+                continue;
+            }
+            out.append(ch);
+        }
+        if (hadSlash) {
+            out.append('\\');
+        }
+        return out.toString();
+    }
+
 
     public static <T> List<List<T>> listSplitCopy(List list, Class<T> clazz) {
         return listSplitCopy(list, 300, false, clazz, (Class)null);
