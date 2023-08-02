@@ -20,6 +20,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(getJwtInterceptor()).
                 excludePathPatterns("/user/login").
                 excludePathPatterns("/user/regist").
+                excludePathPatterns("/dict/dictsMap").
                 excludePathPatterns("/doctor/**")
                 .addPathPatterns("/**");
     }

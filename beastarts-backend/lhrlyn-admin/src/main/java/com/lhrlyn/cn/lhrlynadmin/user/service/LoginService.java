@@ -1,7 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service;
 
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.util.ResultData;
 
 import javax.servlet.http.HttpServletRequest;

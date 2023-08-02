@@ -3,7 +3,7 @@
 
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper">
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.UserRole" id="userRolesMap">
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.UserRole" id="userRolesMap">
         <!-- id -->
         <result property="id" column="id"/>
         <!-- 用户id -->

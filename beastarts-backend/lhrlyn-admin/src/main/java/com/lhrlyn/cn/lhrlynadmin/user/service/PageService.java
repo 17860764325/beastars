@@ -3,9 +3,9 @@ package com.lhrlyn.cn.lhrlynadmin.user.service;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.PageDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.PageRoleVO;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Page;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.VO.PageRoleVO;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 
 import java.util.List;

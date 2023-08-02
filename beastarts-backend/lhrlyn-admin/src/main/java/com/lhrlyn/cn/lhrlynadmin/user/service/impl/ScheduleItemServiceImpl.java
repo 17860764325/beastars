@@ -3,7 +3,7 @@ package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleItemDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleItem;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.ScheduleItem;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.ScheduleItemMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.ScheduleItemService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.IdWorker;
@@ -12,7 +12,6 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

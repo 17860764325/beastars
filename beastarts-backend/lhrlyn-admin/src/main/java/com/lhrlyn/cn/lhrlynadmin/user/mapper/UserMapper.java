@@ -1,6 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.mapper;
 
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

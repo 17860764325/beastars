@@ -1,6 +1,6 @@
 package com.lhrlyn.cn.lhrlynadmin.user.mapper;
 
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Dict;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Dict;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.base.CurdMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import org.apache.ibatis.annotations.Mapper;

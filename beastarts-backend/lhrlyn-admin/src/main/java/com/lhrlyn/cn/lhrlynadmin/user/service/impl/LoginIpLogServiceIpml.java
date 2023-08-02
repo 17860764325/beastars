@@ -1,7 +1,7 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
 import com.lhrlyn.cn.lhrlynadmin.user.dto.LoginIpLogDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.LoginIpLog;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.LoginIpLog;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.LoginIpLogMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.LoginIpLogService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;

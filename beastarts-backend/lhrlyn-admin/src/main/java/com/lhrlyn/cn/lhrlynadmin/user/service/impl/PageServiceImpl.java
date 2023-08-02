@@ -5,17 +5,16 @@ import com.lhrlyn.cn.lhrlynadmin.user.dto.Meta;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.PageDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.RouterDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.TreeDateDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Page;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.PageRole;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.UserRole;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.PageRoleVO;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Page;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.PageRole;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.UserRole;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.VO.PageRoleVO;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.PageMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.PageRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.PageService;
-import com.lhrlyn.cn.lhrlynadmin.user.util.IdWorker;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 /**
  * 页面管理

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+
+import net.sf.jsqlparser.expression.StringValue;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +54,11 @@ public class BeanCopyUtils {
                 throw new RuntimeException(clazz + "没有默认无参构造函数，请在类上使用@NoArgsConstructor添加无参构造函数");
             }
             String jsonString = JSON.toJSONString(obj);
+            // 如果json串开头和结尾有 两个"" 号需要将双引号替换为空
+            if (jsonString.startsWith("\"") && jsonString.endsWith("\"")) {
+                jsonString = jsonString.substring(1, jsonString.length() - 1);
+            }
+            jsonString= unescapeJava(jsonString);
             JSONObject object = JSON.parseObject(jsonString);
             if (removeEmpty) {
                 empty2Null(object);

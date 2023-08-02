@@ -1,10 +1,8 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
-import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Dict;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Role;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.UserRole;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.UserRolesVO;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Role;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.UserRole;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.VO.UserRolesVO;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.RoleService;

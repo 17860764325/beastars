@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.FoodPlanMapper">
+
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.FoodPlan" id="foodPlanMap">
+            <result property="id" column="id"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="currentDate" column="current_date"/>
+            <result property="mealsType" column="meals_type"/>
+            <result property="foodType" column="food_type"/>
+            <result property="number" column="number"/>
+            <result property="unitCode" column="unit_code"/>
+            <result property="unitName" column="unit_name"/>
+    </resultMap>
+
+    <select id="page" resultMap="foodPlanMap"
+            parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
+        select
+        sh.*
+        from food_plan sh
+            <where>
+                    <if test="id != null and id != ''">
+                        and sh.id = #{id}
+                    </if>
+                    <if test="createBy != null and createBy != ''">
+                        and sh.create_by = #{createBy}
+                    </if>
+                    <if test="createTime != null and createTime != ''">
+                        and sh.create_time = #{createTime}
+                    </if>
+                    <if test="updateBy != null and updateBy != ''">
+                        and sh.update_by = #{updateBy}
+                    </if>
+                    <if test="updateTime != null and updateTime != ''">
+                        and sh.update_time = #{updateTime}
+                    </if>
+                    <if test="currentDate != null and currentDate != ''">
+                        and sh.current_date = #{currentDate}
+                    </if>
+                    <if test="mealsType != null and mealsType != ''">
+                        and sh.meals_type = #{mealsType}
+                    </if>
+                    <if test="foodType != null and foodType != ''">
+                        and sh.food_type = #{foodType}
+                    </if>
+                    <if test="number != null and number != ''">
+                        and sh.number = #{number}
+                    </if>
+                    <if test="unitCode != null and unitCode != ''">
+                        and sh.unit_code = #{unitCode}
+                    </if>
+                    <if test="unitName != null and unitName != ''">
+                        and sh.unit_name = #{unitName}
+                    </if>
+            </where>
+        order by sh.create_time desc
+    </select>
+
+</mapper>

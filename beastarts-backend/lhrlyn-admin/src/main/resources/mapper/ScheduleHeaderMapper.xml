@@ -4,7 +4,7 @@
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.ScheduleHeaderMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.ScheduleHeader" id="ScheduleHeaderResultMap">
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.ScheduleHeader" id="ScheduleHeaderResultMap">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="date" column="date"/>

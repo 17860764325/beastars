@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.User;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;

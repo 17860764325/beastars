@@ -1,8 +1,7 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service;
 
-import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Role;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.VO.UserRolesVO;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Role;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.VO.UserRolesVO;
 import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 

@@ -4,7 +4,7 @@
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.DictMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.Dict" id="DictResultMap">
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.Dict" id="DictResultMap">
         <id property="dictCode" column="dict_code"/>
         <result property="dictSort" column="dict_sort"/>
         <result property="dictLabel" column="dict_label"/>

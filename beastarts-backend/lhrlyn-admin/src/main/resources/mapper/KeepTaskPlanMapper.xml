@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.KeepTaskPlanMapper">
+
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.KeepTaskPlan" id="keepTaskPlanMap">
+            <result property="id" column="id"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="currentDate" column="current_date"/>
+            <result property="isTrain" column="is_train"/>
+            <result property="isFinishTrain" column="is_finish_train"/>
+            <result property="isPunchClock" column="is_punch_clock"/>
+            <result property="punchClockTime" column="punch_clock_time"/>
+            <result property="pictureAddressId" column="picture_address_id"/>
+            <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <select id="page" resultMap="keepTaskPlanMap"
+            parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
+        select
+        sh.*
+        from keep_task_plan sh
+            <where>
+                    <if test="id != null and id != ''">
+                        and sh.id = #{id}
+                    </if>
+                    <if test="createBy != null and createBy != ''">
+                        and sh.create_by = #{createBy}
+                    </if>
+                    <if test="createTime != null and createTime != ''">
+                        and sh.create_time = #{createTime}
+                    </if>
+                    <if test="updateBy != null and updateBy != ''">
+                        and sh.update_by = #{updateBy}
+                    </if>
+                    <if test="updateTime != null and updateTime != ''">
+                        and sh.update_time = #{updateTime}
+                    </if>
+                    <if test="currentDate != null and currentDate != ''">
+                        and sh.current_date = #{currentDate}
+                    </if>
+                    <if test="isTrain != null and isTrain != ''">
+                        and sh.is_train = #{isTrain}
+                    </if>
+                    <if test="isFinishTrain != null and isFinishTrain != ''">
+                        and sh.is_finish_train = #{isFinishTrain}
+                    </if>
+                    <if test="isPunchClock != null and isPunchClock != ''">
+                        and sh.is_punch_clock = #{isPunchClock}
+                    </if>
+                    <if test="punchClockTime != null and punchClockTime != ''">
+                        and sh.punch_clock_time = #{punchClockTime}
+                    </if>
+                    <if test="pictureAddressId != null and pictureAddressId != ''">
+                        and sh.picture_address_id = #{pictureAddressId}
+                    </if>
+                    <if test="userName != null and userName != ''">
+                        and sh.user_name = #{userName}
+                    </if>
+            </where>
+        order by sh.create_time desc
+    </select>
+
+    <delete id="deleteById">
+        delete from keep_task_plan where id =#{id}
+    </delete>
+
+</mapper>

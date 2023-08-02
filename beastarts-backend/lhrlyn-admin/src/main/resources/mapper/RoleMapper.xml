@@ -3,7 +3,7 @@
 
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper">
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.Role" id="roleMap">
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.Role" id="roleMap">
         <!-- id -->
         <result property="id" column="id"/>
         <!-- 权限名称 -->
@@ -25,7 +25,7 @@
             </if>
         </where>
     </select>
-    <select id="getCharacterByUserId" parameterType="java.lang.String" resultType="com.lhrlyn.cn.lhrlynadmin.user.enity.Role">
+    <select id="getCharacterByUserId" parameterType="java.lang.String" resultType="com.lhrlyn.cn.lhrlynadmin.user.entity.Role">
         select
             r.id,
             r.role_name,

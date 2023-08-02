@@ -3,7 +3,7 @@
 
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.LoginIpLogMapper">
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.LoginIpLog" id="loginIpLogMap">
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.LoginIpLog" id="loginIpLogMap">
         <result property="id" column="id"/>
         <!-- 登陆用户 -->
         <result property="userId" column="user_id"/>

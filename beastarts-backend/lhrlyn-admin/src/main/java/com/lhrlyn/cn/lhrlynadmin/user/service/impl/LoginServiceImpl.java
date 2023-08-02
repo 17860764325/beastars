@@ -2,7 +2,7 @@ package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.*;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.*;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.LoginIpLogMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserMapper;
@@ -21,13 +21,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.lhrlyn.cn.lhrlynadmin.user.util.ReturnCode.USER_IS_HASED;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -66,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
                 // 比较成功
                 // 生成token
                 String token = JwtUtil.sign(userDto.getUserid().intValue());
-                redisTemplate.opsForValue().set(token, JSONUtil.toJsonStr(userDto), Duration.ofMinutes(30L));
+                redisTemplate.opsForValue().set(token, JSONUtil.toJsonStr(userDto), 3, TimeUnit.HOURS);
                 userDto.setToken(token);
                 // 存储ip
                 //  TODO 因为目前没有网络所以暂时讲则需要连网注册ip地址的功能先屏掉
@@ -144,8 +142,8 @@ public class LoginServiceImpl implements LoginService {
         }
         User user1 = BeanCopyUtils.beanCopy(user, User.class);
         user1.setIsVoid("1");
-        user1.setUserHeadImg("1.png");
-        user1.setBackagegroundImg("12.jpg");
+        user1.setUserHeadImg("navbar_image/1.png");
+        user1.setBackagegroundImg("weekWallPaper/12.jpg");
         int insert = userMapper.insert(user1);
         if (insert > 0 ){
             return ResultData.success("");

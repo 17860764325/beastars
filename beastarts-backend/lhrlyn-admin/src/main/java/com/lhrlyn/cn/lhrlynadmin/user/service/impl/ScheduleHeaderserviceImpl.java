@@ -1,32 +1,24 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
 import com.lhrlyn.cn.lhrlynadmin.user.dto.ScheduleHeaderDto;
-import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.*;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.*;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.ScheduleHeaderMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.ScheduleHeaderService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
-import com.lhrlyn.cn.lhrlynadmin.user.util.pageQuery.PageQuery;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.TableResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.sql.Wrapper;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,8 +73,8 @@ public class ScheduleHeaderserviceImpl extends ServiceImpl<ScheduleHeaderMapper,
         scheduleHeaderDto.setUserId(user.getUserid().toString());
         scheduleHeaderDto.setUserName(user.getUsername());
         ScheduleHeader scheduleHeader = BeanCopyUtils.beanCopy(scheduleHeaderDto, ScheduleHeader.class);
-        int insert = scheduleHeaderMapper.insert(scheduleHeader);
-        if (insert > 0) {
+        boolean save= save(scheduleHeader);
+        if (save) {
             return ObjectRestResponse.success();
         } else {
             return ObjectRestResponse.failed();

@@ -1,9 +1,9 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
 import com.lhrlyn.cn.lhrlynadmin.user.dto.UserDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Role;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.User;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.UserRole;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Role;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.User;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.UserRole;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.RoleMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.UserRoleMapper;
@@ -12,7 +12,6 @@ import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;
 import com.lhrlyn.cn.lhrlynadmin.user.util.response.ObjectRestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cn.hutool.core.collection.CollUtil;
 
 import java.util.ArrayList;
 import java.util.List;

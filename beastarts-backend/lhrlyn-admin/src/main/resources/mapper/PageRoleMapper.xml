@@ -3,7 +3,7 @@
 
 <mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.PageRoleMapper">
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.enity.PageRole" id="pageRoleMap">
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.PageRole" id="pageRoleMap">
         <result property="id" column="id"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>

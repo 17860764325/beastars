@@ -1,7 +1,7 @@
 package com.lhrlyn.cn.lhrlynadmin.user.service.impl;
 
 import com.lhrlyn.cn.lhrlynadmin.user.dto.DictDto;
-import com.lhrlyn.cn.lhrlynadmin.user.enity.Dict;
+import com.lhrlyn.cn.lhrlynadmin.user.entity.Dict;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.DictMapper;
 import com.lhrlyn.cn.lhrlynadmin.user.service.DictService;
 import com.lhrlyn.cn.lhrlynadmin.user.util.beanCopy.BeanCopyUtils;

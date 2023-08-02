@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhrlyn.cn.lhrlynadmin.user.mapper.FoodMapper">
+
+    <resultMap type="com.lhrlyn.cn.lhrlynadmin.user.entity.Food" id="foodMap">
+            <result property="id" column="id"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="foodName" column="food_name"/>
+            <result property="foodCode" column="food_code"/>
+            <result property="foodType" column="food_type"/>
+            <result property="quantityOfHeat" column="quantity_of_heat"/>
+            <result property="protein" column="protein"/>
+            <result property="fat" column="fat"/>
+            <result property="number" column="number"/>
+            <result property="dietaryFiber" column="dietary_fiber"/>
+            <result property="carbonWater" column="carbon_water"/>
+            <result property="starch" column="starch"/>
+    </resultMap>
+    <delete id="deleteById">
+        delete from food where id = #{id}
+    </delete>
+
+    <select id="page" resultMap="foodMap"
+            parameterType="com.lhrlyn.cn.lhrlynadmin.user.util.pageExample.PageExample">
+        select
+        sh.*
+        from food sh
+            <where>
+                    <if test="id != null and id != ''">
+                        and sh.id = #{id}
+                    </if>
+                    <if test="foodName != null and foodName != ''">
+                        and sh.food_name like  N'%${ foodName}%'
+                    </if>
+                    <if test="foodCode != null and foodCode != ''">
+                        and sh.food_code = #{foodCode}
+                    </if>
+                    <if test="foodType != null and foodType != ''">
+                        and sh.food_type = #{foodType}
+                    </if>
+                    <if test="quantityOfHeat != null and quantityOfHeat != ''">
+                        and sh.quantity_of_heat = #{quantityOfHeat}
+                    </if>
+                    <if test="protein != null and protein != ''">
+                        and sh.protein = #{protein}
+                    </if>
+                    <if test="fat != null and fat != ''">
+                        and sh.fat = #{fat}
+                    </if>
+            </where>
+        order by sh.create_time desc
+    </select>
+
+</mapper>
