@@ -7,6 +7,7 @@
       :form.sync="form"
       :field-list="fieldList"
     />
+    <h1>开通账号后记得让管理员添加权限哦，管理员邮箱：12587747092@qq.com</h1>
     <el-row style="display: flex; justify-content: space-between">
       <el-button @click="register()">注册</el-button>
       <el-button style="float: right" @click="login()"
@@ -26,7 +27,17 @@ export default {
       fieldList: [
         {
           type: 'text',
-          label: '请问怎么称呼你？',
+          label: '昵称',
+          prop: 'name',
+          rules: { required: true },
+          sm: 12,
+          md: 12,
+          lg: 12,
+          xl: 12
+        },
+        {
+          type: 'text',
+          label: '账号？',
           prop: 'username',
           rules: { required: true },
           sm: 12,
@@ -110,6 +121,7 @@ export default {
               type: 'error'
             })
           }
+          this.$emit('close')
         } else {
           // 密码不相同
           // 提示密码不相同，输入框变成红色

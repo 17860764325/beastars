@@ -94,6 +94,11 @@ export const asyncRouters = [{
     name: 'PunchTheClock',
     component: () => import('@/views/workBench/PunchTheClock/index'),
     meta: { title: 'Keeping Life', icon: 'dashboard' }
+  }, {
+    path: 'foodPlan',
+    name: 'foodPlan',
+    component: () => import('@/views/workBench/foodPlan/index'),
+    meta: { title: '饮食搭配', icon: 'dashboard' }
   }
     // 考研，自媒体、模块
     // {

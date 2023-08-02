@@ -9,7 +9,9 @@
         <plan></plan>
       </el-tab-pane>
       <el-tab-pane label="计划变更">计划变更</el-tab-pane>
-      <el-tab-pane label="整体数据预览">整体数据预览</el-tab-pane>
+      <el-tab-pane label="整体数据预览">
+        <allPlan></allPlan>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -17,12 +19,14 @@
 <script>
 import ClockCenter from '@/views/workBench/PunchTheClock/components/ClockCenter.vue'
 import plan from '@/views/workBench/PunchTheClock/components/plan.vue'
+import allPlan from '@/views/workBench/PunchTheClock/components/allPlan.vue'
 
 export default {
   name: 'index',
   components: {
     ClockCenter,
-    plan
+    plan,
+    allPlan
   }
 }
 </script>

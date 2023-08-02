@@ -72,7 +72,7 @@
 </template>
 
 <script>
-
+import { getList } from '@/api/punchTheClock/api.js'
 export default {
   data() {
     return {
@@ -96,6 +96,15 @@ export default {
       dialogVisible: false,
       disabled: false
     }
+  },
+  created() {
+    // 默认加载当天的打卡情况
+    const  query = {
+      currentDate: new Date()
+    }
+    getList(query).then(res => {
+      console.log(res)
+    })
   },
   methods: {
     buttonChange() {
