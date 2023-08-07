@@ -43,7 +43,7 @@ public class KeepTaskPlanController extends Controller {
      }
 
     @PostMapping("/add")
-    public ObjectRestResponse add(@RequestBody KeepTaskPlan data,HttpServletRequest request){
+    public ObjectRestResponse add(@RequestBody List<KeepTaskPlan> data,HttpServletRequest request){
         return keepTaskPlanService.add(data);
     }
 

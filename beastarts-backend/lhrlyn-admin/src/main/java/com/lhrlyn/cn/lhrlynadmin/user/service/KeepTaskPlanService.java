@@ -19,7 +19,7 @@ public interface KeepTaskPlanService extends IService<KeepTaskPlan> {
 
     List<KeepTaskPlan> page(PageQuery query);
 
-    ObjectRestResponse add(KeepTaskPlan data);
+    ObjectRestResponse add(List<KeepTaskPlan> data);
 
     ObjectRestResponse edit(KeepTaskPlan data);
 

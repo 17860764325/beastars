@@ -9,13 +9,19 @@
             <result property="createTime" column="create_time"/>
             <result property="updateBy" column="update_by"/>
             <result property="updateTime" column="update_time"/>
-            <result property="currentDate" column="current_date"/>
+            <result property="currentDateToday" column="current_date_today"/>
             <result property="isTrain" column="is_train"/>
             <result property="isFinishTrain" column="is_finish_train"/>
             <result property="isPunchClock" column="is_punch_clock"/>
             <result property="punchClockTime" column="punch_clock_time"/>
             <result property="pictureAddressId" column="picture_address_id"/>
             <result property="userName" column="user_name"/>
+            <result property="year" column="year"/>
+            <result property="day" column="day"/>
+            <result property="month" column="month"/>
+            <result property="afterToday" column="after_today"/>
+            <result property="isToday" column="is_today"/>
+            <result property="thisMonth" column="this_month"/>
     </resultMap>
 
     <select id="page" resultMap="keepTaskPlanMap"
@@ -39,8 +45,14 @@
                     <if test="updateTime != null and updateTime != ''">
                         and sh.update_time = #{updateTime}
                     </if>
-                    <if test="currentDate != null and currentDate != ''">
-                        and sh.current_date = #{currentDate}
+                    <if test="currentDateStart != null and currentDateStart != ''">
+                        and sh.current_date_today <![CDATA[ >= ]]> #{currentDateStart}
+                    </if>
+                    <if test="currentDateEnd != null and currentDateEnd != ''">
+                        and sh.current_date_today <![CDATA[ <= ]]> #{currentDateEnd}
+                    </if>
+                    <if test="currentDateToday != null and currentDateToday != ''">
+                        and sh.current_date_today = #{currentDateToday}
                     </if>
                     <if test="isTrain != null and isTrain != ''">
                         and sh.is_train = #{isTrain}
@@ -62,6 +74,9 @@
                     </if>
             </where>
         order by sh.create_time desc
+    </select>
+    <select id="selectByDate" resultMap="keepTaskPlanMap">
+        select * from keep_task_plan where current_date_today = #{date}
     </select>
 
     <delete id="deleteById">

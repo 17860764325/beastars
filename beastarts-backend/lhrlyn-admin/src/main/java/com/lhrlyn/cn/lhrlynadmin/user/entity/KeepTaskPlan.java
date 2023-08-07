@@ -43,9 +43,9 @@ public class KeepTaskPlan {
 	* 当前日期
 	*/
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@TableField(value = "current_date")
-	@Column(name = "current_date")
-	private Date currentDate;
+	@TableField(value = "current_date_today")
+	@Column(name = "current_date_today")
+	private Date currentDateToday;
 
 	/**
 	* 是否训练
@@ -89,5 +89,49 @@ public class KeepTaskPlan {
 	@TableField(value = "user_name")
 	@Column(name = "user_name")
 	private String userName;
+
+	/**
+	* 年
+	*/
+	@TableField(value = "year")
+	@Column(name = "year")
+	private String year;
+
+	/**
+	* 月
+	*/
+	@TableField(value = "month")
+	@Column(name = "month")
+	private String month;
+
+	/**
+	* 日
+	*/
+	@TableField(value = "day")
+	@Column(name = "day")
+	private String day;
+
+
+	/**
+	* dangyue --不使用这个字段进行校验，使用时间对比进行校验
+	*/
+	@TableField(value = "this_month")
+	@Column(name = "this_month")
+	private String thisMonth;
+
+	/**
+	* 是否今天 --不使用这个字段进行校验，使用时间对比进行校验
+	*/
+	@TableField(value = "is_today")
+	@Column(name = "is_today")
+	private String isToday
+	;
+
+	/**
+	* shifoujintianzhihou
+	*/
+	@TableField(value = "after_today")
+	@Column(name = "after_today")
+	private String afterToday;
 
 }

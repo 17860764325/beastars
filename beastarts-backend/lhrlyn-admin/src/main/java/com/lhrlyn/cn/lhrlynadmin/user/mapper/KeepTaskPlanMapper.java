@@ -3,6 +3,7 @@ package com.lhrlyn.cn.lhrlynadmin.user.mapper;
 import com.lhrlyn.cn.lhrlynadmin.user.entity.KeepTaskPlan;
 import com.lhrlyn.cn.lhrlynadmin.user.mapper.base.CurdMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,5 +20,7 @@ public interface KeepTaskPlanMapper extends CurdMapper<KeepTaskPlan>,  com.baomi
     List<KeepTaskPlan> page(Map<String, Object> params);
 
     int deleteById(String id);
+
+    List<KeepTaskPlan> selectByDate(@Param("date") String date);
 
 }
