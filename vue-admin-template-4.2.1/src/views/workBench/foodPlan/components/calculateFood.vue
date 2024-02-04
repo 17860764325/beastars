@@ -35,12 +35,15 @@
       <span>维生素：<el-tag style="color: #d00707;font-size: large">{{ calculate.starch }}</el-tag></span>
       <span>热量：<el-tag style="color: #d00707;font-size: large">{{ calculate.quantityOfHeat }}</el-tag></span>
     </div>
+    <br/>
+    <el-button type="primary" @click="save">保存今日膳食</el-button>
   </div>
 </template>
 
 <script>
 import foodSelect from './foodSelect.vue'
 import { data } from 'autoprefixer'
+import { addObj } from '@/api/foodLog/api.js'
 
 export default {
   components: {
@@ -86,7 +89,7 @@ export default {
   },
   methods: {
     data,
-    dateFormat() {
+    dateFormat(type) {
       var date = new Date()
       var year = date.getFullYear()
       var month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
@@ -95,6 +98,9 @@ export default {
       // var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
       // var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
       console.log(year + '-' + month + '-' + day)
+      if (type === '1') {
+        return year + '-' + month + '-' + day
+      }
       return year + '年' + month + '月' + day + '日'
     },
     total(data) {
@@ -112,6 +118,37 @@ export default {
       this.calculate.dietaryFiber = (Number(this.calculate1.dietaryFiber) + Number(this.calculate2.dietaryFiber) + Number(this.calculate3.dietaryFiber)).toFixed(2)
       this.calculate.quantityOfHeat = (Number(this.calculate1.quantityOfHeat) + Number(this.calculate2.quantityOfHeat) + Number(this.calculate3.quantityOfHeat)).toFixed(2)
       this.calculate.starch = (Number(this.calculate1.starch) + Number(this.calculate2.starch) + Number(this.calculate3.starch)).toFixed(2)
+    },
+    save() {
+      if (this.calculate.protein === 0 || this.calculate.fat === 0 || this.calculate.carbonWater === 0 || this.calculate.dietaryFiber === 0 || this.calculate.quantityOfHeat === 0 ) {
+        this.$message({
+          message: '请先选择食物',
+          type: 'warning'
+        })
+        return
+      }
+      addObj({
+        // 日期
+        currentDateToday: this.dateFormat('1'),
+        // 热量
+        quantityOfHeat: this.calculate.quantityOfHeat,
+        // 蛋白质
+        protein: this.calculate.protein,
+        // 脂肪
+        fat: this.calculate.fat,
+        // 膳食纤维
+        dietaryFiber: this.calculate.dietaryFiber,
+        // 碳水
+        carbonWater: this.calculate.carbonWater,
+        // 用户
+      }).then(res => {
+        if (res.code === 200) {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+        }
+      })
     }
   }
 }

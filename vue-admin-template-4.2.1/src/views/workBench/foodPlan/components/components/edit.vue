@@ -7,6 +7,7 @@
           :form-disabled="false"
           :form.sync="form"
           :field-list="fieldList"
+          @handle-event="handleEvent"
         />
       </el-col>
     </el-row>
@@ -67,6 +68,7 @@ export default {
           prop: 'number',
           label: '单位数量(单位:g)：',
           type: 'number',
+          event: 'number',
           rules: { required: true },
           sm: 12,
           md: 12,
@@ -75,9 +77,10 @@ export default {
         },
         {
           prop: 'quantityOfHeat',
-          label: '单位数量下的热量：',
+          label: '每克碳蛋脂 4/4/9 比例来计算热量',
           type: 'number',
           rules: { required: true },
+          disabled: true,
           sm: 12,
           md: 12,
           lg: 12,
@@ -87,6 +90,7 @@ export default {
           prop: 'protein',
           label: '单位数量下的蛋白质：',
           type: 'number',
+          event: 'protein',
           rules: { required: true },
           sm: 12,
           md: 12,
@@ -97,6 +101,7 @@ export default {
           prop: 'fat',
           label: '单位数量下的脂肪：',
           type: 'number',
+          event: 'fat',
           rules: { required: true },
           sm: 12,
           md: 12,
@@ -107,6 +112,7 @@ export default {
           prop: 'carbonWater',
           label: '单位数量下的碳水：',
           type: 'number',
+          event: 'carbonWater',
           rules: { required: true },
           sm: 12,
           md: 12,
@@ -174,6 +180,19 @@ export default {
     },
     centrl() {
       this.$emit('close')
+    },
+    // change的回调事件
+    handleEvent(event, data) {
+      console.log(event, 'event')
+      console.log(data,'data')
+      if (event === 'number' || event === 'protein' || event === 'fat' || event === 'carbonWater') {
+        this.calculateHeat()
+      }
+    },
+    // 根据 449 比例计算热量的方法
+    calculateHeat() {
+      this.form.quantityOfHeat = (Number(this.form.protein) / Number(this.form.number)) * 4 + (Number(this.form.fat) / Number(this.form.number)) * 9 + (Number(this.form.carbonWater) / Number(this.form.number)) * 4
+      this.form.quantityOfHeat = (Number(this.form.quantityOfHeat) * Number(this.form.number)).toFixed(2)
     }
   }
 }

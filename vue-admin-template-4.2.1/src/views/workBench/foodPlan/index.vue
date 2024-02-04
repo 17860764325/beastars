@@ -10,7 +10,8 @@
       <el-tab-pane label="食物列表">
         <foodPlanList></foodPlanList>
       </el-tab-pane>
-      <el-tab-pane label="排产计划">
+      <el-tab-pane label="用餐记录">
+        <log></log>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -20,12 +21,14 @@
 import calculateFood from './components/calculateFood.vue'
 import calculateBady from './components/calculateBady.vue'
 import foodPlanList from './components/foodPlanList.vue'
+import log from './components/log.vue'
 
 export default {
   components: {
     calculateFood,
     foodPlanList,
-    calculateBady
+    calculateBady,
+    log
   },
   data() {
     return {
