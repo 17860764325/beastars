@@ -59,6 +59,7 @@ public class BeanCopyUtils {
                 jsonString = jsonString.substring(1, jsonString.length() - 1);
             }
             jsonString= unescapeJava(jsonString);
+            // TODO 网页存储的富文本标签和json 转译时候会产生冲突，需要解决
             JSONObject object = JSON.parseObject(jsonString);
             if (removeEmpty) {
                 empty2Null(object);
